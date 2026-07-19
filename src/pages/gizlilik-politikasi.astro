@@ -1,0 +1,29 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { siteConfig } from "../lib/site-config";
+---
+
+<BaseLayout
+  title="Gizlilik Politikası"
+  description={`${siteConfig.name} gizlilik politikası.`}
+>
+  <section class="border-b border-neutral-200 bg-neutral-50">
+    <div class="mx-auto max-w-3xl px-24 py-64 lg:px-32 lg:py-96">
+      <h1 class="font-display text-3xl font-semibold text-neutral-900">Gizlilik Politikası</h1>
+
+      <div class="mt-32 flex flex-col gap-24 text-neutral-700">
+        <p>
+          Bu sayfa, {siteConfig.name} ({siteConfig.domain}) tarafından
+          toplanan kişisel verilerin nasıl işlendiğini açıklamak için
+          hazırlanmıştır.
+        </p>
+        <p>
+          <strong>Bu içerik bir yer tutucudur.</strong> KVKK (6698 sayılı
+          Kişisel Verilerin Korunması Kanunu) uyumlu nihai gizlilik
+          politikası metni, form/randevu entegrasyonları netleşince
+          hukuki danışmanlık alınarak tamamlanacaktır.
+        </p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

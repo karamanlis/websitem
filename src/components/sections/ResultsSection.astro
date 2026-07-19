@@ -1,0 +1,31 @@
+---
+import SectionHeading from "../ui/SectionHeading.astro";
+
+const outcomes = [
+  "Daha fazla nitelikli potansiyel müşteri",
+  "Daha fazla satış",
+  "Daha yüksek dönüşüm oranları",
+  "Daha düşük müşteri kazanım maliyeti",
+  "Daha güçlü müşteri deneyimi",
+  "Daha verimli pazarlama operasyonları",
+];
+---
+
+<section id="sonuclar" class="border-b border-neutral-200 bg-primary-900 text-neutral-50">
+  <div class="mx-auto max-w-6xl px-24 py-64 lg:px-32 lg:py-96">
+    <SectionHeading
+      eyebrow="Sonuçlar"
+      title="Sistemin ürettiği, işletmeniz için anlamlı sonuçlar."
+      class="max-w-2xl [&_h2]:text-neutral-50 [&_p]:text-primary-100"
+    />
+
+    <ul class="mt-48 grid gap-24 lg:grid-cols-2">
+      {outcomes.map((outcome) => (
+        <li class="flex items-start gap-16 border-b border-neutral-50/15 pb-24">
+          <span class="mt-8 h-8 w-8 shrink-0 rounded-full bg-accent-500" aria-hidden="true"></span>
+          <p class="text-lg">{outcome}</p>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>

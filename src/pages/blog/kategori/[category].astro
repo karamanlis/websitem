@@ -1,0 +1,40 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import SectionHeading from "../../../components/ui/SectionHeading.astro";
+import { categoryLabels } from "../../../content.config";
+
+export async function getStaticPaths() {
+  return Object.keys(categoryLabels).map((category) => ({ params: { category } }));
+}
+
+const { category } = Astro.params;
+const label = categoryLabels[category as keyof typeof categoryLabels];
+
+const posts = (await getCollection("blog", ({ data }) => !data.draft && data.category === category)).sort(
+  (a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf()
+);
+---
+
+<BaseLayout title={label} description={`${label} kategorisindeki yazılar.`}>
+  <section class="border-b border-neutral-200 bg-neutral-50">
+    <div class="mx-auto max-w-6xl px-24 py-64 lg:px-32 lg:py-96">
+      <SectionHeading eyebrow="Blog kategorisi" title={label} />
+
+      <div class="mt-48 grid gap-32 lg:grid-cols-3">
+        {posts.map((post) => (
+          <a
+            href={`/blog/${post.id}`}
+            class="flex flex-col gap-16 rounded-sm border border-neutral-200 bg-neutral-50 p-24 transition-colors duration-250 ease-premium hover:border-primary-600"
+          >
+            <p class="font-display text-lg font-semibold text-neutral-900">{post.data.title}</p>
+            <p class="text-sm text-neutral-600">{post.data.description}</p>
+          </a>
+        ))}
+        {posts.length === 0 && (
+          <p class="text-neutral-600">Bu kategoride henüz yazı yok.</p>
+        )}
+      </div>
+    </div>
+  </section>
+</BaseLayout>

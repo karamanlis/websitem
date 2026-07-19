@@ -1,17 +1,29 @@
 ---
-
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Hero from "../components/sections/Hero.astro";
+import ProblemSection from "../components/sections/ProblemSection.astro";
+import GrowthSystem from "../components/sections/GrowthSystem.astro";
+import ProcessFlow from "../components/sections/ProcessFlow.astro";
+import ResultsSection from "../components/sections/ResultsSection.astro";
+import WhyCnkr from "../components/sections/WhyCnkr.astro";
+import CaseStudies from "../components/sections/CaseStudies.astro";
+import BlogPreview from "../components/sections/BlogPreview.astro";
+import FaqSection from "../components/sections/FaqSection.astro";
+import FinalCta from "../components/sections/FinalCta.astro";
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<BaseLayout
+  title="Dijital Büyüme Sistemleri"
+  description="CNKR Dijital, işletmeler için web sitesi, reklam, AI otomasyon ve dönüşüm optimizasyonunu tek bir büyüme sistemi olarak kurar."
+>
+  <Hero />
+  <ProblemSection />
+  <GrowthSystem />
+  <ProcessFlow />
+  <ResultsSection />
+  <WhyCnkr />
+  <CaseStudies />
+  <BlogPreview />
+  <FaqSection />
+  <FinalCta />
+</BaseLayout>

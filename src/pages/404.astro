@@ -1,0 +1,14 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Button from "../components/ui/Button.astro";
+---
+
+<BaseLayout title="Sayfa bulunamadı" description="Aradığınız sayfa bulunamadı.">
+  <section class="bg-neutral-50">
+    <div class="mx-auto flex max-w-2xl flex-col items-center gap-24 px-24 py-96 text-center">
+      <p class="font-display text-4xl font-semibold text-neutral-900">404</p>
+      <p class="text-neutral-600">Aradığınız sayfa bulunamadı.</p>
+      <Button href="/" variant="solid">Ana sayfaya dön</Button>
+    </div>
+  </section>
+</BaseLayout>

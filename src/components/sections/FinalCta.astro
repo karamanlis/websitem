@@ -1,0 +1,34 @@
+---
+import { siteConfig } from "../../lib/site-config";
+---
+
+<section id="iletisim" class="bg-primary-900 text-neutral-50">
+  <div class="mx-auto max-w-4xl px-24 py-64 text-center lg:px-32 lg:py-96">
+    <h2 class="font-display text-3xl font-semibold lg:text-4xl">
+      Sistemsiz büyümeye devam etmeyin.
+    </h2>
+    <p class="mx-auto mt-24 max-w-xl text-primary-100">
+      Her ay sistemsiz geçen süre, rakiplerinizin sistemli ilerlediği bir
+      süredir. Ücretsiz strateji görüşmesinde işletmeniz için somut bir
+      büyüme yol haritası çıkaralım.
+    </p>
+
+    <div class="mt-48">
+      {siteConfig.calendlyUrl ? (
+        <iframe
+          src={siteConfig.calendlyUrl}
+          title="Strateji görüşmesi randevu takvimi"
+          class="mx-auto h-[700px] w-full max-w-2xl rounded-sm bg-neutral-50"
+          loading="lazy"
+        />
+      ) : (
+        <div class="mx-auto flex max-w-md flex-col items-center gap-16 rounded-sm border border-dashed border-neutral-50/40 px-32 py-48">
+          <p class="font-display text-lg font-semibold">{siteConfig.ctaLabel}</p>
+          <p class="text-sm text-primary-100">
+            Randevu takvimi eklenecek — src/lib/site-config.ts → calendlyUrl
+          </p>
+        </div>
+      )}
+    </div>
+  </div>
+</section>

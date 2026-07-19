@@ -1,0 +1,44 @@
+---
+import Button from "../ui/Button.astro";
+import { siteConfig } from "../../lib/site-config";
+---
+
+<section class="border-b border-neutral-200 bg-neutral-50">
+  <div class="mx-auto grid max-w-6xl gap-48 px-24 py-64 lg:grid-cols-[1.1fr_0.9fr] lg:items-center lg:px-32 lg:py-96">
+    <div>
+      <p class="mb-16 text-sm font-semibold uppercase tracking-[0.14em] text-primary-700">
+        {siteConfig.name}
+      </p>
+      <h1 class="font-display text-4xl font-semibold leading-[1.08] text-neutral-900 lg:text-5xl">
+        İşletmeler için dijital büyüme sistemleri kuruyoruz.
+      </h1>
+      <p class="mt-24 max-w-lg text-lg text-neutral-600">
+        Web sitenizi, reklamlarınızı ve otomasyonlarınızı birbirinden kopuk
+        araçlar olarak değil, tek bir büyüme sistemi olarak tasarlıyoruz —
+        butik otellerden kliniklere, hizmet işletmelerinin daha fazla
+        müşteri ve daha karlı bir pazarlama operasyonu kurmasını sağlıyoruz.
+      </p>
+      <div class="mt-32 flex flex-wrap items-center gap-24">
+        <Button href="#iletisim" variant="solid">{siteConfig.ctaLabel}</Button>
+        <a href="#sistem" class="text-sm font-semibold text-neutral-800 hover:text-primary-700">
+          Sistemi incele →
+        </a>
+      </div>
+    </div>
+
+    <div class="relative">
+      {siteConfig.heroImageUrl ? (
+        <img
+          src={siteConfig.heroImageUrl}
+          alt="CNKR Dijital büyüme sistemi görseli"
+          class="aspect-[4/5] w-full rounded-sm border border-neutral-200 object-cover shadow-[0_24px_60px_-24px_rgba(14,42,31,0.35)]"
+        />
+      ) : (
+        <div class="flex aspect-[4/5] w-full flex-col items-center justify-center gap-8 rounded-sm border border-dashed border-neutral-300 bg-neutral-100 text-center text-sm text-neutral-500">
+          <span>Hero görseli eklenecek</span>
+          <span class="text-xs text-neutral-400">src/lib/site-config.ts → heroImageUrl</span>
+        </div>
+      )}
+    </div>
+  </div>
+</section>

@@ -1,0 +1,57 @@
+/*
+  CNKR Dijital — tasarım token'ları.
+  Tek doğruluk kaynağı: bu dosyadaki her değer Tailwind utility'lerine
+  (bg-primary-600, gap-24, font-display, vb.) doğrudan eşlenir, böylece
+  her tasarım kararı koddan denetlenebilir.
+
+  Renk kontrast oranları (WCAG AA, hesaplanmış):
+  - primary-600 zemin + beyaz metin: 6.38:1  (AA metin eşiği: 4.5:1)
+  - primary-900 zemin + neutral-50 metin: 14.2:1
+  - accent-500 zemin + neutral-900 metin: 6.76:1 (rozet/vurgu kullanımı için)
+  - accent tonları KÜÇÜK METİN rengi olarak KULLANILMAZ (yalnızca ~3.5:1
+    kontrast verir); yalnızca arka plan/rozet/ikon/kalın başlık olarak kullanılır.
+*/
+
+@theme {
+  /* ---- Renk: bir birincil (koyu çam yeşili), bir nötr (sıcak taş),
+     bir vurgu (antik altın). Mor/mavi kombinasyonu yok. ---- */
+  --color-primary-50: #F0F6F2;
+  --color-primary-100: #DCEAE1;
+  --color-primary-300: #7FAE94;
+  --color-primary-500: #2F8060;
+  --color-primary-600: #256B4C;
+  --color-primary-700: #1F5C41;
+  --color-primary-900: #0E2A1F;
+
+  --color-neutral-50: #F8F6F2;
+  --color-neutral-100: #F0EDE6;
+  --color-neutral-200: #E2DDD3;
+  --color-neutral-300: #C9C2B4;
+  --color-neutral-400: #A8A196;
+  --color-neutral-600: #6B6459;
+  --color-neutral-800: #3A362F;
+  --color-neutral-900: #1C1A16;
+
+  --color-accent-100: #F6EBD3;
+  --color-accent-500: #C99A3B;
+  --color-accent-600: #AD8330;
+
+  /* ---- Spacing: yalnızca 8px sistemi, piksel değeriyle adlandırıldı ---- */
+  --spacing-8: 0.5rem;
+  --spacing-16: 1rem;
+  --spacing-24: 1.5rem;
+  --spacing-32: 2rem;
+  --spacing-48: 3rem;
+  --spacing-64: 4rem;
+  --spacing-96: 6rem;
+
+  /* ---- Tipografi: bir başlık fontu (Fraunces, sıcak/otoriter serif),
+     bir gövde fontu (Manrope, temiz/modern grotesk) ---- */
+  --font-display: "Fraunces Variable", ui-serif, Georgia, serif;
+  --font-body: "Manrope Variable", ui-sans-serif, system-ui, sans-serif;
+
+  /* ---- Hareket: premium mikro-etkileşimler için ---- */
+  --ease-premium: cubic-bezier(0.16, 1, 0.3, 1);
+  --default-transition-duration: 250ms;
+  --default-transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+}

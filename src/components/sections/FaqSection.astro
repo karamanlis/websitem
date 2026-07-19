@@ -1,0 +1,46 @@
+---
+import SectionHeading from "../ui/SectionHeading.astro";
+
+const faqs = [
+  {
+    q: "Ne kadar reklam bütçesine ihtiyacım var?",
+    a: "Bütçe, sektörünüze ve hedeflerinize göre değişir. Strateji görüşmesinde işletmenize uygun gerçekçi bir bütçe aralığını birlikte belirleriz.",
+  },
+  {
+    q: "Bir web sitesi projesi ne kadar sürer?",
+    a: "Kapsam ve içerik hazırlığına bağlı olarak değişir; strateji görüşmesinde projenize özel bir zaman çizelgesi paylaşırız.",
+  },
+  {
+    q: "Sonuçları ne zaman görmeye başlarım?",
+    a: "Sistem kurulumu ve optimizasyon aşamalarına bağlı olarak değişir; bu, sabit bir vaat değil, işletmenize özel bir süreçtir.",
+  },
+  {
+    q: "Hangi işletmelerle çalışıyorsunuz?",
+    a: "Butik oteller, klinikler, fitness merkezleri, koçlar, yerel işletmeler ve hizmet sektöründeki KOBİ'lerle çalışıyoruz.",
+  },
+  {
+    q: "Strateji görüşmesi nasıl işliyor?",
+    a: "Görüşmede işletmenizi, mevcut dijital varlığınızı ve hedeflerinizi konuşuyoruz; uygunsa size özel bir sistem önerisi paylaşıyoruz.",
+  },
+];
+---
+
+<section id="sss" class="border-b border-neutral-200 bg-neutral-50">
+  <div class="mx-auto max-w-4xl px-24 py-64 lg:px-32 lg:py-96">
+    <SectionHeading eyebrow="SSS" title="Sıkça sorulan sorular" align="center" />
+
+    <div class="mt-48 flex flex-col gap-16">
+      {faqs.map((faq) => (
+        <details class="group rounded-sm border border-neutral-200 bg-neutral-50 px-24 py-16 open:border-primary-600">
+          <summary class="cursor-pointer list-none font-display text-base font-semibold text-neutral-900 marker:content-none">
+            <span class="flex items-center justify-between gap-16">
+              {faq.q}
+              <span class="text-primary-600 transition-transform duration-250 ease-premium group-open:rotate-45" aria-hidden="true">+</span>
+            </span>
+          </summary>
+          <p class="mt-16 text-neutral-600">{faq.a}</p>
+        </details>
+      ))}
+    </div>
+  </div>
+</section>

@@ -1,0 +1,36 @@
+---
+import { getCollection, render } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { categoryLabels } from "../../content.config";
+
+export async function getStaticPaths() {
+  const posts = await getCollection("blog", ({ data }) => !data.draft);
+  return posts.map((post) => ({
+    params: { slug: post.id },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+---
+
+<BaseLayout title={post.data.title} description={post.data.description}>
+  <article class="border-b border-neutral-200 bg-neutral-50">
+    <div class="mx-auto max-w-3xl px-24 py-64 lg:px-32 lg:py-96">
+      <p class="text-xs font-semibold uppercase tracking-wide text-primary-700">
+        {categoryLabels[post.data.category]}
+      </p>
+      <h1 class="mt-16 font-display text-3xl font-semibold text-neutral-900 lg:text-4xl">
+        {post.data.title}
+      </h1>
+      <p class="mt-16 text-sm text-neutral-500">
+        {post.data.publishDate.toLocaleDateString("tr-TR", { year: "numeric", month: "long", day: "numeric" })}
+      </p>
+
+      <div class="prose prose-neutral mt-48 max-w-none prose-headings:font-display prose-a:text-primary-700">
+        <Content />
+      </div>
+    </div>
+  </article>
+</BaseLayout>

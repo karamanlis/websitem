@@ -1,0 +1,38 @@
+---
+import SectionHeading from "../ui/SectionHeading.astro";
+
+const steps = [
+  { number: "01", name: "Analiz", note: "Mevcut sitenizi, reklamlarınızı ve verinizi inceliyoruz." },
+  { number: "02", name: "Strateji", note: "İşletmenize özel bir büyüme yol haritası kuruyoruz." },
+  { number: "03", name: "Sistem Kurulumu", note: "Web sitesi, reklam ve otomasyon altyapısını devreye alıyoruz." },
+  { number: "04", name: "Optimizasyon", note: "Verilere göre sistemi sürekli iyileştiriyoruz." },
+  { number: "05", name: "Büyüme", note: "Sistem, öngörülebilir sonuçlar üretmeye başlıyor." },
+];
+---
+
+<section id="surec" class="border-b border-neutral-200 bg-neutral-100">
+  <div class="mx-auto max-w-6xl px-24 py-64 lg:px-32 lg:py-96">
+    <SectionHeading eyebrow="Süreç" title="Sonuç değil, süreç satın alırsınız." align="center" class="mx-auto max-w-2xl" />
+
+    <ol class="relative mt-64 hidden lg:grid lg:grid-cols-5">
+      <div class="absolute inset-x-0 top-24 h-px bg-neutral-300" aria-hidden="true"></div>
+      {steps.map((step) => (
+        <li data-reveal class="relative flex flex-col items-start gap-16 px-16">
+          <span class="font-display text-2xl font-semibold text-primary-600">{step.number}</span>
+          <p class="font-display text-base font-semibold text-neutral-900">{step.name}</p>
+          <p class="text-sm text-neutral-600">{step.note}</p>
+        </li>
+      ))}
+    </ol>
+
+    <ol class="mt-48 flex flex-col gap-32 border-l-2 border-neutral-300 pl-24 lg:hidden">
+      {steps.map((step) => (
+        <li>
+          <span class="font-display text-xl font-semibold text-primary-600">{step.number}</span>
+          <p class="mt-8 font-display text-base font-semibold text-neutral-900">{step.name}</p>
+          <p class="mt-8 text-sm text-neutral-600">{step.note}</p>
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>

@@ -1,0 +1,40 @@
+---
+import { getCollection } from "astro:content";
+import SectionHeading from "../ui/SectionHeading.astro";
+import Badge from "../ui/Badge.astro";
+
+const cases = (await getCollection("case-studies")).sort(
+  (a, b) => a.data.order - b.data.order
+);
+---
+
+<section id="vaka-analizleri" class="border-b border-neutral-200 bg-neutral-50">
+  <div class="mx-auto max-w-6xl px-24 py-64 lg:px-32 lg:py-96">
+    <SectionHeading eyebrow="Vaka Analizleri" title="Sistemin pratikte nasıl çalıştığı." />
+
+    <div class="mt-48 grid gap-32 lg:grid-cols-3">
+      {cases.map((item) => (
+        <article class="flex flex-col gap-16 rounded-sm border border-neutral-200 bg-neutral-50 p-32 shadow-[0_20px_40px_-28px_rgba(14,42,31,0.5)]">
+          {item.data.isPlaceholder && (
+            <Badge>Örnek vaka — gerçek verilerle güncellenecek</Badge>
+          )}
+          <p class="font-display text-lg font-semibold text-neutral-900">{item.data.client}</p>
+          <p class="text-xs font-semibold uppercase tracking-wide text-primary-700">{item.data.industry}</p>
+
+          <div>
+            <p class="text-xs font-semibold uppercase tracking-wide text-neutral-500">Problem</p>
+            <p class="mt-8 text-sm text-neutral-700">{item.data.problem}</p>
+          </div>
+          <div>
+            <p class="text-xs font-semibold uppercase tracking-wide text-neutral-500">Çözüm</p>
+            <p class="mt-8 text-sm text-neutral-700">{item.data.solution}</p>
+          </div>
+          <div>
+            <p class="text-xs font-semibold uppercase tracking-wide text-neutral-500">Sonuç</p>
+            <p class="mt-8 text-sm text-neutral-700">{item.data.results}</p>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>

@@ -1,0 +1,70 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+@import "./tokens.css";
+
+/* Self-hosted variable fonts (performans için Google Fonts CDN yerine) */
+@import "@fontsource-variable/fraunces";
+@import "@fontsource-variable/manrope";
+
+@layer base {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    font-family: var(--font-body);
+    background-color: var(--color-neutral-50);
+    color: var(--color-neutral-900);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    line-height: 1.1;
+  }
+
+  a {
+    color: inherit;
+  }
+
+  /* Klavye kullanıcıları için görünür odak halkası (WCAG AA) */
+  :focus-visible {
+    outline: 2px solid var(--color-accent-500);
+    outline-offset: 2px;
+  }
+
+  /* Hareket azaltma tercihi olan kullanıcılar için tüm animasyon/geçişleri kapat */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+
+  /* Skip-link: yalnızca odaklanınca görünür */
+  .skip-link {
+    position: absolute;
+    left: -9999px;
+    top: 0;
+    z-index: 100;
+    background-color: var(--color-primary-900);
+    color: var(--color-neutral-50);
+    padding: var(--spacing-16) var(--spacing-24);
+  }
+
+  .skip-link:focus {
+    left: var(--spacing-16);
+    top: var(--spacing-16);
+  }
+}

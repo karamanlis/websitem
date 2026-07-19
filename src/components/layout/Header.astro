@@ -1,0 +1,66 @@
+---
+import { siteConfig } from "../../lib/site-config";
+import Button from "../ui/Button.astro";
+---
+
+<header class="sticky top-0 z-50 border-b border-neutral-200 bg-neutral-50/95 backdrop-saturate-150">
+  <div class="mx-auto flex max-w-6xl items-center justify-between px-24 py-16 lg:px-32">
+    <a href="/" class="font-display text-xl font-semibold text-neutral-900">
+      {siteConfig.name}
+    </a>
+
+    <nav aria-label="Ana gezinme" class="hidden items-center gap-32 lg:flex">
+      {siteConfig.nav.map((item) => (
+        <a
+          href={item.href}
+          class="text-sm font-medium text-neutral-800 transition-colors duration-250 ease-premium hover:text-primary-700"
+        >
+          {item.label}
+        </a>
+      ))}
+    </nav>
+
+    <div class="hidden lg:block">
+      <Button href="/#iletisim" variant="solid">{siteConfig.ctaLabel}</Button>
+    </div>
+
+    <button
+      id="mobile-nav-toggle"
+      type="button"
+      class="inline-flex items-center justify-center rounded-sm border border-neutral-300 p-8 lg:hidden"
+      aria-expanded="false"
+      aria-controls="mobile-nav"
+    >
+      <span class="sr-only">Menüyü aç/kapat</span>
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <path d="M3 6h18M3 12h18M3 18h18" stroke-linecap="round" />
+      </svg>
+    </button>
+  </div>
+
+  <nav
+    id="mobile-nav"
+    aria-label="Mobil gezinme"
+    class="hidden flex-col gap-16 border-t border-neutral-200 bg-neutral-50 px-24 py-24 lg:hidden"
+  >
+    {siteConfig.nav.map((item) => (
+      <a href={item.href} class="text-base font-medium text-neutral-800">
+        {item.label}
+      </a>
+    ))}
+    <Button href="/#iletisim" variant="solid" class="mt-8 w-full">
+      {siteConfig.ctaLabel}
+    </Button>
+  </nav>
+</header>
+
+<script>
+  const toggle = document.getElementById("mobile-nav-toggle");
+  const nav = document.getElementById("mobile-nav");
+
+  toggle?.addEventListener("click", () => {
+    const isOpen = nav?.classList.toggle("flex");
+    nav?.classList.toggle("hidden");
+    toggle.setAttribute("aria-expanded", String(Boolean(isOpen)));
+  });
+</script>

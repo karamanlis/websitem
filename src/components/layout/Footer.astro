@@ -1,0 +1,44 @@
+---
+import { siteConfig } from "../../lib/site-config";
+
+const year = new Date().getFullYear();
+---
+
+<footer class="border-t border-neutral-200 bg-primary-900 text-neutral-50">
+  <div class="mx-auto max-w-6xl px-24 py-64 lg:px-32">
+    <div class="grid gap-48 lg:grid-cols-[2fr_1fr_1fr]">
+      <div>
+        <p class="font-display text-xl font-semibold">{siteConfig.name}</p>
+        <p class="mt-16 max-w-sm text-sm text-neutral-300">{siteConfig.tagline}</p>
+      </div>
+
+      <div>
+        <p class="text-sm font-semibold uppercase tracking-wide text-neutral-400">Site</p>
+        <ul class="mt-16 flex flex-col gap-8">
+          {siteConfig.nav.map((item) => (
+            <li>
+              <a href={item.href} class="text-sm text-neutral-300 hover:text-neutral-50">
+                {item.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <div>
+        <p class="text-sm font-semibold uppercase tracking-wide text-neutral-400">İletişim</p>
+        <ul class="mt-16 flex flex-col gap-8 text-sm text-neutral-300">
+          {siteConfig.contactEmail && <li>{siteConfig.contactEmail}</li>}
+          {siteConfig.contactPhone && <li>{siteConfig.contactPhone}</li>}
+          <li>
+            <a href="/gizlilik-politikasi" class="hover:text-neutral-50">Gizlilik Politikası</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="mt-64 border-t border-neutral-800 pt-24 text-xs text-neutral-400">
+      &copy; {year} {siteConfig.name}. Tüm hakları saklıdır.
+    </div>
+  </div>
+</footer>
