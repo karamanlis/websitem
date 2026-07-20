@@ -34,8 +34,8 @@ export const siteConfig = {
   /**
    * Google Calendar randevu sayfasının paylaşılabilir linki.
    * Calendar → Randevu programı → "Paylaşılabilir bağlantıyı kopyala".
-   * Sayfaya gömülü takvim olarak yerleşir; `?gv=true` parametresi
-   * BookingEmbed bileşeni tarafından otomatik ekleniyor, elle eklemeyin.
+   * CTA butonları bu adrese yeni sekmede yönlendirir. Boş bırakılırsa
+   * butonlar iletişim sayfasına/e-postaya düşer, sayfa kırılmaz.
    */
   bookingUrl: "https://calendar.app.google/iXkAbZPYW9Jese148",
 

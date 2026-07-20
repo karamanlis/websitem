@@ -11,7 +11,7 @@
  * tanıması için zorunludur. Sunucu tarafı kod gerekmez.
  */
 import BaseLayout from "../layouts/BaseLayout.astro";
-import BookingEmbed from "../components/ui/BookingEmbed.astro";
+import Button from "../components/ui/Button.astro";
 import SectionHeading from "../components/ui/SectionHeading.astro";
 import { siteConfig } from "../lib/site-config";
 
@@ -204,21 +204,17 @@ const labelClass = "mb-8 block text-sm font-semibold text-neutral-900";
             bir yol haritası çıkarıyoruz.
           </p>
 
-          <div class="mt-32">
-            {
-              siteConfig.bookingUrl ? (
-                <BookingEmbed height="640px" />
-              ) : (
-                <div class="flex flex-col items-center gap-16 rounded-sm border border-dashed border-neutral-300 bg-neutral-100 px-32 py-48 text-center">
-                  <p class="font-display text-lg font-semibold text-neutral-900">
-                    Randevu takvimi eklenecek
-                  </p>
-                  <p class="text-sm text-neutral-500">
-                    src/lib/site-config.ts → bookingUrl
-                  </p>
-                </div>
-              )
-            }
+          <div class="mt-32 flex flex-col items-start gap-16">
+            <Button
+              href={siteConfig.bookingUrl || `mailto:${siteConfig.contactEmail}`}
+              target={siteConfig.bookingUrl ? "_blank" : undefined}
+            >
+              {siteConfig.ctaLabel}
+            </Button>
+
+            <p class="text-sm text-neutral-500">
+              Takvimden size uygun saati seçin — yeni sekmede açılır.
+            </p>
           </div>
         </div>
       </div>

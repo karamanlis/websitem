@@ -72,7 +72,7 @@ Sitenin tamamı tek bir hedefe (ücretsiz strateji görüşmesi rezervasyonu) hi
 
 - Tek bir CTA metni (`"Ücretsiz Strateji Görüşmesi Al"`) site genelinde tekrarlanıyor — farklı CTA metinleri ziyaretçiyi bilişsel olarak yorar, tek ve net bir eylem çağrısı dönüşüm oranını güçlendirir.
 - CTA, Header (her zaman erişilebilir), Hero (ilk izlenim), ve Final CTA (kapanış) olmak üzere üç stratejik noktada tekrarlanıyor.
-- Final CTA'daki randevu alanı, Google Calendar randevu takvimini doğrudan sayfaya gömüyor (`src/lib/site-config.ts` → `bookingUrl`, `BookingEmbed.astro`) — ziyaretçi siteden ayrılmadan saat seçebiliyor. Link boşaltılırsa bölüm otomatik olarak yer tutucuya düşer, sayfa kırılmaz.
+- Randevu adımı gömülü takvim (iframe) yerine **tek bir butonla** kurgulandı. Google Calendar'ın gömülü görünümü kendi tipografisini, kendi buton stilini ve kendi çerçevesini sayfaya taşıyor; sitenin serif/grotesk tipografisi ve yeşil paletiyle çakışarak bölümü amatör gösteriyordu — ayrıca üçüncü taraf iframe'i sayfa ağırlığını ve gizlilik yükünü artırıyor. Bunun yerine CTA butonu randevu sayfasını yeni sekmede açıyor (`rel="noopener noreferrer"`), sitenin kendi tasarım dili bozulmadan kalıyor. Buton koyu zeminde `onDark` varyantıyla beyaz zemin + `primary-900` metin kullanıyor (14.2:1 kontrast). `bookingUrl` boşaltılırsa buton iletişim sayfasına/e-postaya düşer, sayfa kırılmaz.
 
 ## 9. Sosyal Kanıt (Müşteri Görüşleri)
 

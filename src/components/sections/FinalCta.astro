@@ -1,6 +1,6 @@
 ---
 import { siteConfig } from "../../lib/site-config";
-import BookingEmbed from "../ui/BookingEmbed.astro";
+import Button from "../ui/Button.astro";
 ---
 
 <section id="iletisim" class="bg-primary-900 text-neutral-50">
@@ -14,17 +14,18 @@ import BookingEmbed from "../ui/BookingEmbed.astro";
       büyüme yol haritası çıkaralım.
     </p>
 
-    <div class="mt-48">
-      {siteConfig.bookingUrl ? (
-        <BookingEmbed class="mx-auto max-w-2xl" />
-      ) : (
-        <div class="mx-auto flex max-w-md flex-col items-center gap-16 rounded-sm border border-dashed border-neutral-50/40 px-32 py-48">
-          <p class="font-display text-lg font-semibold">{siteConfig.ctaLabel}</p>
-          <p class="text-sm text-primary-100">
-            Randevu takvimi eklenecek — src/lib/site-config.ts → bookingUrl
-          </p>
-        </div>
-      )}
+    <div class="mt-48 flex flex-col items-center gap-24">
+      <Button
+        href={siteConfig.bookingUrl || "/iletisim"}
+        variant="onDark"
+        target={siteConfig.bookingUrl ? "_blank" : undefined}
+      >
+        {siteConfig.ctaLabel}
+      </Button>
+
+      <p class="text-sm text-primary-100">
+        30 dakika · Ücretsiz · Satış sunumu değil
+      </p>
     </div>
   </div>
 </section>
