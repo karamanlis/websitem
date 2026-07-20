@@ -84,7 +84,8 @@ export const siteConfig = {
     { label: "Sistem", href: "/#sistem" },
     { label: "Süreç", href: "/#surec" },
     { label: "Sonuçlar", href: "/#sonuclar" },
-    { label: "Vaka Analizleri", href: "/vaka-analizleri" },
+    // Gerçek vaka analizi eklendiğinde geri açılır:
+    // { label: "Vaka Analizleri", href: "/vaka-analizleri" },
     { label: "Blog", href: "/blog" },
     { label: "SSS", href: "/#sss" },
     { label: "İletişim", href: "/iletisim" },

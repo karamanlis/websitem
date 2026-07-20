@@ -43,7 +43,7 @@ Brief'teki 10 bölüm, birebir aynı sırayla ve her biri kendi bileşen dosyas�
 
 - **Section 3 (CNKR Büyüme Sistemi)** bilinçli olarak jenerik servis kartları olarak değil, merkezi bir düğüm + 4 sütun düğümünün SVG-benzeri ince çizgilerle bağlandığı, asimetrik dikey ofsetli (mt-8/16/32/48) bir sistem diyagramı olarak kuruldu — brief'in "servis kartlarından kaçının" ve "simetrik grid'lerden kaçının" kurallarına doğrudan yanıt.
 - **Section 4 (Süreç)**, ikon baloncukları yerine 01–05 numaralandırmasıyla "stratejik/profesyonel" bir his taşıyor; masaüstünde yatay bağlantı çizgili stepper, mobilde dikey timeline'a dönüşüyor.
-- **Section 7 (Vaka Analizleri)**, gerçek veri gelene kadar her kartta görünür bir "Örnek vaka" rozetiyle (`Badge.astro`, `isPlaceholder` alanı) şeffaf biçimde işaretlendi — sahte istatistik kullanılmadı, sonuçlar niteliksel ifadelerle yazıldı.
+- **Section 7 (Vaka Analizleri)** yayına çıkmadan önce tamamen kaldırıldı: uydurma vaka örnekleriyle (rozetli de olsa) canlıya çıkmamak tercih edildi. `CaseStudies.astro` koleksiyon boşken hiçbir şey render etmiyor; `src/content/case-studies/` altına gerçek bir `.md` eklendiğinde bölüm kendiliğinden geri geliyor. Liste/detay rotaları ve navigasyon bağlantısı da bu nedenle kapatıldı (`site-config.ts` içinde yorum satırı olarak duruyor). Sosyal kanıtın tamamını Section 9'daki gerçek müşteri görüşleri taşıyor.
 
 ## 5. Dönüşüm Stratejisi Açıklaması
 
@@ -82,4 +82,4 @@ Kaynak: `src/components/sections/Testimonials.astro`, `src/lib/site-config.ts`
 
 ---
 
-**Not:** Vaka analizleri gerçek veri gelene kadar görünür "Örnek vaka" rozetiyle yer tutucu olarak duruyor; gizlilik politikası metni de hukuki gözden geçirme bekliyor. Diğer tüm değerler (randevu linki, hero görseli, iletişim bilgileri, müşteri görüşleri) gerçek verilerle dolduruldu ve `src/lib/site-config.ts` üzerinden güncellenebilir.
+**Not:** Sitede uydurma hiçbir müşteri verisi yok. Tüm sosyal kanıt, işletme sahibinin doğruladığı üç gerçek müşteri görüşünden ibaret; yer tutucu vaka analizleri yayına çıkmadan kaldırıldı. Randevu linki, hero görseli, iletişim bilgileri ve görüşler gerçek verilerle dolduruldu ve `src/lib/site-config.ts` üzerinden güncellenebilir. Açık kalan tek kalem: gizlilik politikası metni hukuki gözden geçirme bekliyor.
