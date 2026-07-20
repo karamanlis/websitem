@@ -12,5 +12,11 @@ export default defineConfig({
     plugins: [tailwindcss()],
   },
 
-  integrations: [sitemap()],
+  // Teşekkür sayfası noindex olduğu için sitemap'ten de çıkarılıyor —
+  // aksi halde Search Console "noindex sayfa sitemap'te" uyarısı verir.
+  integrations: [
+    sitemap({
+      filter: (page) => !page.includes('/tesekkurler'),
+    }),
+  ],
 });

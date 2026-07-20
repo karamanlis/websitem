@@ -28,8 +28,37 @@ const year = new Date().getFullYear();
       <div>
         <p class="text-sm font-semibold uppercase tracking-wide text-neutral-400">İletişim</p>
         <ul class="mt-16 flex flex-col gap-8 text-sm text-neutral-300">
-          {siteConfig.contactEmail && <li>{siteConfig.contactEmail}</li>}
-          {siteConfig.contactPhone && <li>{siteConfig.contactPhone}</li>}
+          {siteConfig.contactEmail && (
+            <li>
+              <a href={`mailto:${siteConfig.contactEmail}`} class="hover:text-neutral-50">
+                {siteConfig.contactEmail}
+              </a>
+            </li>
+          )}
+          {siteConfig.contactPhone && (
+            <li>
+              <a
+                href={`tel:${siteConfig.contactPhone.replace(/\s/g, "")}`}
+                class="hover:text-neutral-50"
+              >
+                {siteConfig.contactPhone}
+              </a>
+            </li>
+          )}
+          {siteConfig.whatsappNumber && (
+            <li>
+              <a
+                href={`https://wa.me/${siteConfig.whatsappNumber}`}
+                class="hover:text-neutral-50"
+                rel="noopener"
+              >
+                WhatsApp
+              </a>
+            </li>
+          )}
+          <li>
+            <a href="/iletisim" class="hover:text-neutral-50">İletişim Formu</a>
+          </li>
           <li>
             <a href="/gizlilik-politikasi" class="hover:text-neutral-50">Gizlilik Politikası</a>
           </li>

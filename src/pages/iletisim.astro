@@ -1,0 +1,227 @@
+---
+/**
+ * İletişim sayfası.
+ *
+ * Birincil eylem her zaman randevu (sitenin tek dönüşüm hedefi); form,
+ * "randevu saatleri uymuyor" diyen ziyaretçi için ikincil bir kaçış yolu
+ * olarak konumlandırıldı.
+ *
+ * Form, Netlify Forms ile çalışır: `data-netlify` özniteliği ve gizli
+ * `form-name` alanı, deploy sırasında Netlify'ın formu otomatik
+ * tanıması için zorunludur. Sunucu tarafı kod gerekmez.
+ */
+import BaseLayout from "../layouts/BaseLayout.astro";
+import BookingEmbed from "../components/ui/BookingEmbed.astro";
+import SectionHeading from "../components/ui/SectionHeading.astro";
+import { siteConfig } from "../lib/site-config";
+
+const fieldClass =
+  "w-full rounded-sm border border-neutral-300 bg-neutral-50 px-16 py-16 text-[15px] text-neutral-900 transition-colors duration-250 ease-premium placeholder:text-neutral-400 focus:border-primary-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600";
+const labelClass = "mb-8 block text-sm font-semibold text-neutral-900";
+---
+
+<BaseLayout
+  title="İletişim"
+  description={`${siteConfig.name} ile iletişime geçin: ücretsiz strateji görüşmesi planlayın veya projenizi anlatın.`}
+>
+  <section class="border-b border-neutral-200 bg-neutral-50">
+    <div class="mx-auto max-w-6xl px-24 py-64 lg:px-32 lg:py-96">
+      <SectionHeading
+        eyebrow="İletişim"
+        title="Önce işletmenizi dinleyelim, sonra sistemi konuşalım."
+        class="max-w-2xl"
+      >
+        <p class="mt-24 max-w-xl text-lg text-neutral-600">
+          En hızlı yol, takvimden size uygun bir saat seçmeniz. Uygun bir
+          saat bulamazsanız formu doldurun — 1 iş günü içinde dönüş yapıyoruz.
+        </p>
+      </SectionHeading>
+
+      <div class="mt-64 grid gap-64 lg:grid-cols-[0.95fr_1.05fr] lg:items-start">
+        <div>
+          <h2 class="font-display text-xl font-semibold text-neutral-900">
+            Projenizi anlatın
+          </h2>
+
+          <form
+            name="iletisim"
+            method="POST"
+            action="/tesekkurler"
+            data-netlify="true"
+            data-netlify-honeypot="bot-field"
+            class="mt-32 flex flex-col gap-24"
+          >
+            {/* Netlify'ın formu eşleştirmesi için zorunlu gizli alan */}
+            <input type="hidden" name="form-name" value="iletisim" />
+            {/* Bot tuzağı: gerçek kullanıcılar bu alanı görmez ve doldurmaz */}
+            <p class="hidden">
+              <label>
+                Bu alanı boş bırakın: <input name="bot-field" tabindex="-1" />
+              </label>
+            </p>
+
+            <div>
+              <label class={labelClass} for="ad">Ad Soyad</label>
+              <input
+                class={fieldClass}
+                type="text"
+                id="ad"
+                name="ad"
+                required
+                autocomplete="name"
+              />
+            </div>
+
+            <div>
+              <label class={labelClass} for="isletme">İşletme adı</label>
+              <input
+                class={fieldClass}
+                type="text"
+                id="isletme"
+                name="isletme"
+                autocomplete="organization"
+              />
+            </div>
+
+            <div class="grid gap-24 sm:grid-cols-2">
+              <div>
+                <label class={labelClass} for="email">E-posta</label>
+                <input
+                  class={fieldClass}
+                  type="email"
+                  id="email"
+                  name="email"
+                  required
+                  autocomplete="email"
+                />
+              </div>
+              <div>
+                <label class={labelClass} for="telefon">Telefon</label>
+                <input
+                  class={fieldClass}
+                  type="tel"
+                  id="telefon"
+                  name="telefon"
+                  autocomplete="tel"
+                />
+              </div>
+            </div>
+
+            <div>
+              <label class={labelClass} for="mesaj">
+                Şu an sizi en çok ne zorluyor?
+              </label>
+              <textarea
+                class={fieldClass}
+                id="mesaj"
+                name="mesaj"
+                rows="5"
+                required
+                placeholder="Örn: Sitemiz var ama form doldurulmuyor; Meta reklamları maliyetli çalışıyor."
+              ></textarea>
+            </div>
+
+            <div class="flex items-start gap-16">
+              <input
+                type="checkbox"
+                id="kvkk"
+                name="kvkk"
+                required
+                class="mt-8 h-16 w-16 shrink-0 accent-primary-600 focus-visible:outline-2 focus-visible:outline-offset-2"
+              />
+              <label for="kvkk" class="text-sm text-neutral-600">
+                Kişisel verilerimin
+                <a
+                  href="/gizlilik-politikasi"
+                  class="font-semibold text-primary-700 underline underline-offset-2"
+                >
+                  Gizlilik Politikası
+                </a>
+                kapsamında işlenmesini onaylıyorum.
+              </label>
+            </div>
+
+            <button
+              type="submit"
+              class="inline-flex items-center justify-center gap-8 self-start rounded-sm bg-primary-600 px-24 py-16 font-body text-[15px] font-semibold tracking-wide text-neutral-50 transition-colors duration-250 ease-premium hover:bg-primary-700 focus-visible:outline-2 focus-visible:outline-offset-2"
+            >
+              Mesajı gönder
+            </button>
+          </form>
+
+          {
+            (siteConfig.contactEmail ||
+              siteConfig.contactPhone ||
+              siteConfig.whatsappNumber) && (
+              <div class="mt-48 border-t border-neutral-200 pt-32">
+                <p class="text-sm font-semibold uppercase tracking-[0.14em] text-primary-700">
+                  Doğrudan ulaşın
+                </p>
+                <ul class="mt-16 flex flex-col gap-8 text-neutral-800">
+                  {siteConfig.contactEmail && (
+                    <li>
+                      <a
+                        href={`mailto:${siteConfig.contactEmail}`}
+                        class="hover:text-primary-700"
+                      >
+                        {siteConfig.contactEmail}
+                      </a>
+                    </li>
+                  )}
+                  {siteConfig.contactPhone && (
+                    <li>
+                      <a
+                        href={`tel:${siteConfig.contactPhone.replace(/\s/g, "")}`}
+                        class="hover:text-primary-700"
+                      >
+                        {siteConfig.contactPhone}
+                      </a>
+                    </li>
+                  )}
+                  {siteConfig.whatsappNumber && (
+                    <li>
+                      <a
+                        href={`https://wa.me/${siteConfig.whatsappNumber}`}
+                        class="hover:text-primary-700"
+                        rel="noopener"
+                      >
+                        WhatsApp üzerinden yazın
+                      </a>
+                    </li>
+                  )}
+                </ul>
+              </div>
+            )
+          }
+        </div>
+
+        <div>
+          <h2 class="font-display text-xl font-semibold text-neutral-900">
+            {siteConfig.ctaLabel}
+          </h2>
+          <p class="mt-16 text-neutral-600">
+            30 dakika, satış sunumu değil: mevcut durumunuzu inceleyip somut
+            bir yol haritası çıkarıyoruz.
+          </p>
+
+          <div class="mt-32">
+            {
+              siteConfig.bookingUrl ? (
+                <BookingEmbed height="640px" />
+              ) : (
+                <div class="flex flex-col items-center gap-16 rounded-sm border border-dashed border-neutral-300 bg-neutral-100 px-32 py-48 text-center">
+                  <p class="font-display text-lg font-semibold text-neutral-900">
+                    Randevu takvimi eklenecek
+                  </p>
+                  <p class="text-sm text-neutral-500">
+                    src/lib/site-config.ts → bookingUrl
+                  </p>
+                </div>
+              )
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

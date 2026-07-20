@@ -9,9 +9,11 @@ interface Props {
   title: string;
   description: string;
   ogImage?: string;
+  /** Teşekkür/onay sayfaları gibi arama sonuçlarında yeri olmayan sayfalar için. */
+  noindex?: boolean;
 }
 
-const { title, description, ogImage } = Astro.props;
+const { title, description, ogImage, noindex = false } = Astro.props;
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 ---
 
@@ -25,6 +27,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
     <title>{title} · {siteConfig.name}</title>
     <meta name="description" content={description} />
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
 
     <meta property="og:type" content="website" />
     <meta property="og:title" content={title} />

@@ -1,0 +1,40 @@
+---
+/**
+ * Form gönderimi sonrası teşekkür sayfası (Netlify form `action` hedefi).
+ * `noindex` verildi — arama sonuçlarında görünmesi anlamsız ve
+ * dönüşüm ölçümünü kirletir.
+ */
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Button from "../components/ui/Button.astro";
+import { siteConfig } from "../lib/site-config";
+---
+
+<BaseLayout
+  title="Mesajınız ulaştı"
+  description="Mesajınız bize ulaştı. En kısa sürede dönüş yapacağız."
+  noindex
+>
+  <section class="border-b border-neutral-200 bg-neutral-50">
+    <div class="mx-auto max-w-2xl px-24 py-96 text-center lg:px-32">
+      <p class="text-sm font-semibold uppercase tracking-[0.14em] text-primary-700">
+        Teşekkürler
+      </p>
+      <h1 class="mt-16 font-display text-3xl font-semibold text-neutral-900 lg:text-4xl">
+        Mesajınız bize ulaştı.
+      </h1>
+      <p class="mx-auto mt-24 max-w-lg text-lg text-neutral-600">
+        1 iş günü içinde size dönüş yapacağız. Beklemek istemiyorsanız
+        takvimden doğrudan uygun bir saat seçebilirsiniz.
+      </p>
+
+      <div class="mt-48 flex flex-wrap items-center justify-center gap-24">
+        <Button href={siteConfig.bookingUrl || "/iletisim"} variant="solid">
+          {siteConfig.ctaLabel}
+        </Button>
+        <a href="/" class="text-sm font-semibold text-neutral-800 hover:text-primary-700">
+          Ana sayfaya dön →
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

@@ -1,5 +1,6 @@
 ---
 import { siteConfig } from "../../lib/site-config";
+import BookingEmbed from "../ui/BookingEmbed.astro";
 ---
 
 <section id="iletisim" class="bg-primary-900 text-neutral-50">
@@ -14,18 +15,13 @@ import { siteConfig } from "../../lib/site-config";
     </p>
 
     <div class="mt-48">
-      {siteConfig.calendlyUrl ? (
-        <iframe
-          src={siteConfig.calendlyUrl}
-          title="Strateji görüşmesi randevu takvimi"
-          class="mx-auto h-[700px] w-full max-w-2xl rounded-sm bg-neutral-50"
-          loading="lazy"
-        />
+      {siteConfig.bookingUrl ? (
+        <BookingEmbed class="mx-auto max-w-2xl" />
       ) : (
         <div class="mx-auto flex max-w-md flex-col items-center gap-16 rounded-sm border border-dashed border-neutral-50/40 px-32 py-48">
           <p class="font-display text-lg font-semibold">{siteConfig.ctaLabel}</p>
           <p class="text-sm text-primary-100">
-            Randevu takvimi eklenecek — src/lib/site-config.ts → calendlyUrl
+            Randevu takvimi eklenecek — src/lib/site-config.ts → bookingUrl
           </p>
         </div>
       )}

@@ -1,0 +1,10 @@
+# Netlify deploy yapılandırması.
+# Formlar (iletisim) Netlify Forms tarafından, deploy sırasında dist/ içindeki
+# statik HTML taranarak otomatik algılanır — ek yapılandırma gerekmez.
+
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "22.12.0"

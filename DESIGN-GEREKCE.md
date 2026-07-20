@@ -72,8 +72,14 @@ Sitenin tamamı tek bir hedefe (ücretsiz strateji görüşmesi rezervasyonu) hi
 
 - Tek bir CTA metni (`"Ücretsiz Strateji Görüşmesi Al"`) site genelinde tekrarlanıyor — farklı CTA metinleri ziyaretçiyi bilişsel olarak yorar, tek ve net bir eylem çağrısı dönüşüm oranını güçlendirir.
 - CTA, Header (her zaman erişilebilir), Hero (ilk izlenim), ve Final CTA (kapanış) olmak üzere üç stratejik noktada tekrarlanıyor.
-- Final CTA'daki randevu alanı, Calendly linki henüz sağlanmadığı için net bir yer tutucu ile işaretlendi (`src/lib/site-config.ts` → `calendlyUrl`) — link geldiğinde tek satır değişiklikle canlıya alınabilir.
+- Final CTA'daki randevu alanı, Google Calendar randevu takvimini doğrudan sayfaya gömüyor (`src/lib/site-config.ts` → `bookingUrl`, `BookingEmbed.astro`) — ziyaretçi siteden ayrılmadan saat seçebiliyor. Link boşaltılırsa bölüm otomatik olarak yer tutucuya düşer, sayfa kırılmaz.
+
+## 9. Sosyal Kanıt (Müşteri Görüşleri)
+
+Kaynak: `src/components/sections/Testimonials.astro`, `src/lib/site-config.ts`
+
+Üç gerçek müşteri görüşü, işletme sahibinin sağladığı somut sonuç metrikleriyle birlikte yerleştirildi (Ifdukkan — satışlarda 2x, Lavinya Çocuk Kulübü — %50 yeni kayıt, Aybüş Aksesuar — %150 etkileşim). Her görüşte **önce sonuç, sonra alıntı** gösteriliyor: ziyaretçi metni okumadan önce çıktıyı görüyor. Görüşler kişi adı değil işletme adı + sektör ile imzalanıyor — hedef kitle (KOBİ sahibi) kendi sektörünü gördüğünde daha hızlı özdeşleşiyor. Düzen asimetrik: ilk görüş büyük tipografiyle öne çıkarken diğer ikisi yan sütunda daha küçük bloklar halinde — brief'in "her yerde simetrik grid kullanma" kuralına uygun. Dizi boşaltılırsa bölüm sayfada hiç render edilmiyor; uydurma yorumla site yayına çıkamaz.
 
 ---
 
-**Not:** Hero görseli ve Calendly randevu linki henüz sağlanmadığı için ilgili alanlar açıkça etiketlenmiş yer tutucularla bırakıldı; bu değerler `src/lib/site-config.ts` dosyasından güncellenebilir.
+**Not:** Vaka analizleri gerçek veri gelene kadar görünür "Örnek vaka" rozetiyle yer tutucu olarak duruyor; gizlilik politikası metni de hukuki gözden geçirme bekliyor. Diğer tüm değerler (randevu linki, hero görseli, iletişim bilgileri, müşteri görüşleri) gerçek verilerle dolduruldu ve `src/lib/site-config.ts` üzerinden güncellenebilir.

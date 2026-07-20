@@ -30,7 +30,10 @@ import { siteConfig } from "../../lib/site-config";
       {siteConfig.heroImageUrl ? (
         <img
           src={siteConfig.heroImageUrl}
-          alt="CNKR Dijital büyüme sistemi görseli"
+          alt={siteConfig.heroImageAlt || `${siteConfig.name} kurucusu`}
+          width="1200"
+          height="1500"
+          fetchpriority="high"
           class="aspect-[4/5] w-full rounded-sm border border-neutral-200 object-cover shadow-[0_24px_60px_-24px_rgba(14,42,31,0.35)]"
         />
       ) : (
