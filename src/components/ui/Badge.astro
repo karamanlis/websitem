@@ -7,7 +7,7 @@ const { class: className = "" } = Astro.props;
 ---
 
 <span
-  class={`inline-flex w-fit items-center gap-8 rounded-sm bg-accent-100 px-16 py-8 text-xs font-semibold uppercase tracking-wide text-neutral-900 ${className}`}
+  class={`inline-flex w-fit items-center gap-8 rounded-full border border-accent-400/25 bg-[linear-gradient(140deg,rgba(212,175,94,0.16),rgba(248,246,242,0.03))] px-16 py-8 text-xs font-semibold uppercase tracking-[0.12em] text-accent-200 ${className}`}
 >
   <slot />
 </span>

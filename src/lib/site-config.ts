@@ -27,6 +27,13 @@ export type Testimonial = {
 
 export const siteConfig = {
   name: "CNKR Dijital",
+
+  /**
+   * Başlıktaki logonun yanında görünen ad. `name` marka adı olarak
+   * meta etiketlerde, footer'da ve şema verisinde kullanılmaya devam
+   * ederken burası kişisel imzayı taşır.
+   */
+  logoText: "Emre Cenk",
   domain: "cnkrdijital.com",
   tagline: "İşletmeler için dijital büyüme sistemleri kuruyoruz.",
   ctaLabel: "Ücretsiz Strateji Görüşmesi Al",
@@ -46,6 +53,16 @@ export const siteConfig = {
   heroImageUrl: "/hero.webp",
   /** Hero görselinin ekran okuyucular için açıklaması (WCAG AA). */
   heroImageAlt: "CNKR Dijital kurucusu, portre fotoğraf",
+
+  /**
+   * Portrenin altında yan yana duran kanıt rakamları. Üç öğe için
+   * tasarlandı; daha fazlası satırı sıkıştırır, boş dizi bölümü gizler.
+   */
+  heroStats: [
+    { value: "+5 Yıl", label: "Deneyim" },
+    { value: "10+", label: "Marka" },
+    { value: "12.4x", label: "ROAS" },
+  ],
 
   contactEmail: "cenkaragency70@gmail.com",
   contactPhone: "0542 259 86 60",
@@ -84,6 +101,8 @@ export const siteConfig = {
     { label: "Sistem", href: "/#sistem" },
     { label: "Süreç", href: "/#surec" },
     { label: "Sonuçlar", href: "/#sonuclar" },
+    { label: "Hakkımda", href: "/#ben-kimim" },
+    { label: "Hizmetler", href: "/#hizmetler" },
     // Gerçek vaka analizi eklendiğinde geri açılır:
     // { label: "Vaka Analizleri", href: "/vaka-analizleri" },
     { label: "Blog", href: "/blog" },

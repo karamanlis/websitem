@@ -3,45 +3,205 @@ import Button from "../ui/Button.astro";
 import { siteConfig } from "../../lib/site-config";
 ---
 
-<section class="border-b border-neutral-200 bg-neutral-50">
-  <div class="mx-auto grid max-w-6xl gap-48 px-24 py-64 lg:grid-cols-[1.1fr_0.9fr] lg:items-center lg:px-32 lg:py-96">
+{/*
+  Hero'nun görsel kimliği: sayfa zeminin üzerine binen üç animasyonlu aurora
+  lekesi + maskeli ince ızgara + üstten inen spotlight. Tüm bu katmanlar
+  dekoratiftir (`aria-hidden`) ve `-z-10` ile içeriğin arkasında durur.
+*/}
+<section class="section-shell">
+  <div aria-hidden="true" class="pointer-events-none absolute inset-0 -z-10">
+    {/* Üstten inen spotlight */}
+    <div
+      class="absolute inset-x-0 top-0 h-[70%] bg-[radial-gradient(ellipse_60%_100%_at_50%_0%,rgba(212,175,94,0.10),transparent_70%)]"
+    >
+    </div>
+
+    {/* Yavaşça sürüklenen ışık lekeleri */}
+    <div
+      class="aurora left-[-14%] top-[-18%] h-[560px] w-[560px] animate-aurora bg-primary-500/30"
+    >
+    </div>
+    <div
+      class="aurora right-[-12%] top-[6%] h-[480px] w-[480px] animate-aurora-slow bg-accent-500/16"
+    >
+    </div>
+    <div
+      class="aurora bottom-[-28%] left-[34%] h-[520px] w-[620px] animate-aurora bg-primary-700/34 [animation-delay:-9s]"
+    >
+    </div>
+
+    <div class="grid-mask"></div>
+
+    {/*
+      Alt vinyet: bir sonraki bölüme sert kenarlık olmadan bağlanır.
+      Tam opak siyaha inmez — aksi halde hero ile sonraki bölüm arasında
+      düz bir siyah bant oluşuyordu.
+    */}
+    <div
+      class="absolute inset-x-0 bottom-0 h-96 bg-[linear-gradient(to_bottom,transparent,rgba(5,12,9,0.6))]"
+    >
+    </div>
+  </div>
+
+  <div
+    class="section-body mx-auto grid max-w-6xl gap-48 px-24 pb-96 pt-64 lg:grid-cols-[1.1fr_0.9fr] lg:items-center lg:px-32 lg:pb-96 lg:pt-96"
+  >
     <div>
-      <p class="mb-16 text-sm font-semibold uppercase tracking-[0.14em] text-primary-700">
-        {siteConfig.name}
-      </p>
-      <h1 class="font-display text-4xl font-semibold leading-[1.08] text-neutral-900 lg:text-5xl">
-        İşletmeler için dijital büyüme sistemleri kuruyoruz.
+      <p class="eyebrow">{siteConfig.name}</p>
+
+      <h1
+        class="mt-24 font-display text-[clamp(2.25rem,1.2rem+4.4vw,4rem)] font-semibold leading-[1.04] tracking-[-0.025em] text-balance text-neutral-50"
+      >
+        İşletmeler için <span class="text-gold">dijital büyüme sistemleri</span
+        > kuruyoruz.
       </h1>
-      <p class="mt-24 max-w-lg text-lg text-neutral-600">
+
+      <p class="mt-32 max-w-lg text-lg leading-relaxed text-neutral-400">
         Web sitenizi, reklamlarınızı ve otomasyonlarınızı birbirinden kopuk
         araçlar olarak değil, tek bir büyüme sistemi olarak tasarlıyoruz —
         butik otellerden kliniklere, hizmet işletmelerinin daha fazla
         müşteri ve daha karlı bir pazarlama operasyonu kurmasını sağlıyoruz.
       </p>
-      <div class="mt-32 flex flex-wrap items-center gap-24">
+
+      <div class="mt-48 flex flex-wrap items-center gap-24">
         <Button href="#iletisim" variant="solid">{siteConfig.ctaLabel}</Button>
-        <a href="#sistem" class="text-sm font-semibold text-neutral-800 hover:text-primary-700">
-          Sistemi incele →
-        </a>
       </div>
     </div>
 
-    <div class="relative">
-      {siteConfig.heroImageUrl ? (
-        <img
-          src={siteConfig.heroImageUrl}
-          alt={siteConfig.heroImageAlt || `${siteConfig.name} kurucusu`}
-          width="1200"
-          height="1500"
-          fetchpriority="high"
-          class="aspect-[4/5] w-full rounded-sm border border-neutral-200 object-cover shadow-[0_24px_60px_-24px_rgba(14,42,31,0.35)]"
-        />
-      ) : (
-        <div class="flex aspect-[4/5] w-full flex-col items-center justify-center gap-8 rounded-sm border border-dashed border-neutral-300 bg-neutral-100 text-center text-sm text-neutral-500">
-          <span>Hero görseli eklenecek</span>
-          <span class="text-xs text-neutral-400">src/lib/site-config.ts → heroImageUrl</span>
+    {/*
+      Portre kesilmiş (alfa kanallı) bir PNG/WebP'dir ve doğrudan zeminin
+      üzerinde durur — cam kart ya da çerçeve yok, aksi halde hero'nun
+      ortasında düz bir dikdörtgen oluşuyor. Bütünleşmeyi üç katman sağlıyor:
+      arkadaki yumuşak yeşil/altın glow, gövdenin altında zemine karışması
+      için maske ile inen fade ve figürün altındaki elips gölge.
+      `--px`/`--py` değerleri aşağıdaki pointer script'i tarafından yazılır.
+    */}
+    <div id="hero-visual" class="relative mx-auto w-full max-w-md lg:max-w-none">
+      <div
+        aria-hidden="true"
+        class="pointer-events-none absolute -inset-16 -z-10"
+      >
+        <div
+          class="aurora inset-0 h-full w-full animate-glow-pulse bg-[radial-gradient(circle_at_50%_45%,rgba(47,128,96,0.55),transparent_65%)]"
+        >
         </div>
-      )}
+        <div
+          class="aurora right-[-8%] top-[8%] h-[220px] w-[220px] bg-accent-500/28"
+        >
+        </div>
+      </div>
+
+      {/*
+        Portre + zemin gölgesi kendi sarmalayıcısında durur; gölge
+        #hero-visual'ın altına sabitlenseydi aşağıdaki rakam satırının
+        arkasına düşerdi.
+      */}
+      <div class="relative">
+        {/* Figürün ayak bastığı zemin hissi: yumuşak elips gölge */}
+        <div
+          aria-hidden="true"
+          class="pointer-events-none absolute inset-x-[12%] bottom-[2%] -z-10 h-24 rounded-[50%] bg-[radial-gradient(ellipse_at_center,rgba(5,12,9,0.55),transparent_70%)] blur-xl"
+        >
+        </div>
+
+      <div
+        id="hero-frame"
+        class="relative transition-transform duration-300 ease-premium will-change-transform motion-reduce:!transform-none"
+        style="transform: perspective(1200px) rotateX(calc(var(--py, 0) * -3deg)) rotateY(calc(var(--px, 0) * 3deg)) translate3d(0,0,0);"
+      >
+        {
+          siteConfig.heroImageUrl ? (
+            <img
+              src={siteConfig.heroImageUrl}
+              alt={siteConfig.heroImageAlt || `${siteConfig.name} kurucusu`}
+              width="1080"
+              height="1350"
+              fetchpriority="high"
+              class="hero-portrait aspect-[4/5] w-full object-contain"
+            />
+          ) : (
+            <div class="flex aspect-[4/5] w-full flex-col items-center justify-center gap-8 rounded-[1.75rem] border border-dashed border-neutral-50/20 bg-surface-900 text-center text-sm text-neutral-400">
+              <span>Hero görseli eklenecek</span>
+              <span class="text-xs text-neutral-500">
+                src/lib/site-config.ts → heroImageUrl
+              </span>
+            </div>
+          )
+        }
+        </div>
+      </div>
+
+      {/*
+        Kanıt rakamları. Portrenin alt maskesi zemine karıştığı için satırın
+        kendi kutusu yok; ayrımı yalnızca üstteki ince altın çizgi veriyor.
+      */}
+      {
+        siteConfig.heroStats.length > 0 && (
+          <dl class="mt-24 grid grid-cols-3 gap-8 border-t border-accent-400/15 pt-24 text-center">
+            {siteConfig.heroStats.map((stat) => (
+              /*
+                DOM sırası dt → dd (etiket, sonra değer) olduğu için ekran
+                okuyucu "Deneyim: +5 Yıl" diye okur; `flex-col-reverse`
+                görsel olarak rakamı üste alır.
+              */
+              <div class="flex flex-col-reverse">
+                <dt class="mt-8 text-xs font-medium uppercase tracking-[0.14em] text-neutral-400">
+                  {stat.label}
+                </dt>
+                <dd class="font-display text-2xl font-semibold tracking-[-0.02em] text-gold lg:text-3xl">
+                  {stat.value}
+                </dd>
+              </div>
+            ))}
+          </dl>
+        )
+      }
     </div>
   </div>
 </section>
+
+<script>
+  /*
+    Fare parallax'ı: imlecin hero görselinin merkezine göre normalize edilmiş
+    konumu (-1..1) CSS değişkeni olarak yazılır, çerçeve buna göre çok hafif
+    eğilir. Dokunmatik cihazlarda ve prefers-reduced-motion açıkken hiç
+    devreye girmez — animasyon bir bağımlılık değil, aşamalı bir katmandır.
+  */
+  const prefersReducedMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)"
+  ).matches;
+  const isFinePointer = window.matchMedia("(pointer: fine)").matches;
+
+  if (!prefersReducedMotion && isFinePointer) {
+    const visual = document.getElementById("hero-visual");
+    const frame = document.getElementById("hero-frame");
+
+    if (visual && frame) {
+      let ticking = false;
+      let nx = 0;
+      let ny = 0;
+
+      function apply() {
+        frame!.style.setProperty("--px", String(nx));
+        frame!.style.setProperty("--py", String(ny));
+        ticking = false;
+      }
+
+      visual.addEventListener("pointermove", (event) => {
+        const rect = visual.getBoundingClientRect();
+        nx = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+        ny = ((event.clientY - rect.top) / rect.height) * 2 - 1;
+        if (!ticking) {
+          ticking = true;
+          requestAnimationFrame(apply);
+        }
+      });
+
+      visual.addEventListener("pointerleave", () => {
+        nx = 0;
+        ny = 0;
+        requestAnimationFrame(apply);
+      });
+    }
+  }
+</script>

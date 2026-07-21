@@ -3,12 +3,39 @@ import { siteConfig } from "../../lib/site-config";
 import Button from "../ui/Button.astro";
 ---
 
-<section id="iletisim" class="bg-primary-900 text-neutral-50">
-  <div class="mx-auto max-w-4xl px-24 py-64 text-center lg:px-32 lg:py-96">
-    <h2 class="font-display text-3xl font-semibold lg:text-4xl">
-      Sistemsiz büyümeye devam etmeyin.
+{/*
+  Sayfanın kapanışı ve en koyu noktası: merkezden yükselen çift glow,
+  ızgara dokusu ve gren. CTA butonu bu zeminde fildişi (`onDark`) varyantla
+  17:1 kontrast taşır — sayfadaki en yüksek görsel ağırlıklı öğe.
+*/}
+<section id="iletisim" class="section-shell">
+  <div aria-hidden="true" class="pointer-events-none absolute inset-0 -z-10">
+    <div
+      class="absolute inset-0 bg-[radial-gradient(ellipse_80%_70%_at_50%_50%,rgba(14,42,31,0.85),rgba(5,12,9,0.95))]"
+    >
+    </div>
+    <div
+      class="aurora left-1/2 top-1/2 h-[520px] w-[820px] -translate-x-1/2 -translate-y-1/2 animate-aurora bg-primary-500/30"
+    >
+    </div>
+    <div
+      class="aurora left-1/2 top-[62%] h-[300px] w-[520px] -translate-x-1/2 animate-glow-pulse bg-accent-500/22"
+    >
+    </div>
+    <div class="grid-mask"></div>
+    <div class="noise-layer"></div>
+  </div>
+
+  <div
+    class="section-body mx-auto max-w-4xl px-24 py-96 text-center lg:px-32 lg:py-96"
+  >
+    <h2
+      class="font-display text-[clamp(2rem,1.2rem+3.6vw,3.5rem)] font-semibold leading-[1.06] tracking-[-0.02em] text-balance text-sheen"
+    >
+      Doğru sistem ile işlerinizi ölçeklendirin.
     </h2>
-    <p class="mx-auto mt-24 max-w-xl text-primary-100">
+
+    <p class="mx-auto mt-32 max-w-xl text-lg leading-relaxed text-neutral-400">
       Her ay sistemsiz geçen süre, rakiplerinizin sistemli ilerlediği bir
       süredir. Ücretsiz strateji görüşmesinde işletmeniz için somut bir
       büyüme yol haritası çıkaralım.
@@ -23,7 +50,9 @@ import Button from "../ui/Button.astro";
         {siteConfig.ctaLabel}
       </Button>
 
-      <p class="text-sm text-primary-100">
+      <p
+        class="inline-flex flex-wrap items-center justify-center gap-8 text-sm text-neutral-400"
+      >
         30 dakika · Ücretsiz · Satış sunumu değil
       </p>
     </div>

@@ -1,7 +1,12 @@
 ---
 interface Props {
   href: string;
-  /** `onDark`: primary-900 gibi koyu zeminlerde kullanılan ters kontrast. */
+  /**
+   * `solid`  : koyu zeminde birincil eylem — yeşil gradyan + glow.
+   * `outline`: koyu zeminde ikincil eylem — cam kenarlık.
+   * `onDark` : primary-900/açık vurgu zeminlerde kullanılan ters kontrast
+   *            (fildişi dolgu, koyu metin).
+   */
   variant?: "solid" | "outline" | "onDark";
   /** Dış bağlantılar için "_blank"; rel otomatik olarak güvenli hale gelir. */
   target?: string;
@@ -10,17 +15,24 @@ interface Props {
 
 const { href, variant = "solid", target, class: className = "" } = Astro.props;
 
+/*
+  `group` + `relative overflow-hidden`: hover'da butonun üzerinden geçen
+  ışık huzmesi (sheen) için. Huzme dekoratif bir <span> olarak render edilir,
+  metnin okunabilirliğini etkilemez.
+*/
 const base =
-  "inline-flex items-center justify-center gap-8 rounded-sm px-24 py-16 font-body text-[15px] font-semibold tracking-wide transition-colors duration-250 ease-premium focus-visible:outline-2 focus-visible:outline-offset-2";
+  "group relative inline-flex items-center justify-center gap-8 overflow-hidden rounded-full px-32 py-16 font-body text-[15px] font-semibold tracking-wide transition-[transform,box-shadow,background-color,border-color,color] duration-300 ease-premium hover:-translate-y-0.5 active:translate-y-0 focus-visible:outline-2";
 
 const variants = {
+  // Yeşil gradyan dolgu + altın çerçeve parıltısı. Beyaz metin 6.38:1.
   solid:
-    "bg-primary-600 text-neutral-50 hover:bg-primary-700",
+    "bg-primary-600 bg-[linear-gradient(140deg,var(--color-primary-500),var(--color-primary-700))] text-neutral-50 shadow-[0_10px_30px_-12px_rgba(37,107,76,0.9)] ring-1 ring-inset ring-neutral-50/12 hover:shadow-[0_18px_45px_-14px_rgba(47,128,96,0.95)] hover:ring-accent-400/40",
+  // Koyu zeminde cam kenarlıklı ikincil buton.
   outline:
-    "border border-neutral-900/20 text-neutral-900 hover:border-primary-600 hover:text-primary-700",
-  // Koyu zeminde beyaz buton: primary-900 üzerinde 14.2:1 kontrast.
+    "border border-neutral-50/16 bg-neutral-50/4 text-neutral-100 hover:border-accent-400/45 hover:bg-neutral-50/8 hover:text-neutral-50",
+  // Açık/vurgulu zeminde fildişi buton: surface-950 metinle 17:1 kontrast.
   onDark:
-    "bg-neutral-50 text-primary-900 hover:bg-accent-500 hover:text-neutral-900 focus-visible:outline-neutral-50",
+    "bg-neutral-50 text-surface-950 shadow-[0_12px_34px_-14px_rgba(0,0,0,0.85)] hover:bg-accent-200 focus-visible:outline-neutral-50",
 };
 ---
 
@@ -30,5 +42,10 @@ const variants = {
   rel={target === "_blank" ? "noopener noreferrer" : undefined}
   class={`${base} ${variants[variant]} ${className}`}
 >
-  <slot />
+  {/* Hover'da soldan sağa geçen ışık huzmesi — tamamen dekoratif */}
+  <span
+    aria-hidden="true"
+    class="pointer-events-none absolute inset-0 -translate-x-full bg-[linear-gradient(105deg,transparent,rgba(255,255,255,0.28),transparent)] transition-transform duration-700 ease-premium group-hover:translate-x-full motion-reduce:hidden"
+  ></span>
+  <span class="relative flex items-center gap-8"><slot /></span>
 </a>

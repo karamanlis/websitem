@@ -17,22 +17,41 @@ const posts = (await getCollection("blog", ({ data }) => !data.draft && data.cat
 ---
 
 <BaseLayout title={label} description={`${label} kategorisindeki yazılar.`}>
-  <section class="border-b border-neutral-200 bg-neutral-50">
-    <div class="mx-auto max-w-6xl px-24 py-64 lg:px-32 lg:py-96">
-      <SectionHeading eyebrow="Blog kategorisi" title={label} />
+  <section class="section-shell">
+    <div aria-hidden="true" class="pointer-events-none absolute inset-0 -z-10">
+      <div
+        class="aurora left-[-10%] top-[-10%] h-[460px] w-[520px] animate-aurora bg-primary-500/20"
+      >
+      </div>
+      <div class="dot-mask"></div>
+    </div>
 
-      <div class="mt-48 grid gap-32 lg:grid-cols-3">
+    <div class="section-body mx-auto max-w-6xl px-24 py-64 lg:px-32 lg:py-96">
+      <SectionHeading eyebrow="Blog kategorisi" title={label} sheen />
+
+      <div class="mt-48 grid gap-24 lg:grid-cols-3">
         {posts.map((post) => (
           <a
             href={`/blog/${post.id}`}
-            class="flex flex-col gap-16 rounded-sm border border-neutral-200 bg-neutral-50 p-24 transition-colors duration-250 ease-premium hover:border-primary-600"
+            data-reveal
+            class="glass card-lift card-spotlight group flex flex-col gap-16 rounded-2xl p-32"
           >
-            <p class="font-display text-lg font-semibold text-neutral-900">{post.data.title}</p>
-            <p class="text-sm text-neutral-600">{post.data.description}</p>
+            <p class="font-display text-lg font-semibold leading-snug text-neutral-50">
+              {post.data.title}
+            </p>
+            <p class="text-sm leading-relaxed text-neutral-400">
+              {post.data.description}
+            </p>
+            <span
+              aria-hidden="true"
+              class="mt-8 text-lg text-neutral-500 transition-all duration-300 ease-premium group-hover:translate-x-1 group-hover:text-accent-300"
+            >
+              →
+            </span>
           </a>
         ))}
         {posts.length === 0 && (
-          <p class="text-neutral-600">Bu kategoride henüz yazı yok.</p>
+          <p class="text-neutral-400">Bu kategoride henüz yazı yok.</p>
         )}
       </div>
     </div>

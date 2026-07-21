@@ -1,0 +1,77 @@
+---
+import SectionHeading from "../ui/SectionHeading.astro";
+
+/*
+  Hizmet listesi. Kartlar tek bir ızgarada durur; sıralama bilinçlidir —
+  önce talebi hemen yakalayan ücretli kanallar, sonra kalıcı varlık
+  üreten uzun vadeli kanallar.
+*/
+const services = [
+  {
+    name: "Google Ads",
+    note: "Arama niyeti yüksek trafiği, tıklama başına maliyeti değil kâr edilen müşteriyi hedefleyerek yönetiyoruz.",
+  },
+  {
+    name: "Meta Ads",
+    note: "Instagram ve Facebook'ta doğru kitleye ulaşan, kreatifi düzenli test edilen kampanyalar kuruyoruz.",
+  },
+  {
+    name: "E-posta Pazarlama",
+    note: "Bir kez topladığınız listeyi, her ay kendi kendine satış üreten otomatik akışlara dönüştürüyoruz.",
+  },
+  {
+    name: "İçerik Pazarlama",
+    note: "Müşterinizin satın almadan önce sorduğu soruları yanıtlayan, güven inşa eden içerikler üretiyoruz.",
+  },
+  {
+    name: "Otomasyon ve Dijital Çözümler",
+    note: "Tekrar eden işleri, randevu ve takip süreçlerini otomatikleştirip ekibinizin zamanını geri kazandırıyoruz.",
+  },
+  {
+    name: "SEO Optimizasyonu",
+    note: "Reklam bütçesi durduğunda kaybolmayan, aramada kalıcı görünürlük sağlayan teknik ve içerik altyapısı.",
+  },
+];
+---
+
+{/*
+  Bölümün görsel kimliği: nokta dokusu + sağ üstte altın leke. Kartlar cam
+  yüzeylerdir; hover'da yükselip imleci izleyen bir ışıkla aydınlanır.
+*/}
+<section id="hizmetler" class="section-shell">
+  <div aria-hidden="true" class="pointer-events-none absolute inset-0 -z-10">
+    <div
+      class="aurora right-[-8%] top-[-8%] h-[380px] w-[480px] bg-accent-600/14"
+    >
+    </div>
+    <div class="dot-mask"></div>
+  </div>
+
+  <div class="section-body mx-auto max-w-6xl px-24 py-64 lg:px-32 lg:py-96">
+    <SectionHeading
+      eyebrow="Hizmetler"
+      title="Emre Cenk ile büyümeye başlayın."
+      align="center"
+      sheen
+      class="mx-auto max-w-2xl [&_.eyebrow]:mx-auto"
+    />
+
+    <div class="mt-48 grid gap-24 sm:grid-cols-2 lg:grid-cols-3">
+      {
+        services.map((service) => (
+          <div
+            data-reveal
+            class="glass card-lift card-spotlight flex flex-col gap-16 rounded-2xl p-32"
+          >
+            <p class="font-display text-lg font-semibold leading-snug text-neutral-50">
+              {service.name}
+            </p>
+            <p class="text-sm leading-relaxed text-neutral-400">
+              {service.note}
+            </p>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>

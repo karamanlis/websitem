@@ -6,19 +6,28 @@ Bu doküman, `wb.md.txt` briefinin zorunlu kıldığı "her kararı gerekçelend
 
 Kaynak: `src/styles/tokens.css`
 
+Site, görsel yenileme turunda **koyu-dominant** bir yüzeye taşındı (referans: Furkan RSD / Linear / premium AI landing sayfaları). Marka renkleri — çam yeşili ve antik altın — korundu; değişen şey bu renklerin üzerinde durduğu zemin.
+
 | Rol | Değer | Kullanım |
 |---|---|---|
-| Birincil (primary) | `#256B4C` (koyu çam yeşili), 50→900 skalası | CTA butonları, vurgu çizgileri, koyu bölüm arka planları (`primary-900: #0E2A1F`) |
-| Nötr (neutral) | `#F8F6F2` → `#1C1A16` (sıcak taş skalası) | Sayfa arka planı, gövde metni, kenarlıklar |
-| Vurgu (accent) | `#C99A3B` (antik altın) | Rozetler, küçük ikonlar, odak halkası — asla küçük gövde metni rengi olarak kullanılmaz |
+| Yüzey (surface) | `#050C09` → `#1E402F` (koyu çam-kömür skalası) | Sayfa zemini, cam kart dolguları, koyu paneller |
+| Birincil (primary) | `#256B4C` (koyu çam yeşili), 50→950 skalası | CTA butonları, aurora ışık lekeleri, bağlantı çizgileri |
+| Nötr (neutral) | `#F8F6F2` → `#1C1A16` (sıcak taş skalası) | Koyu zeminde metin skalası; açık "nefes" bölümünde zemin |
+| Vurgu (accent) | `#C99A3B` (antik altın), 100→600 | Etiketler (eyebrow), hover kenarlıkları, odak halkası, başlık vurgusu |
 
-**Neden bu palet:** Mor/mavi kombinasyonu brief tarafından açıkça yasaklanmıştı ve bu renkler "jenerik SaaS/AI şablonu" hissi yaratır. Koyu çam yeşili; büyüme, istikrar ve para ile ilişkilendirilen ama mavi/mor aile dışında kalan bir renktir. Sıcak taş nötr skala (saf gri değil), klinik değil premium/editoryal bir his verir. Antik altın vurgu rengi, "otorite/premium" hissini pekiştirir.
+**Neden koyu:** Mor/mavi kombinasyonu brief tarafından yasaklıydı ve "jenerik SaaS/AI şablonu" hissi yaratıyor. Koyu çam-kömür zemin, yeşil/altın paletini soğutmadan taşır; ışık lekeleri (aurora), cam yüzeyler ve gren dokusu ancak koyu bir zeminde okunur. Sıcak taş nötr skala (saf gri değil) klinik değil, editoryal bir his verir.
 
-**Erişilebilirlik doğrulaması (WCAG AA, hesaplanmış kontrast oranları):**
-- `primary-600` zemin + beyaz metin (CTA butonları): **6.38:1** — AA eşiği 4.5:1'in üzerinde.
-- `primary-900` zemin + `neutral-50` metin (koyu bölümler): **14.2:1** — AAA seviyesinde.
-- `accent-500` zemin + `neutral-900` metin (rozetler): **6.76:1**.
-- `accent-600` küçük metin olarak kullanıldığında yalnızca **~3.46:1** verir — bu yüzden accent tonları hiçbir yerde küçük gövde metni rengi olarak kullanılmadı, yalnızca arka plan/rozet/ikon olarak kullanıldı.
+**Ritim:** Sayfa baştan sona koyu değildir — `ResultsSection` bilinçli olarak tek bir açık "nefes" bölümüdür: koyu akışın ortasında yüzen yuvarlatılmış fildişi bir panel. Bu, hem monotonluğu kırar hem de sayfanın en somut vaadini (elde edilecek sonuçlar) görsel olarak öne çıkarır.
+
+**Erişilebilirlik doğrulaması (WCAG, hesaplanmış kontrast oranları):**
+- `neutral-50` metin + `surface-950` zemin (başlıklar): **17.4:1** — AAA.
+- `neutral-300` metin + `surface-950` zemin (gövde metni): **10.6:1** — AAA.
+- `neutral-400` metin + `surface-950` zemin: **6.9:1** — AA; yalnızca ikincil/destek metni için.
+- `accent-300` metin + `surface-950` zemin (etiketler): **8.4:1** — AA.
+- `primary-600` zemin + beyaz metin (CTA butonları): **6.38:1** — AA.
+- `neutral-900` metin + `neutral-50` zemin (açık nefes bölümü): **15.8:1** — AAA.
+
+**Kural:** `accent-500/600` tonları AÇIK zeminde küçük gövde metni olarak kullanılmaz (~3.5:1). Koyu zeminde bu rol `accent-300/400`'e devredildi — koyu zemin, altını güvenli bir metin rengi haline getirir.
 
 ## 2. Seçilen Tipografi Çifti
 
@@ -79,6 +88,37 @@ Sitenin tamamı tek bir hedefe (ücretsiz strateji görüşmesi rezervasyonu) hi
 Kaynak: `src/components/sections/Testimonials.astro`, `src/lib/site-config.ts`
 
 Üç gerçek müşteri görüşü, işletme sahibinin sağladığı somut sonuç metrikleriyle birlikte yerleştirildi (Ifdukkan — satışlarda 2x, Lavinya Çocuk Kulübü — %50 yeni kayıt, Aybüş Aksesuar — %150 etkileşim). Her görüşte **önce sonuç, sonra alıntı** gösteriliyor: ziyaretçi metni okumadan önce çıktıyı görüyor. Görüşler kişi adı değil işletme adı + sektör ile imzalanıyor — hedef kitle (KOBİ sahibi) kendi sektörünü gördüğünde daha hızlı özdeşleşiyor. Düzen asimetrik: ilk görüş büyük tipografiyle öne çıkarken diğer ikisi yan sütunda daha küçük bloklar halinde — brief'in "her yerde simetrik grid kullanma" kuralına uygun. Dizi boşaltılırsa bölüm sayfada hiç render edilmiyor; uydurma yorumla site yayına çıkamaz.
+
+## 10. Katmanlı Zemin, Cam Yüzeyler ve Render Maliyeti
+
+Kaynak: `src/styles/global.css`, `src/styles/tokens.css`
+
+Brief'in "düz beyaz zemini kaldır, katmanlı derinlik kur" talebi üç katmanla karşılandı:
+
+1. **Atmosfer:** `body::before` — sabit konumlu, üç geniş radial gradyandan oluşan ışık katmanı.
+2. **Gren:** `body::after` — SVG `feTurbulence` dokusu, düşük opaklıkta.
+3. **Bölüm kimliği:** her bölüm kendi düz zeminini boyamak yerine büyük ölçüde saydam kalır ve içine `aria-hidden` dekoratif katmanlar (`.aurora`, `.grid-mask`, `.dot-mask`, `.noise-layer`) yerleştirilir. Bölümler böylece **sert kenarlık olmadan** ayrışır; ayrımı ışık farkı ve kenarlara doğru sönümlenen `.hairline` gradyanı taşır.
+
+Bu görünümün naif uygulaması ölçülebilir biçimde render sürecini kilitliyordu. Üç karar bilinçli olarak alındı ve kodda gerekçesiyle birlikte yorumlandı:
+
+- **`background-attachment: fixed` kullanılmadı.** Sabit arka plan eki her kaydırma karesinde yeniden boyama tetikler ve iOS Safari'de güvenilir çalışmaz; yerine sabit konumlu bir sözde-öğe kullanıldı.
+- **Ekran boyutunda `mix-blend-mode` kullanılmadı.** Sabit, viewport boyutunda bir harmanlama katmanı altındaki tüm içeriği tek bir kompozisyon grubuna zorlar; uzun sayfada render süreci yanıt vermez hale geliyordu. Düşük opaklıkta düz doku aynı görsel etkiyi bedelsiz verir.
+- **Cam yüzeylerde `backdrop-filter` kullanılmadı.** 26 cam kartın her biri ayrı bir kompozisyon katmanı demekti. Zemin sabit ve büyük ölçüde düz olduğu için bulanıklaştırılacak içerik zaten yok; cam etkisi gradyan + ince kenarlık + üst iç parlaklıkla kuruluyor. `backdrop-filter` yalnızca gerçekten içerik üzerinde yüzen tek öğede — sticky header'da — korundu.
+- **`will-change` kaldırıldı.** Aurora lekelerinde ve kartlarda kalıcı GPU katmanı terfisi, büyük blur yarıçaplarıyla birlikte yüksek doku belleği tüketiyordu.
+
+Ayrıca `html, body { overflow-x: clip }` kalıcı bir güvenlik ağı olarak eklendi: dekoratif lekeler sabit piksel genişliğinde ve bölüm kutusunun dışına taşacak şekilde konumlandığı için, ileride kırpılmayan bir kapsayıcıya eklenecek bir leke dar ekranlarda yatay kaydırma çubuğu oluşturamaz.
+
+## 11. Hareket ve Aşamalı Geliştirme
+
+Kaynak: `src/components/ScrollReveal.astro`, `src/components/sections/Hero.astro`
+
+Eklenen tüm hareket katmanları isteğe bağlıdır, hiçbiri içeriğin görünmesi için gerekli değildir:
+
+- `data-reveal` öğeleri varsayılan olarak tam görünürdür; yalnızca JS çalışıyorsa ve `prefers-reduced-motion` kapalıysa gizlenip IntersectionObserver ile kademeli gecikmeyle ortaya çıkar.
+- `.card-spotlight` kartlarındaki imleç ışığı, `--mx`/`--my` CSS değişkenleri yazılmazsa hiç görünmez.
+- Hero portresindeki fare parallax'ı yalnızca `(pointer: fine)` cihazlarda devreye girer; dokunmatik cihazlarda hiç bağlanmaz.
+- Butonun üzerinden geçen ışık huzmesi `motion-reduce:hidden` ile kapatılır.
+- `prefers-reduced-motion: reduce` tüm animasyon ve geçiş sürelerini global olarak sıfırlar.
 
 ---
 

@@ -11,21 +11,72 @@ const outcomes = [
 ];
 ---
 
-<section id="sonuclar" class="border-b border-neutral-200 bg-primary-900 text-neutral-50">
-  <div class="mx-auto max-w-6xl px-24 py-64 lg:px-32 lg:py-96">
-    <SectionHeading
-      eyebrow="Sonuçlar"
-      title="Sistemin ürettiği, işletmeniz için anlamlı sonuçlar."
-      class="max-w-2xl [&_h2]:text-neutral-50 [&_p]:text-primary-100"
-    />
+{/*
+  Sayfanın tek açık "nefes" bölümü: koyu akışın ortasında yüzen, yumuşak
+  fildişi bir panel. Tam genişlik yerine yuvarlatılmış bir yüzey olarak
+  durur — bölüm ayrımı sert kenarlıkla değil, ışık farkıyla kurulur.
+  Kontrast: neutral-900 metin + neutral-50 zemin = 15.8:1 (AAA).
+*/}
+<section id="sonuclar" class="section-shell">
+  <div aria-hidden="true" class="pointer-events-none absolute inset-0 -z-10">
+    <div
+      class="aurora left-1/2 top-1/2 h-[520px] w-[880px] -translate-x-1/2 -translate-y-1/2 bg-accent-500/16"
+    >
+    </div>
+  </div>
 
-    <ul class="mt-48 grid gap-24 lg:grid-cols-2">
-      {outcomes.map((outcome) => (
-        <li class="flex items-start gap-16 border-b border-neutral-50/15 pb-24">
-          <span class="mt-8 h-8 w-8 shrink-0 rounded-full bg-accent-500" aria-hidden="true"></span>
-          <p class="text-lg">{outcome}</p>
-        </li>
-      ))}
-    </ul>
+  <div class="section-body mx-auto max-w-6xl px-24 py-64 lg:px-32 lg:py-96">
+    <div
+      class="relative overflow-hidden rounded-3xl bg-[linear-gradient(155deg,var(--color-neutral-50),var(--color-neutral-100)_55%,var(--color-neutral-200))] px-24 py-64 shadow-[0_40px_100px_-40px_rgba(0,0,0,0.9)] ring-1 ring-neutral-900/8 lg:px-64"
+    >
+      <div aria-hidden="true" class="pointer-events-none absolute inset-0">
+        <div
+          class="absolute inset-0 bg-[radial-gradient(ellipse_70%_60%_at_85%_0%,rgba(37,107,76,0.10),transparent_70%)]"
+        >
+        </div>
+        {/* Açık panelde gren, harmanlama modu olmadan koyu bir doku olarak durur */}
+        <div class="noise-layer opacity-[0.12]"></div>
+      </div>
+
+      <div class="relative">
+        <SectionHeading
+          eyebrow="Sonuçlar"
+          title="Sistemin ürettiği, işletmeniz için anlamlı sonuçlar."
+          tone="light"
+          class="max-w-2xl"
+        />
+
+        <ul class="mt-48 grid gap-16 lg:grid-cols-2">
+          {
+            outcomes.map((outcome) => (
+              <li
+                data-reveal
+                class="group flex items-start gap-16 rounded-xl border border-neutral-900/8 bg-neutral-50/70 px-24 py-24 shadow-[0_12px_30px_-24px_rgba(14,42,31,0.55)] transition-all duration-500 ease-premium hover:-translate-y-0.5 hover:border-primary-600/30 hover:shadow-[0_20px_44px_-24px_rgba(37,107,76,0.5)]"
+              >
+                {/* Onay işareti: yeşil gradyan disk */}
+                <span
+                  aria-hidden="true"
+                  class="mt-px grid h-24 w-24 shrink-0 place-items-center rounded-full bg-[linear-gradient(140deg,var(--color-primary-500),var(--color-primary-700))] text-neutral-50 shadow-[0_4px_12px_-4px_rgba(37,107,76,0.8)]"
+                >
+                  <svg
+                    width="12"
+                    height="12"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="3"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path d="M4 12.5 9.5 18 20 6.5" />
+                  </svg>
+                </span>
+                <p class="text-lg leading-snug text-neutral-900">{outcome}</p>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
   </div>
 </section>

@@ -14,15 +14,29 @@ import { siteConfig } from "../lib/site-config";
   description="Mesajınız bize ulaştı. En kısa sürede dönüş yapacağız."
   noindex
 >
-  <section class="border-b border-neutral-200 bg-neutral-50">
-    <div class="mx-auto max-w-2xl px-24 py-96 text-center lg:px-32">
-      <p class="text-sm font-semibold uppercase tracking-[0.14em] text-primary-700">
-        Teşekkürler
-      </p>
-      <h1 class="mt-16 font-display text-3xl font-semibold text-neutral-900 lg:text-4xl">
+  <section class="section-shell">
+    <div aria-hidden="true" class="pointer-events-none absolute inset-0 -z-10">
+      <div
+        class="aurora left-1/2 top-[30%] h-[440px] w-[640px] -translate-x-1/2 animate-aurora bg-primary-500/28"
+      >
+      </div>
+      <div
+        class="aurora left-1/2 top-[52%] h-[240px] w-[420px] -translate-x-1/2 animate-glow-pulse bg-accent-500/20"
+      >
+      </div>
+      <div class="grid-mask"></div>
+    </div>
+
+    <div class="section-body mx-auto max-w-2xl px-24 py-96 text-center lg:px-32">
+      <p class="eyebrow">Teşekkürler</p>
+
+      <h1
+        class="text-sheen mt-24 font-display text-[clamp(1.875rem,1.1rem+3.2vw,3rem)] font-semibold leading-[1.08] tracking-[-0.02em]"
+      >
         Mesajınız bize ulaştı.
       </h1>
-      <p class="mx-auto mt-24 max-w-lg text-lg text-neutral-600">
+
+      <p class="mx-auto mt-32 max-w-lg text-lg leading-relaxed text-neutral-400">
         1 iş günü içinde size dönüş yapacağız. Beklemek istemiyorsanız
         takvimden doğrudan uygun bir saat seçebilirsiniz.
       </p>
@@ -31,8 +45,16 @@ import { siteConfig } from "../lib/site-config";
         <Button href={siteConfig.bookingUrl || "/iletisim"} variant="solid">
           {siteConfig.ctaLabel}
         </Button>
-        <a href="/" class="text-sm font-semibold text-neutral-800 hover:text-primary-700">
-          Ana sayfaya dön →
+        <a
+          href="/"
+          class="group inline-flex items-center gap-8 text-sm font-semibold text-neutral-300 transition-colors duration-300 ease-premium hover:text-accent-200"
+        >
+          Ana sayfaya dön
+          <span
+            aria-hidden="true"
+            class="transition-transform duration-300 ease-premium group-hover:translate-x-1"
+            >→</span
+          >
         </a>
       </div>
     </div>

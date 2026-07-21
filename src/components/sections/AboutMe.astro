@@ -1,0 +1,62 @@
+---
+import SectionHeading from "../ui/SectionHeading.astro";
+
+/*
+  Metin tek bir paragraf olarak verildi; okunabilirlik için üçe bölündü.
+  Son cümle bir taahhüt olduğu için gövde metninden ayrılıp altın kenarlı
+  bir vurgu bloğuna alındı.
+*/
+const paragraphs = [
+  "5 yıldır dijital pazarlama alanında e-ticaret, eğitim ve perakende sektörü gibi birçok farklı sektördeki işletmelerle düzenli ve uzun soluklu iş birlikleri yaptım. Geldiğim noktada sonuç odaklı ve değer katan çalışmalarımla işletmelerin büyümesine katkı sağlamaya devam ediyorum.",
+  "Her işletmenin kendine özgü ihtiyaçlarını keşfederek kişiselleştirilmiş bir çözüm haritası çıkarıyorum. Bilinen ajanslardan farklı olarak satış ve kâr odaklı, verilere dayalı, sistemli, şeffaf ve sınırlı sayıda marka ile çalışırım.",
+  "Yaptığım her çalışmayı işletme çözüm ortağı sıfatıyla en verimli şekilde gerçekleştirmeye çalışırım.",
+];
+---
+
+{/*
+  Bölümün görsel kimliği: sağ üstten inen altın leke + sol alttan yükselen
+  yeşil gradyan. Başlık solda sabit dururken metin sağda akar; bu asimetri
+  bölümü çevresindeki kart ızgaralarından ayırır.
+*/}
+<section id="ben-kimim" class="section-shell">
+  <div aria-hidden="true" class="pointer-events-none absolute inset-0 -z-10">
+    <div
+      class="aurora right-[-10%] top-[-10%] h-[420px] w-[520px] bg-accent-600/13"
+    >
+    </div>
+    <div
+      class="aurora bottom-[-20%] left-[-8%] h-[480px] w-[520px] animate-aurora-slow bg-primary-600/20"
+    >
+    </div>
+    <div class="dot-mask"></div>
+  </div>
+
+  <div
+    class="section-body mx-auto grid max-w-6xl gap-48 px-24 py-64 lg:grid-cols-[0.85fr_1.15fr] lg:px-32 lg:py-96"
+  >
+    <SectionHeading
+      eyebrow="Hakkımda"
+      title="Ben kimim ve farkım ne?"
+      class="lg:sticky lg:top-96 lg:self-start"
+    />
+
+    <div class="flex flex-col gap-24">
+      {
+        paragraphs.map((text) => (
+          <p data-reveal class="text-lg leading-relaxed text-neutral-400">
+            {text}
+          </p>
+        ))
+      }
+
+      {/* Kapanış taahhüdü: solunda altın çizgi taşıyan vurgu bloğu */}
+      <p
+        data-reveal
+        class="relative mt-8 border-l-2 border-accent-400/45 py-8 pl-32 font-display text-xl leading-snug text-balance text-neutral-50"
+      >
+        Verimli ve etkili olmayan bir çalışmanın içerisine girmeyeceğimi en
+        baştan beyan ederim.
+      </p>
+    </div>
+  </div>
+</section>

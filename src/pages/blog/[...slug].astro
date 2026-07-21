@@ -16,19 +16,38 @@ const { Content } = await render(post);
 ---
 
 <BaseLayout title={post.data.title} description={post.data.description}>
-  <article class="border-b border-neutral-200 bg-neutral-50">
-    <div class="mx-auto max-w-3xl px-24 py-64 lg:px-32 lg:py-96">
-      <p class="text-xs font-semibold uppercase tracking-wide text-primary-700">
+  <article class="section-shell">
+    <div aria-hidden="true" class="pointer-events-none absolute inset-0 -z-10">
+      <div
+        class="aurora left-1/2 top-[-14%] h-[460px] w-[760px] -translate-x-1/2 animate-aurora-slow bg-primary-600/22"
+      >
+      </div>
+      <div class="grid-mask"></div>
+    </div>
+
+    <div class="section-body mx-auto max-w-3xl px-24 py-64 lg:px-32 lg:py-96">
+      <a
+        href="/blog"
+        class="eyebrow transition-colors duration-300 ease-premium hover:text-accent-200"
+      >
         {categoryLabels[post.data.category]}
-      </p>
-      <h1 class="mt-16 font-display text-3xl font-semibold text-neutral-900 lg:text-4xl">
+      </a>
+
+      <h1
+        class="mt-24 font-display text-[clamp(1.875rem,1.1rem+3.2vw,3rem)] font-semibold leading-[1.08] tracking-[-0.02em] text-balance text-neutral-50"
+      >
         {post.data.title}
       </h1>
-      <p class="mt-16 text-sm text-neutral-500">
+
+      <p class="mt-24 text-sm text-neutral-500">
         {post.data.publishDate.toLocaleDateString("tr-TR", { year: "numeric", month: "long", day: "numeric" })}
       </p>
 
-      <div class="prose prose-neutral mt-48 max-w-none prose-headings:font-display prose-a:text-primary-700">
+      <div aria-hidden="true" class="hairline mt-48 opacity-60"></div>
+
+      <div
+        class="prose prose-cnkr mt-48 max-w-none prose-headings:font-display prose-a:no-underline hover:prose-a:underline prose-a:underline-offset-4"
+      >
         <Content />
       </div>
     </div>

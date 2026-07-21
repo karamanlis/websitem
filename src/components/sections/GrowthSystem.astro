@@ -9,42 +9,90 @@ const pillars = [
 ];
 ---
 
-<section id="sistem" class="border-b border-neutral-200 bg-neutral-50">
-  <div class="mx-auto max-w-6xl px-24 py-64 lg:px-32 lg:py-96">
+{/*
+  Bölümün görsel kimliği: merkezden yayılan bulanık radial gradyan + nokta
+  dokusu. Sistem diyagramının bağlantı çizgileri düz çizgi yerine kenarlara
+  doğru sönümlenen gradyanlardır — asimetrik dikey ofsetler korundu.
+*/}
+<section id="sistem" class="section-shell">
+  <div aria-hidden="true" class="pointer-events-none absolute inset-0 -z-10">
+    <div
+      class="aurora left-1/2 top-[10%] h-[520px] w-[760px] -translate-x-1/2 animate-aurora-slow bg-primary-600/26"
+    >
+    </div>
+    <div class="dot-mask"></div>
+  </div>
+
+  <div class="section-body mx-auto max-w-6xl px-24 py-64 lg:px-32 lg:py-96">
     <SectionHeading
       eyebrow="Metodoloji"
       title="Dört bileşen, tek sistem olarak çalışır."
       align="center"
-      class="mx-auto max-w-2xl"
+      sheen
+      class="mx-auto max-w-2xl [&_.eyebrow]:mx-auto"
     />
 
     <div class="mt-64 flex flex-col items-center">
-      <div class="rounded-sm border border-primary-600 bg-primary-900 px-32 py-16 text-center font-display font-semibold text-neutral-50">
-        CNKR Büyüme Sistemi
-      </div>
-
-      <div class="relative mt-48 hidden w-full lg:block">
-        <div class="absolute inset-x-0 top-0 h-px bg-primary-300" aria-hidden="true"></div>
-        <div class="grid grid-cols-4 gap-32">
-          {pillars.map((pillar) => (
-            <div class={`flex flex-col items-center text-center ${pillar.offset}`}>
-              <div class="h-32 w-px bg-primary-300" aria-hidden="true"></div>
-              <div data-reveal class="rounded-sm border border-neutral-200 bg-neutral-50 px-24 py-24 shadow-[0_16px_32px_-20px_rgba(14,42,31,0.4)]">
-                <p class="font-display text-lg font-semibold text-neutral-900">{pillar.name}</p>
-                <p class="mt-8 text-sm text-neutral-600">{pillar.note}</p>
-              </div>
-            </div>
-          ))}
+      {/* Merkezi düğüm: yeşil gradyan cam blok, çevresinde nefes alan glow */}
+      <div class="relative">
+        <div
+          aria-hidden="true"
+          class="aurora inset-0 h-full w-full animate-glow-pulse bg-primary-400/45"
+        >
+        </div>
+        <div
+          class="glass relative rounded-full bg-[linear-gradient(140deg,rgba(47,128,96,0.35),rgba(14,42,31,0.6))] px-32 py-16 text-center font-display text-lg font-semibold text-neutral-50 ring-1 ring-inset ring-accent-400/25"
+        >
+          CNKR Büyüme Sistemi
         </div>
       </div>
 
-      <ol class="mt-48 flex w-full flex-col gap-24 border-l-2 border-primary-300 pl-24 lg:hidden">
-        {pillars.map((pillar) => (
-          <li>
-            <p class="font-display text-lg font-semibold text-neutral-900">{pillar.name}</p>
-            <p class="mt-8 text-sm text-neutral-600">{pillar.note}</p>
-          </li>
-        ))}
+      <div class="relative mt-48 hidden w-full lg:block">
+        {/* Yatay taşıyıcı hat — kenarlara doğru söner */}
+        <div
+          class="absolute inset-x-0 top-0 h-px bg-[linear-gradient(90deg,transparent,rgba(127,174,148,0.55),rgba(212,175,94,0.5),rgba(127,174,148,0.55),transparent)]"
+          aria-hidden="true"
+        >
+        </div>
+        <div class="grid grid-cols-4 gap-32">
+          {
+            pillars.map((pillar) => (
+              <div class={`flex flex-col items-center text-center ${pillar.offset}`}>
+                <div
+                  class="h-32 w-px bg-[linear-gradient(to_bottom,rgba(127,174,148,0.55),transparent)]"
+                  aria-hidden="true"
+                />
+                <div
+                  data-reveal
+                  class="glass card-lift card-spotlight w-full rounded-xl px-24 py-32"
+                >
+                  <p class="font-display text-lg font-semibold text-neutral-50">
+                    {pillar.name}
+                  </p>
+                  <p class="mt-16 text-sm leading-relaxed text-neutral-400">
+                    {pillar.note}
+                  </p>
+                </div>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+
+      {/* Mobil: aynı bilgi dikey zaman çizelgesi olarak, bilgi kaybı yok */}
+      <ol class="mt-48 flex w-full flex-col gap-16 lg:hidden">
+        {
+          pillars.map((pillar) => (
+            <li class="glass card-lift rounded-xl px-24 py-24">
+              <p class="font-display text-lg font-semibold text-neutral-50">
+                {pillar.name}
+              </p>
+              <p class="mt-8 text-sm leading-relaxed text-neutral-400">
+                {pillar.note}
+              </p>
+            </li>
+          ))
+        }
       </ol>
     </div>
   </div>

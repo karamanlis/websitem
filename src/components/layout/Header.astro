@@ -3,51 +3,101 @@ import { siteConfig } from "../../lib/site-config";
 import Button from "../ui/Button.astro";
 ---
 
-<header class="sticky top-0 z-50 border-b border-neutral-200 bg-neutral-50/95 backdrop-saturate-150">
+{/*
+  Sticky başlık iki durumludur:
+  - sayfa tepesinde: tamamen saydam, hero'nun atmosferini kesmez
+  - kaydırıldığında (`data-scrolled`): cam panel + gradyan saç teli belirir
+  Durum, aşağıdaki script tarafından `data-scrolled` özniteliğiyle yazılır;
+  JS çalışmazsa başlık cam görünümünde kalır (aşamalı geliştirme).
+*/}
+<header
+  id="site-header"
+  class="group/header sticky top-0 z-50 transition-[background-color,backdrop-filter,box-shadow] duration-500 ease-premium data-[scrolled]:bg-surface-950/72 data-[scrolled]:shadow-[0_18px_40px_-30px_rgba(0,0,0,0.95)] data-[scrolled]:backdrop-blur-xl data-[scrolled]:backdrop-saturate-150"
+>
   <div class="mx-auto flex max-w-6xl items-center justify-between px-24 py-16 lg:px-32">
-    <a href="/" class="font-display text-xl font-semibold text-neutral-900">
-      {siteConfig.name}
+    <a
+      href="/"
+      class="group/logo flex items-center gap-16 font-display text-xl font-semibold text-neutral-50"
+    >
+      {/* Marka işareti: yeşil-altın gradyan disk, hover'da parlar */}
+      <span
+        aria-hidden="true"
+        class="relative grid h-32 w-32 place-items-center rounded-full bg-[linear-gradient(140deg,var(--color-primary-400),var(--color-primary-700))] text-xs font-bold text-neutral-50 shadow-[0_0_20px_-4px_rgba(47,128,96,0.8)] ring-1 ring-neutral-50/15 transition-shadow duration-500 ease-premium group-hover/logo:shadow-[0_0_28px_-2px_rgba(212,175,94,0.7)]"
+      >
+        C
+      </span>
+      <span class="transition-colors duration-300 ease-premium group-hover/logo:text-accent-200">
+        {siteConfig.logoText || siteConfig.name}
+      </span>
     </a>
 
-    <nav aria-label="Ana gezinme" class="hidden items-center gap-32 lg:flex">
-      {siteConfig.nav.map((item) => (
-        <a
-          href={item.href}
-          class="text-sm font-medium text-neutral-800 transition-colors duration-250 ease-premium hover:text-primary-700"
-        >
-          {item.label}
-        </a>
-      ))}
+    {/*
+      Kırılma noktası `lg` değil `xl`: sekiz menü öğesi + CTA butonu 1024px'te
+      logoyla çakışıyordu. 1280px altında hamburger menüye düşülür.
+    */}
+    <nav aria-label="Ana gezinme" class="hidden items-center gap-8 xl:flex">
+      {
+        siteConfig.nav.map((item) => (
+          <a
+            href={item.href}
+            class="relative rounded-full px-8 py-8 text-sm font-medium text-neutral-300 transition-colors duration-300 ease-premium hover:bg-neutral-50/6 hover:text-neutral-50"
+          >
+            {item.label}
+          </a>
+        ))
+      }
     </nav>
 
-    <div class="hidden lg:block">
-      <Button href="/#iletisim" variant="solid">{siteConfig.ctaLabel}</Button>
+    <div class="hidden xl:block">
+      <Button href="/#iletisim" variant="solid" class="px-24 py-8 text-sm">
+        {siteConfig.ctaLabel}
+      </Button>
     </div>
 
     <button
       id="mobile-nav-toggle"
       type="button"
-      class="inline-flex items-center justify-center rounded-sm border border-neutral-300 p-8 lg:hidden"
+      class="inline-flex items-center justify-center rounded-full border border-neutral-50/14 bg-neutral-50/5 p-8 text-neutral-100 backdrop-blur-md transition-colors duration-300 ease-premium hover:border-accent-400/40 hover:text-neutral-50 xl:hidden"
       aria-expanded="false"
       aria-controls="mobile-nav"
     >
       <span class="sr-only">Menüyü aç/kapat</span>
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-        <path d="M3 6h18M3 12h18M3 18h18" stroke-linecap="round" />
+      <svg
+        width="22"
+        height="22"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        aria-hidden="true"
+      >
+        <path d="M3 6h18M3 12h18M3 18h18" stroke-linecap="round"></path>
       </svg>
     </button>
+  </div>
+
+  {/* Sert kenarlık yerine, yalnızca kaydırıldığında beliren gradyan saç teli */}
+  <div
+    aria-hidden="true"
+    class="hairline opacity-0 transition-opacity duration-500 ease-premium group-data-[scrolled]/header:opacity-100"
+  >
   </div>
 
   <nav
     id="mobile-nav"
     aria-label="Mobil gezinme"
-    class="hidden flex-col gap-16 border-t border-neutral-200 bg-neutral-50 px-24 py-24 lg:hidden"
+    class="hidden flex-col gap-8 border-t border-neutral-50/8 bg-surface-950/92 px-24 py-24 backdrop-blur-xl xl:hidden"
   >
-    {siteConfig.nav.map((item) => (
-      <a href={item.href} class="text-base font-medium text-neutral-800">
-        {item.label}
-      </a>
-    ))}
+    {
+      siteConfig.nav.map((item) => (
+        <a
+          href={item.href}
+          class="rounded-lg px-16 py-8 text-base font-medium text-neutral-200 transition-colors duration-300 ease-premium hover:bg-neutral-50/6 hover:text-neutral-50"
+        >
+          {item.label}
+        </a>
+      ))
+    }
     <Button href="/#iletisim" variant="solid" class="mt-8 w-full">
       {siteConfig.ctaLabel}
     </Button>
@@ -63,4 +113,34 @@ import Button from "../ui/Button.astro";
     nav?.classList.toggle("hidden");
     toggle.setAttribute("aria-expanded", String(Boolean(isOpen)));
   });
+
+  /*
+    Kaydırma durumu: sayfa tepesindeyken başlık saydam kalır, ilk 12px'ten
+    sonra cam panele döner. rAF ile throttle edilir (scroll'da layout okuma
+    maliyetini düşürmek için).
+  */
+  const header = document.getElementById("site-header");
+  let ticking = false;
+
+  function syncHeaderState() {
+    if (window.scrollY > 12) {
+      header?.setAttribute("data-scrolled", "");
+    } else {
+      header?.removeAttribute("data-scrolled");
+    }
+    ticking = false;
+  }
+
+  window.addEventListener(
+    "scroll",
+    () => {
+      if (!ticking) {
+        ticking = true;
+        window.requestAnimationFrame(syncHeaderState);
+      }
+    },
+    { passive: true }
+  );
+
+  syncHeaderState();
 </script>

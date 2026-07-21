@@ -10,17 +10,47 @@ const traits = [
 ];
 ---
 
-<section id="neden-cnkr" class="border-b border-neutral-200 bg-neutral-50">
-  <div class="mx-auto grid max-w-6xl gap-48 px-24 py-64 lg:grid-cols-[0.9fr_1.1fr] lg:px-32 lg:py-96">
+{/*
+  Bölümün görsel kimliği: sol taraftan yükselen bulanık yeşil radial gradyan.
+  Özellikler kart yerine, sol kenarında hover'da aydınlanan dikey gradyan
+  çizgi taşıyan satırlar olarak dizilir.
+*/}
+<section id="neden-cnkr" class="section-shell">
+  <div aria-hidden="true" class="pointer-events-none absolute inset-0 -z-10">
+    <div
+      class="aurora left-[-16%] top-[12%] h-[560px] w-[560px] animate-aurora bg-primary-500/22"
+    >
+    </div>
+    <div
+      class="aurora right-[6%] bottom-[-18%] h-[360px] w-[420px] bg-accent-600/12"
+    >
+    </div>
+  </div>
+
+  <div
+    class="section-body mx-auto grid max-w-6xl gap-48 px-24 py-64 lg:grid-cols-[0.9fr_1.1fr] lg:px-32 lg:py-96"
+  >
     <SectionHeading eyebrow="Neden CNKR?" title="Taktik değil, metodoloji satarız." />
 
-    <ul class="flex flex-col gap-32">
-      {traits.map((trait) => (
-        <li class="border-l-2 border-primary-600 pl-24">
-          <p class="font-display text-lg font-semibold text-neutral-900">{trait.name}</p>
-          <p class="mt-8 text-neutral-600">{trait.note}</p>
-        </li>
-      ))}
+    <ul class="flex flex-col gap-8">
+      {
+        traits.map((trait) => (
+          <li
+            data-reveal
+            class="group relative rounded-xl py-24 pl-32 pr-24 transition-colors duration-500 ease-premium hover:bg-neutral-50/4"
+          >
+            {/* Sol kenar çizgisi: hover'da altına döner ve parlar */}
+            <span
+              aria-hidden="true"
+              class="absolute bottom-24 left-0 top-24 w-0.5 rounded-full bg-[linear-gradient(to_bottom,var(--color-primary-400),transparent)] transition-all duration-500 ease-premium group-hover:bg-[linear-gradient(to_bottom,var(--color-accent-400),transparent)] group-hover:shadow-[0_0_14px_1px_rgba(212,175,94,0.45)]"
+            />
+            <p class="font-display text-lg font-semibold text-neutral-50">
+              {trait.name}
+            </p>
+            <p class="mt-8 leading-relaxed text-neutral-400">{trait.note}</p>
+          </li>
+        ))
+      }
     </ul>
   </div>
 </section>

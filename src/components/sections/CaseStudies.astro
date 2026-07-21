@@ -14,35 +14,69 @@ const cases = (await getCollection("case-studies")).sort(
 );
 ---
 
-{cases.length > 0 && (
-<section id="vaka-analizleri" class="border-b border-neutral-200 bg-neutral-50">
-  <div class="mx-auto max-w-6xl px-24 py-64 lg:px-32 lg:py-96">
-    <SectionHeading eyebrow="Vaka Analizleri" title="Sistemin pratikte nasıl çalıştığı." />
+{
+  cases.length > 0 && (
+    <section id="vaka-analizleri" class="section-shell">
+      <div aria-hidden="true" class="pointer-events-none absolute inset-0 -z-10">
+        <div class="aurora left-1/2 top-[8%] h-[440px] w-[720px] -translate-x-1/2 bg-primary-600/20" />
+        <div class="noise-layer" />
+      </div>
 
-    <div class="mt-48 grid gap-32 lg:grid-cols-3">
-      {cases.map((item) => (
-        <article class="flex flex-col gap-16 rounded-sm border border-neutral-200 bg-neutral-50 p-32 shadow-[0_20px_40px_-28px_rgba(14,42,31,0.5)]">
-          {item.data.isPlaceholder && (
-            <Badge>Örnek vaka — gerçek verilerle güncellenecek</Badge>
-          )}
-          <p class="font-display text-lg font-semibold text-neutral-900">{item.data.client}</p>
-          <p class="text-xs font-semibold uppercase tracking-wide text-primary-700">{item.data.industry}</p>
+      <div class="section-body mx-auto max-w-6xl px-24 py-64 lg:px-32 lg:py-96">
+        <SectionHeading
+          eyebrow="Vaka Analizleri"
+          title="Sistemin pratikte nasıl çalıştığı."
+        />
 
-          <div>
-            <p class="text-xs font-semibold uppercase tracking-wide text-neutral-500">Problem</p>
-            <p class="mt-8 text-sm text-neutral-700">{item.data.problem}</p>
-          </div>
-          <div>
-            <p class="text-xs font-semibold uppercase tracking-wide text-neutral-500">Çözüm</p>
-            <p class="mt-8 text-sm text-neutral-700">{item.data.solution}</p>
-          </div>
-          <div>
-            <p class="text-xs font-semibold uppercase tracking-wide text-neutral-500">Sonuç</p>
-            <p class="mt-8 text-sm text-neutral-700">{item.data.results}</p>
-          </div>
-        </article>
-      ))}
-    </div>
-  </div>
-</section>
-)}
+        <div class="mt-48 grid gap-24 lg:grid-cols-3">
+          {cases.map((item) => (
+            <article
+              data-reveal
+              class="glass card-lift card-spotlight flex flex-col gap-24 rounded-2xl p-32"
+            >
+              {item.data.isPlaceholder && (
+                <Badge>Örnek vaka — gerçek verilerle güncellenecek</Badge>
+              )}
+
+              <div>
+                <p class="font-display text-lg font-semibold text-neutral-50">
+                  {item.data.client}
+                </p>
+                <p class="mt-8 text-xs font-semibold uppercase tracking-[0.12em] text-accent-300">
+                  {item.data.industry}
+                </p>
+              </div>
+
+              <div aria-hidden="true" class="hairline opacity-60" />
+
+              <div>
+                <p class="text-xs font-semibold uppercase tracking-[0.12em] text-neutral-500">
+                  Problem
+                </p>
+                <p class="mt-8 text-sm leading-relaxed text-neutral-300">
+                  {item.data.problem}
+                </p>
+              </div>
+              <div>
+                <p class="text-xs font-semibold uppercase tracking-[0.12em] text-neutral-500">
+                  Çözüm
+                </p>
+                <p class="mt-8 text-sm leading-relaxed text-neutral-300">
+                  {item.data.solution}
+                </p>
+              </div>
+              <div>
+                <p class="text-xs font-semibold uppercase tracking-[0.12em] text-neutral-500">
+                  Sonuç
+                </p>
+                <p class="mt-8 text-sm leading-relaxed text-neutral-300">
+                  {item.data.results}
+                </p>
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}

@@ -15,29 +15,154 @@
 
   html {
     scroll-behavior: smooth;
+    background-color: var(--color-surface-950);
+    /* Sticky header'ın çapa bağlantılarında başlığı kesmemesi için */
+    scroll-padding-top: 6rem;
+  }
+
+  /*
+    Güvenlik ağı: dekoratif aurora lekeleri sabit piksel genişliklerinde
+    ve bölüm kutusunun dışına taşacak şekilde konumlanır. Her bölüm
+    `.section-shell` ile zaten kırpılır; bu kural, ileride kırpılmayan bir
+    kapsayıcıya eklenen bir leke yüzünden dar ekranlarda yatay kaydırma
+    çubuğu belirmesini kalıcı olarak engeller. (`clip`, `hidden`den farklı
+    olarak sticky header'ı bozmaz.)
+  */
+  html,
+  body {
+    overflow-x: clip;
   }
 
   body {
+    position: relative;
+    min-height: 100vh;
     font-family: var(--font-body);
-    background-color: var(--color-neutral-50);
-    color: var(--color-neutral-900);
+    font-feature-settings: "kern", "liga", "calt";
+    color: var(--color-neutral-300);
+    background-color: var(--color-surface-950);
     -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
   }
 
-  h1, h2, h3, h4 {
+  /*
+    Sayfa zemini tek düz renk değil, üst üste binen üç geniş radial
+    gradyandan oluşan bir "atmosfer" katmanıdır. Bölümler kendi zeminlerini
+    boyamak yerine çoğunlukla saydam kalır ve bu katman içinden görünür —
+    bölümler böylece sert kenarlık olmadan birbirinden ayrışır.
+
+    Katman, `background-attachment: fixed` yerine SABİT KONUMLU bir
+    sözde-öğe olarak kurulur: `fixed` arka plan eki her kaydırma karesinde
+    yeniden boyama tetikler (mobilde belirgin jank) ve iOS Safari'de
+    güvenilir çalışmaz; sabit konumlu katman ise GPU'da tek seferde
+    birleştirilir.
+  */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background-image:
+      radial-gradient(
+        1100px 780px at 12% -6%,
+        rgba(47, 128, 96, 0.22),
+        transparent 62%
+      ),
+      radial-gradient(
+        860px 640px at 92% 4%,
+        rgba(201, 154, 59, 0.12),
+        transparent 60%
+      ),
+      radial-gradient(
+        1000px 900px at 50% 108%,
+        rgba(37, 107, 76, 0.18),
+        transparent 62%
+      );
+  }
+
+  /*
+    İnce film grenli doku. İçeriğin ARKASINDA durur (z-index: 0) — metnin
+    üzerine binip okunabilirliği düşürmez, yalnızca zemine dokunsal bir
+    premium katman ekler.
+  */
+  body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    /*
+      Bilinçli olarak `mix-blend-mode` KULLANILMAZ. Ekran boyutunda, sabit
+      konumlu bir harmanlama katmanı altındaki TÜM içeriği tek bir
+      kompozisyon grubuna zorlar; her kaydırma karesinde sayfanın tamamı
+      yeniden boyanır ve uzun sayfalarda render süreci kilitlenir.
+      Düşük opaklıkta düz bir doku aynı görsel etkiyi bedelsiz verir.
+    */
+    opacity: 0.22;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.35'/%3E%3C/svg%3E");
+    background-size: 180px 180px;
+  }
+
+  /* Sabit konumlu gren katmanının üstünde kalmaları için */
+  body > header,
+  body > main,
+  body > footer {
+    position: relative;
+    z-index: 1;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
     font-family: var(--font-display);
     font-weight: 600;
     line-height: 1.1;
+    letter-spacing: -0.015em;
+    color: var(--color-neutral-50);
+    /* Fraunces değişken ekseni: büyük puntoda daha zarif kontrast */
+    font-optical-sizing: auto;
   }
 
   a {
     color: inherit;
   }
 
+  ::selection {
+    background-color: rgba(212, 175, 94, 0.28);
+    color: var(--color-neutral-50);
+  }
+
+  /* Koyu temaya uygun ince kaydırma çubuğu */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-surface-600) transparent;
+  }
+
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: var(--color-surface-950);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: var(--color-surface-600);
+    border-radius: 999px;
+    border: 3px solid var(--color-surface-950);
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: var(--color-primary-600);
+  }
+
   /* Klavye kullanıcıları için görünür odak halkası (WCAG AA) */
   :focus-visible {
-    outline: 2px solid var(--color-accent-500);
-    outline-offset: 2px;
+    outline: 2px solid var(--color-accent-400);
+    outline-offset: 3px;
+    border-radius: var(--radius-xs);
   }
 
   /* Hareket azaltma tercihi olan kullanıcılar için tüm animasyon/geçişleri kapat */
@@ -58,8 +183,10 @@
     left: -9999px;
     top: 0;
     z-index: 100;
-    background-color: var(--color-primary-900);
-    color: var(--color-neutral-50);
+    background-color: var(--color-neutral-50);
+    color: var(--color-surface-950);
+    border-radius: var(--radius-md);
+    font-weight: 600;
     padding: var(--spacing-16) var(--spacing-24);
   }
 
@@ -67,4 +194,320 @@
     left: var(--spacing-16);
     top: var(--spacing-16);
   }
+}
+
+@layer components {
+  /* ------------------------------------------------------------------
+     Bölüm iskeleti
+     Bölümler kendi düz zeminlerini boyamaz; `section-shell` yalnızca
+     dekoratif katmanların taşmasını keser ve konumlandırma bağlamı kurar.
+     ------------------------------------------------------------------ */
+  .section-shell {
+    position: relative;
+    isolation: isolate;
+    overflow: clip;
+  }
+
+  /* Bölüm içeriği dekoratif katmanların üstünde kalır */
+  .section-body {
+    position: relative;
+    z-index: 1;
+  }
+
+  /*
+    Bölümler arası "sert kenarlık yerine" kullanılan, kenarlara doğru
+    sönümlenen gradyan saç teli.
+  */
+  .hairline {
+    height: 1px;
+    width: 100%;
+    border: 0;
+    background-image: linear-gradient(
+      90deg,
+      transparent,
+      rgba(248, 246, 242, 0.14) 22%,
+      rgba(212, 175, 94, 0.32) 50%,
+      rgba(248, 246, 242, 0.14) 78%,
+      transparent
+    );
+  }
+
+  /* ------------------------------------------------------------------
+     Cam yüzeyler
+     ------------------------------------------------------------------ */
+  /*
+    Cam yüzey etkisi gradyan + ince kenarlık + üst iç parlaklıkla kurulur,
+    `backdrop-filter` İLE DEĞİL. Sayfanın zemini sabit ve büyük ölçüde düz
+    olduğu için bulanıklaştırılacak bir içerik yok; buna karşılık onlarca
+    kartta backdrop-filter, her kart için ayrı bir kompozisyon katmanı ve
+    kaydırmada sürekli yeniden okuma maliyeti demek. Görsel sonuç aynı,
+    render maliyeti sıfıra yakın. (Gerçekten içerik üzerinde yüzen tek öğe
+    olan sticky header backdrop-filter kullanmayı sürdürür.)
+  */
+  .glass {
+    background-image: linear-gradient(
+      158deg,
+      rgba(248, 246, 242, 0.095),
+      rgba(248, 246, 242, 0.035) 46%,
+      rgba(5, 12, 9, 0.14)
+    );
+    border: 1px solid rgba(248, 246, 242, 0.11);
+    box-shadow: var(--shadow-soft), var(--shadow-inset-top);
+  }
+
+  /* Daha derin, "oyulmuş" cam — koyu vurgu panelleri için */
+  .glass-deep {
+    background-image: linear-gradient(
+      158deg,
+      rgba(248, 246, 242, 0.06),
+      rgba(5, 12, 9, 0.35)
+    );
+    border: 1px solid rgba(248, 246, 242, 0.08);
+    box-shadow: var(--shadow-lift), var(--shadow-inset-top);
+  }
+
+  /*
+    Etkileşimli cam kart: hover'da hafifçe yükselir, kenarı altına döner
+    ve arkasında yeşil bir glow belirir.
+  */
+  .card-lift {
+    transition:
+      transform 450ms var(--ease-premium),
+      border-color 450ms var(--ease-premium),
+      box-shadow 450ms var(--ease-premium),
+      background-color 450ms var(--ease-premium);
+  }
+
+  .card-lift:hover {
+    transform: translateY(-6px);
+    border-color: rgba(212, 175, 94, 0.34);
+    box-shadow: var(--shadow-glow), var(--shadow-inset-top);
+  }
+
+  /*
+    İmleç konumunu izleyen yumuşak ışık. `--mx`/`--my` değerleri
+    ScrollReveal.astro içindeki pointer script'i tarafından yazılır;
+    script çalışmazsa katman görünmez kalır (aşamalı geliştirme).
+  */
+  .card-spotlight {
+    position: relative;
+  }
+
+  .card-spotlight::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 400ms var(--ease-premium);
+    background: radial-gradient(
+      340px circle at var(--mx, 50%) var(--my, 0%),
+      rgba(212, 175, 94, 0.13),
+      transparent 62%
+    );
+  }
+
+  .card-spotlight:hover::after {
+    opacity: 1;
+  }
+
+  /* ------------------------------------------------------------------
+     Atmosfer katmanları (bölümlerin kendi görsel kimliği)
+     Hepsi `aria-hidden` dekoratif <div>'ler olarak kullanılır.
+     ------------------------------------------------------------------ */
+
+  /*
+    Yavaşça sürüklenen bulanık ışık lekesi.
+    `will-change: transform` bilinçli olarak KULLANILMAZ: her lekeyi kalıcı
+    bir GPU katmanına terfi ettirir ve büyük blur yarıçapıyla birlikte
+    sayfa genelinde yüzlerce MB doku belleği tüketir.
+  */
+  .aurora {
+    position: absolute;
+    border-radius: 999px;
+    filter: blur(72px);
+    pointer-events: none;
+  }
+
+  /*
+    Hero portresi: alfa kanallı kesilmiş görsel. Görsel alt kenarda kesildiği
+    için maske ile sönümlenir, böylece gövde düz bir çizgiyle bitmek yerine
+    zemine karışır. Gölge kutuya değil figürün siluetine düşer.
+  */
+  .hero-portrait {
+    filter: drop-shadow(0 24px 48px rgba(5, 12, 9, 0.55));
+    mask-image: linear-gradient(to bottom, #000 76%, transparent 99%);
+    -webkit-mask-image: linear-gradient(to bottom, #000 76%, transparent 99%);
+  }
+
+  /* İnce ızgara dokusu — kenarlara doğru maskeyle söner */
+  .grid-mask {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background-image:
+      linear-gradient(to right, rgba(248, 246, 242, 0.055) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(248, 246, 242, 0.055) 1px, transparent 1px);
+    background-size: 72px 72px;
+    mask-image: radial-gradient(
+      ellipse 75% 62% at 50% 38%,
+      #000 32%,
+      transparent 76%
+    );
+    -webkit-mask-image: radial-gradient(
+      ellipse 75% 62% at 50% 38%,
+      #000 32%,
+      transparent 76%
+    );
+  }
+
+  /* Nokta dokusu — ızgaradan daha sakin, içerik yoğun bölümler için */
+  .dot-mask {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background-image: radial-gradient(
+      rgba(248, 246, 242, 0.09) 1px,
+      transparent 1px
+    );
+    background-size: 26px 26px;
+    mask-image: radial-gradient(ellipse 70% 60% at 50% 50%, #000, transparent 72%);
+    -webkit-mask-image: radial-gradient(
+      ellipse 70% 60% at 50% 50%,
+      #000,
+      transparent 72%
+    );
+  }
+
+  /*
+    Bölüme özel gren dokusu — kendi zeminini boyayan (açık/koyu vurgu)
+    bölümlerde gövde greni görünmediği için yerel olarak eklenir.
+  */
+  .noise-layer {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    /* body::after ile aynı gerekçe: harmanlama modu yok, düz düşük opaklık. */
+    opacity: 0.25;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n2'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n2)' opacity='0.35'/%3E%3C/svg%3E");
+    background-size: 180px 180px;
+  }
+
+  /* ------------------------------------------------------------------
+     Tipografi vurguları
+     ------------------------------------------------------------------ */
+
+  /* Başlıkta yavaşça kayan sıcak metalik gradyan */
+  .text-sheen {
+    background-image: linear-gradient(
+      100deg,
+      var(--color-neutral-50) 12%,
+      var(--color-neutral-300) 32%,
+      var(--color-accent-300) 50%,
+      var(--color-neutral-200) 68%,
+      var(--color-neutral-50) 88%
+    );
+    background-size: 220% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: var(--animate-sheen);
+  }
+
+  /*
+    Başlık içinde tek bir öbeği vurgulamak için sıcak altın gradyan.
+    `.text-sheen`den farkı: nötr gri durakları yoktur — çevresindeki beyaz
+    metnin yanında soluk değil, bilinçli bir vurgu olarak okunur.
+  */
+  .text-gold {
+    background-image: linear-gradient(
+      100deg,
+      var(--color-accent-200) 8%,
+      var(--color-accent-400) 38%,
+      var(--color-accent-100) 62%,
+      var(--color-accent-300) 92%
+    );
+    background-size: 200% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: var(--animate-sheen);
+  }
+
+  /* Bölüm üstü küçük etiket: nokta + cam pill */
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-8);
+    padding: 0.4rem 0.85rem;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-accent-300);
+    background-image: linear-gradient(
+      140deg,
+      rgba(212, 175, 94, 0.14),
+      rgba(248, 246, 242, 0.03)
+    );
+    border: 1px solid rgba(212, 175, 94, 0.22);
+  }
+
+  .eyebrow::before {
+    content: "";
+    width: 5px;
+    height: 5px;
+    border-radius: 999px;
+    background-color: var(--color-accent-400);
+    box-shadow: 0 0 10px 2px rgba(212, 175, 94, 0.65);
+    animation: var(--animate-glow-pulse);
+  }
+
+  /* Açık "nefes" bölümlerinde aynı etiketin ters kontrastı */
+  .eyebrow-on-light {
+    color: var(--color-primary-700);
+    background-image: linear-gradient(
+      140deg,
+      rgba(37, 107, 76, 0.1),
+      rgba(28, 26, 22, 0.02)
+    );
+    border-color: rgba(37, 107, 76, 0.24);
+  }
+
+  .eyebrow-on-light::before {
+    background-color: var(--color-primary-600);
+    box-shadow: 0 0 10px 2px rgba(37, 107, 76, 0.4);
+  }
+
+}
+
+/* ------------------------------------------------------------------
+   Blog içeriği (Markdown) — koyu zemin uyarlaması
+
+   Bu blok BİLİNÇLİ olarak katmansızdır (`@layer` dışında). Typography
+   eklentisinin `.prose` sınıfı `--tw-prose-*` değişkenlerini `utilities`
+   katmanında tanımlar; `components` katmanındaki bir override her zaman
+   ona yenilir ve gövde metni koyu zeminde koyu gri kalır. Katmansız
+   kurallar tüm katmanlı kuralları yendiği için değerler burada
+   güvenle geçersiz kılınır.
+   ------------------------------------------------------------------ */
+.prose-cnkr {
+  --tw-prose-body: var(--color-neutral-300);
+  --tw-prose-headings: var(--color-neutral-50);
+  --tw-prose-lead: var(--color-neutral-300);
+  --tw-prose-links: var(--color-accent-300);
+  --tw-prose-bold: var(--color-neutral-50);
+  --tw-prose-counters: var(--color-accent-400);
+  --tw-prose-bullets: var(--color-primary-400);
+  --tw-prose-hr: rgba(248, 246, 242, 0.12);
+  --tw-prose-quotes: var(--color-neutral-100);
+  --tw-prose-quote-borders: var(--color-accent-500);
+  --tw-prose-captions: var(--color-neutral-400);
+  --tw-prose-code: var(--color-accent-200);
+  --tw-prose-pre-code: var(--color-neutral-200);
+  --tw-prose-pre-bg: var(--color-surface-900);
+  --tw-prose-th-borders: rgba(248, 246, 242, 0.18);
+  --tw-prose-td-borders: rgba(248, 246, 242, 0.1);
 }
