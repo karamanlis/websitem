@@ -1,28 +1,29 @@
 ---
 import SectionHeading from "../ui/SectionHeading.astro";
+import { getDict, getLocale, localeTags } from "../../lib/i18n";
 
-const faqs = [
-  {
-    q: "Ne kadar reklam bütçesine ihtiyacım var?",
-    a: "Bütçe, sektörünüze ve hedeflerinize göre değişir. Strateji görüşmesinde işletmenize uygun gerçekçi bir bütçe aralığını birlikte belirleriz.",
-  },
-  {
-    q: "Bir web sitesi projesi ne kadar sürer?",
-    a: "Kapsam ve içerik hazırlığına bağlı olarak değişir; strateji görüşmesinde projenize özel bir zaman çizelgesi paylaşırız.",
-  },
-  {
-    q: "Sonuçları ne zaman görmeye başlarım?",
-    a: "Sistem kurulumu ve optimizasyon aşamalarına bağlı olarak değişir; bu, sabit bir vaat değil, işletmenize özel bir süreçtir.",
-  },
-  {
-    q: "Hangi işletmelerle çalışıyorsunuz?",
-    a: "Butik oteller, klinikler, fitness merkezleri, koçlar, yerel işletmeler ve hizmet sektöründeki KOBİ'lerle çalışıyoruz.",
-  },
-  {
-    q: "Strateji görüşmesi nasıl işliyor?",
-    a: "Görüşmede işletmenizi, mevcut dijital varlığınızı ve hedeflerinizi konuşuyoruz; uygunsa size özel bir sistem önerisi paylaşıyoruz.",
-  },
-];
+const t = getDict(Astro.url.pathname);
+const faqs = t.faq.faqs;
+
+/*
+ * FAQPage şeması, Google'ın soruları arama sonuçlarında zengin snippet
+ * olarak göstermesini sağlar. İçerik, sayfada görünen `faqs` dizisinden
+ * üretilir — görünmeyen/uydurma bir soru eklenmez. Dil, sayfanın
+ * diline göre otomatik uyar.
+ */
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  inLanguage: localeTags[getLocale(Astro.url.pathname)],
+  mainEntity: faqs.map((faq) => ({
+    "@type": "Question",
+    name: faq.q,
+    acceptedAnswer: {
+      "@type": "Answer",
+      text: faq.a,
+    },
+  })),
+};
 ---
 
 {/*
@@ -31,6 +32,7 @@ const faqs = [
   açık durumda kart altın kenarlıkla vurgulanır.
 */}
 <section id="sss" class="section-shell">
+  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
   <div aria-hidden="true" class="pointer-events-none absolute inset-0 -z-10">
     <div
       class="aurora left-1/2 top-[20%] h-[440px] w-[680px] -translate-x-1/2 bg-primary-600/18"
@@ -39,7 +41,7 @@ const faqs = [
   </div>
 
   <div class="section-body mx-auto max-w-4xl px-24 py-64 lg:px-32 lg:py-96">
-    <SectionHeading eyebrow="SSS" title="Sıkça sorulan sorular" align="center" />
+    <SectionHeading eyebrow={t.faq.eyebrow} title={t.faq.title} align="center" />
 
     <div class="mt-48 flex flex-col gap-16">
       {

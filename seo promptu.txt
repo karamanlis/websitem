@@ -1,0 +1,79 @@
+Sen kıdemli bir SEO uzmanı ve UX copywriter'sın.
+
+https://cnkrdijital.com adresindeki web sitesini analiz et ve mevcut tasarımı bozmadan sadece SEO ve içerik optimizasyonu yap.
+
+ÖNEMLİ KURALLAR
+
+- Tasarımı değiştirme.
+- Sayfa yapısını değiştirme.
+- Renkleri ve UI elementlerini değiştirme.
+- Sadece başlıklar (H1, H2, H3), meta title, meta description ve CTA metinlerini SEO açısından optimize et.
+- "Dijital Büyüme Sistemi" marka dilini tamamen kaldırma. Bu ifade CNKR Dijital'in metodolojisi olarak kullanılmaya devam edecek.
+- Kullanıcı deneyimini bozacak şekilde keyword stuffing yapma.
+- Metinler profesyonel ve premium algısı oluşturmalı.
+
+SEO HEDEFLERİ
+
+Google'ın aşağıdaki anahtar kelimeler ile CNKR Dijital'i daha iyi anlamasını istiyorum.
+
+Anahtar kelimeler:
+
+- Dijital Pazarlama Danışmanlığı
+- Google Ads Hizmeti
+- Meta Reklam Yönetimi
+- SEO Hizmeti
+- Web Tasarım Hizmeti
+- Yapay Zeka Otomasyon Hizmetleri
+- Dijital Büyüme Sistemleri
+- Dijital Dönüşüm Danışmanlığı
+- İşletmeler İçin Dijital Pazarlama
+- AI Otomasyon Sistemleri
+
+YAPILACAKLAR
+
+1. Ana sayfadaki mevcut H1 başlığını SEO uyumlu hale getir.
+
+2. Tüm H2 ve H3 başlıklarını analiz et ve:
+   - Kullanıcı niyetine uygun hale getir.
+   - Google'ın hizmetlerimi daha iyi anlamasını sağla.
+   - Gereksiz soyut ifadeleri SEO dostu hale getir.
+
+3. Meta Title oluştur.
+   - 50-60 karakter aralığında olsun.
+   - Anahtar kelimeleri doğal şekilde kullansın.
+
+4. Meta Description oluştur.
+   - 140-160 karakter aralığında olsun.
+   - Tıklanma oranını artıracak şekilde yaz.
+
+5. CTA (Call To Action) metinlerini optimize et.
+   - Dönüşüm odaklı olsun.
+   - Premium ve danışmanlık algısı oluştursun.
+
+6. Hakkımda bölümünü SEO açısından optimize et.
+   - İsim aramalarında avantaj sağlayacak şekilde düzenle.
+
+7. Hizmetler bölümünü SEO açısından optimize et.
+   - Google'ın hangi hizmetleri verdiğimi net şekilde anlamasını sağla.
+
+8. Sayfanın heading hiyerarşisini kontrol et.
+   - Yalnızca 1 adet H1 kullan.
+   - H2 ve H3 yapısını SEO best practice kurallarına göre düzenle.
+
+ÇIKTI FORMATI
+
+Aşağıdaki formatta çıktı ver:
+
+- Mevcut Başlık
+- Önerilen Başlık
+- Neden değiştirildi?
+- SEO katkısı nedir?
+
+Son olarak;
+
+- Sayfanın genel SEO puanını değerlendir.
+- Eksik Structured Data (Schema) kullanımı varsa belirt.
+- Local Business Schema, Organization Schema ve FAQ Schema eklenmesi gerekiyorsa öneriler sun.
+- Google Search Console ve SEO açısından dikkat edilmesi gereken diğer noktaları listele.
+
+Amacım tasarımı değiştirmeden, CNKR Dijital'in Google'da "dijital pazarlama ve büyüme sistemleri" alanında daha görünür hale gelmesini sağlamaktır.

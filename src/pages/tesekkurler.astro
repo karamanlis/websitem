@@ -7,13 +7,27 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Button from "../components/ui/Button.astro";
 import { siteConfig } from "../lib/site-config";
+import { getDict } from "../lib/i18n";
+
+const { ctaLabel } = getDict(Astro.url.pathname);
 ---
 
 <BaseLayout
   title="Mesajınız ulaştı"
   description="Mesajınız bize ulaştı. En kısa sürede dönüş yapacağız."
   noindex
+  altHref="/en/thank-you"
 >
+  {/*
+    Meta Pixel dönüşüm event'i. Bu sayfa yalnızca form başarıyla
+    gönderildikten sonra açıldığı için `Lead` burada tetiklenir —
+    böylece başarısız gönderimler dönüşüm sayılmaz. `fbq` base kodu
+    BaseLayout'un head'inde senkron tanımlandığı için burada hazırdır.
+  */}
+  <script is:inline>
+    if (typeof fbq === "function") fbq("track", "Lead");
+  </script>
+
   <section class="section-shell">
     <div aria-hidden="true" class="pointer-events-none absolute inset-0 -z-10">
       <div
@@ -43,7 +57,7 @@ import { siteConfig } from "../lib/site-config";
 
       <div class="mt-48 flex flex-wrap items-center justify-center gap-24">
         <Button href={siteConfig.bookingUrl || "/iletisim"} variant="solid">
-          {siteConfig.ctaLabel}
+          {ctaLabel}
         </Button>
         <a
           href="/"

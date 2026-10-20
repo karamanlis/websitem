@@ -1,6 +1,21 @@
 ---
 import { siteConfig } from "../../lib/site-config";
+import type { Locale } from "../../lib/i18n";
+import { getDict } from "../../lib/i18n";
 import Button from "../ui/Button.astro";
+
+interface Props {
+  locale: Locale;
+  /** Bu sayfanın diğer dildeki karşılığı; yoksa dil seçici tek etiket olarak kalır. */
+  altHref?: string;
+}
+
+const { locale, altHref } = Astro.props;
+const { header, nav, ctaLabel } = getDict(Astro.url.pathname);
+/** CTA, doğrudan Google Calendar randevu sayfasına gider. */
+const ctaHref = siteConfig.bookingUrl || (locale === "en" ? "/en/contact" : "/iletisim");
+const ctaTarget = siteConfig.bookingUrl ? "_blank" : undefined;
+const switchHref = altHref;
 ---
 
 {/*
@@ -16,28 +31,31 @@ import Button from "../ui/Button.astro";
 >
   <div class="mx-auto flex max-w-6xl items-center justify-between px-24 py-16 lg:px-32">
     <a
-      href="/"
+      href={locale === "en" ? "/en/" : "/"}
       class="group/logo flex items-center gap-16 font-display text-xl font-semibold text-neutral-50"
     >
-      {/* Marka işareti: yeşil-altın gradyan disk, hover'da parlar */}
-      <span
+      {/* Marka işareti: logo görseli, hover'da parlar */}
+      <img
+        src="/logo-mark.jpg"
+        alt=""
         aria-hidden="true"
-        class="relative grid h-32 w-32 place-items-center rounded-full bg-[linear-gradient(140deg,var(--color-primary-400),var(--color-primary-700))] text-xs font-bold text-neutral-50 shadow-[0_0_20px_-4px_rgba(47,128,96,0.8)] ring-1 ring-neutral-50/15 transition-shadow duration-500 ease-premium group-hover/logo:shadow-[0_0_28px_-2px_rgba(212,175,94,0.7)]"
-      >
-        C
-      </span>
+        width="32"
+        height="32"
+        class="relative h-32 w-32 rounded-full object-cover shadow-[0_0_20px_-4px_rgba(47,128,96,0.8)] ring-1 ring-neutral-50/15 transition-shadow duration-500 ease-premium group-hover/logo:shadow-[0_0_28px_-2px_rgba(212,175,94,0.7)]"
+      />
       <span class="transition-colors duration-300 ease-premium group-hover/logo:text-accent-200">
         {siteConfig.logoText || siteConfig.name}
       </span>
     </a>
 
     {/*
-      Kırılma noktası `lg` değil `xl`: sekiz menü öğesi + CTA butonu 1024px'te
-      logoyla çakışıyordu. 1280px altında hamburger menüye düşülür.
+      Kırılma noktası `lg` değil `xl`: menü öğeleri + CTA butonu + dil
+      seçici 1024px'te logoyla çakışıyordu. 1280px altında hamburger
+      menüye düşülür.
     */}
-    <nav aria-label="Ana gezinme" class="hidden items-center gap-8 xl:flex">
+    <nav aria-label={locale === "en" ? "Main navigation" : "Ana gezinme"} class="hidden items-center gap-8 xl:flex">
       {
-        siteConfig.nav.map((item) => (
+        nav.map((item) => (
           <a
             href={item.href}
             class="relative rounded-full px-8 py-8 text-sm font-medium text-neutral-300 transition-colors duration-300 ease-premium hover:bg-neutral-50/6 hover:text-neutral-50"
@@ -48,32 +66,72 @@ import Button from "../ui/Button.astro";
       }
     </nav>
 
-    <div class="hidden xl:block">
-      <Button href="/#iletisim" variant="solid" class="px-24 py-8 text-sm">
-        {siteConfig.ctaLabel}
+    <div class="hidden items-center gap-16 xl:flex">
+      {/* Dil seçici: karşı sayfa varsa tıklanabilir, yoksa yalnızca etiket */}
+      <span
+        class="flex items-center rounded-full border border-neutral-50/14 bg-neutral-50/5 text-xs font-semibold"
+      >
+        <span class="rounded-full bg-neutral-50/10 px-10 py-6 text-neutral-50">{header.langLabel}</span>
+        {
+          switchHref ? (
+            <a
+              href={switchHref}
+              class="rounded-full px-10 py-6 text-neutral-400 transition-colors duration-300 ease-premium hover:text-neutral-50"
+              aria-label={header.langSwitchSr}
+            >
+              {header.langSwitchLabel}
+            </a>
+          ) : (
+            <span class="px-10 py-6 text-neutral-600">{header.langSwitchLabel}</span>
+          )
+        }
+      </span>
+      <Button href={ctaHref} variant="solid" target={ctaTarget} class="px-24 py-8 text-sm">
+        {ctaLabel}
       </Button>
     </div>
 
-    <button
-      id="mobile-nav-toggle"
-      type="button"
-      class="inline-flex items-center justify-center rounded-full border border-neutral-50/14 bg-neutral-50/5 p-8 text-neutral-100 backdrop-blur-md transition-colors duration-300 ease-premium hover:border-accent-400/40 hover:text-neutral-50 xl:hidden"
-      aria-expanded="false"
-      aria-controls="mobile-nav"
-    >
-      <span class="sr-only">Menüyü aç/kapat</span>
-      <svg
-        width="22"
-        height="22"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="2"
-        aria-hidden="true"
+    <div class="flex items-center gap-16 xl:hidden">
+      <span
+        class="flex items-center rounded-full border border-neutral-50/14 bg-neutral-50/5 text-xs font-semibold"
       >
-        <path d="M3 6h18M3 12h18M3 18h18" stroke-linecap="round"></path>
-      </svg>
-    </button>
+        <span class="rounded-full bg-neutral-50/10 px-10 py-6 text-neutral-50">{header.langLabel}</span>
+        {
+          switchHref ? (
+            <a
+              href={switchHref}
+              class="rounded-full px-10 py-6 text-neutral-400 transition-colors duration-300 ease-premium hover:text-neutral-50"
+              aria-label={header.langSwitchSr}
+            >
+              {header.langSwitchLabel}
+            </a>
+          ) : (
+            <span class="px-10 py-6 text-neutral-600">{header.langSwitchLabel}</span>
+          )
+        }
+      </span>
+
+      <button
+        id="mobile-nav-toggle"
+        type="button"
+        class="inline-flex items-center justify-center rounded-full border border-neutral-50/14 bg-neutral-50/5 p-8 text-neutral-100 backdrop-blur-md transition-colors duration-300 ease-premium hover:border-accent-400/40 hover:text-neutral-50 xl:hidden"
+        aria-expanded="false"
+        aria-controls="mobile-nav"
+      >
+        <span class="sr-only">{header.menuToggle}</span>
+        <svg
+          width="22"
+          height="22"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          aria-hidden="true"
+        >
+          <path d="M3 6h18M3 12h18M3 18h18" stroke-linecap="round"></path>
+        </svg>
+      </button>
+    </div>
   </div>
 
   {/* Sert kenarlık yerine, yalnızca kaydırıldığında beliren gradyan saç teli */}
@@ -85,11 +143,11 @@ import Button from "../ui/Button.astro";
 
   <nav
     id="mobile-nav"
-    aria-label="Mobil gezinme"
+    aria-label={locale === "en" ? "Mobile navigation" : "Mobil gezinme"}
     class="hidden flex-col gap-8 border-t border-neutral-50/8 bg-surface-950/92 px-24 py-24 backdrop-blur-xl xl:hidden"
   >
     {
-      siteConfig.nav.map((item) => (
+      nav.map((item) => (
         <a
           href={item.href}
           class="rounded-lg px-16 py-8 text-base font-medium text-neutral-200 transition-colors duration-300 ease-premium hover:bg-neutral-50/6 hover:text-neutral-50"
@@ -98,8 +156,8 @@ import Button from "../ui/Button.astro";
         </a>
       ))
     }
-    <Button href="/#iletisim" variant="solid" class="mt-8 w-full">
-      {siteConfig.ctaLabel}
+    <Button href={ctaHref} variant="solid" target={ctaTarget} class="mt-8 w-full">
+      {ctaLabel}
     </Button>
   </nav>
 </header>
@@ -108,10 +166,23 @@ import Button from "../ui/Button.astro";
   const toggle = document.getElementById("mobile-nav-toggle");
   const nav = document.getElementById("mobile-nav");
 
+  function closeMobileNav() {
+    nav?.classList.remove("flex");
+    nav?.classList.add("hidden");
+    toggle?.setAttribute("aria-expanded", "false");
+  }
+
   toggle?.addEventListener("click", () => {
     const isOpen = nav?.classList.toggle("flex");
     nav?.classList.toggle("hidden");
     toggle.setAttribute("aria-expanded", String(Boolean(isOpen)));
+  });
+
+  // Menüdeki bir bağlantıya tıklanınca menü kapanmalı; aksi halde açık
+  // menü, sticky header'a bağlı kalıp anchor ile kaydırılan hedef bölümün
+  // üzerini kaplıyordu.
+  nav?.querySelectorAll("a").forEach((link) => {
+    link.addEventListener("click", closeMobileNav);
   });
 
   /*

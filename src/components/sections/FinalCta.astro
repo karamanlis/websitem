@@ -1,6 +1,10 @@
 ---
 import { siteConfig } from "../../lib/site-config";
+import { getDict, getLocale } from "../../lib/i18n";
 import Button from "../ui/Button.astro";
+
+const locale = getLocale(Astro.url.pathname);
+const t = getDict(Astro.url.pathname);
 ---
 
 {/*
@@ -32,28 +36,26 @@ import Button from "../ui/Button.astro";
     <h2
       class="font-display text-[clamp(2rem,1.2rem+3.6vw,3.5rem)] font-semibold leading-[1.06] tracking-[-0.02em] text-balance text-sheen"
     >
-      Doğru sistem ile işlerinizi ölçeklendirin.
+      {t.finalCta.title}
     </h2>
 
     <p class="mx-auto mt-32 max-w-xl text-lg leading-relaxed text-neutral-400">
-      Her ay sistemsiz geçen süre, rakiplerinizin sistemli ilerlediği bir
-      süredir. Ücretsiz strateji görüşmesinde işletmeniz için somut bir
-      büyüme yol haritası çıkaralım.
+      {t.finalCta.paragraph}
     </p>
 
     <div class="mt-48 flex flex-col items-center gap-24">
       <Button
-        href={siteConfig.bookingUrl || "/iletisim"}
+        href={siteConfig.bookingUrl || (locale === "en" ? "/en/contact" : "/iletisim")}
         variant="onDark"
         target={siteConfig.bookingUrl ? "_blank" : undefined}
       >
-        {siteConfig.ctaLabel}
+        {t.ctaLabel}
       </Button>
 
       <p
         class="inline-flex flex-wrap items-center justify-center gap-8 text-sm text-neutral-400"
       >
-        30 dakika · Ücretsiz · Satış sunumu değil
+        {t.finalCta.note}
       </p>
     </div>
   </div>

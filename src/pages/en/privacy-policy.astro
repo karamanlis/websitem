@@ -1,0 +1,228 @@
+---
+/**
+ * English privacy policy page.
+ *
+ * Turkish page: /gizlilik-politikasi (KVKK aydınlatma metni). Bu sayfa
+ * aynı veri akışlarını uluslararası okuyucuya İngilizce anlatır; hukuki
+ * dayanak (6698 sayılı Kanun / KVKK) olduğu gibi korunur çünkü veri
+ * sorumluluğu Türk mevzuatına tabidir.
+ *
+ * Veri akışı değiştiğinde HER İKİ sayfa da güncellenmelidir.
+ */
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { siteConfig } from "../../lib/site-config";
+
+/** Metnin son güncellenme tarihi — içerik değiştikçe elle güncelleyin. */
+const lastUpdated = new Date("2026-07-20");
+const lastUpdatedLabel = lastUpdated.toLocaleDateString("en-US", {
+  year: "numeric",
+  month: "long",
+  day: "numeric",
+});
+---
+
+<BaseLayout
+  title="Privacy Policy & Data Processing Notice"
+  description={`How ${siteConfig.name} collects, stores and processes your personal data, and your rights under the Turkish Data Protection Law (KVKK).`}
+  altHref="/gizlilik-politikasi"
+>
+  <section class="section-shell">
+    <div aria-hidden="true" class="pointer-events-none absolute inset-0 -z-10">
+      <div
+        class="aurora left-1/2 top-[-12%] h-[420px] w-[700px] -translate-x-1/2 bg-primary-600/18"
+      >
+      </div>
+    </div>
+
+    <div class="section-body mx-auto max-w-3xl px-24 py-64 lg:px-32 lg:py-96">
+      <h1
+        class="font-display text-[clamp(1.875rem,1.1rem+3.2vw,3rem)] font-semibold leading-[1.08] tracking-[-0.02em] text-balance text-neutral-50"
+      >
+        Privacy Policy & Data Processing Notice
+      </h1>
+      <p class="mt-24 text-sm text-neutral-500">
+        Last updated: {lastUpdatedLabel}
+      </p>
+
+      <div aria-hidden="true" class="hairline mt-48 opacity-60"></div>
+
+      <div
+        class="prose prose-cnkr mt-48 max-w-none prose-headings:font-display prose-a:no-underline hover:prose-a:underline prose-a:underline-offset-4"
+      >
+        <p>
+          This notice explains, in accordance with the Turkish Personal Data
+          Protection Law No. 6698 ("KVKK"), for what purposes personal data
+          collected through the {siteConfig.name} ({siteConfig.domain})
+          website is processed, with whom it is shared, and what your rights
+          are.
+        </p>
+
+        <h2>1. Data Controller</h2>
+        <p>
+          Your personal data is processed by {siteConfig.name} as the data
+          controller, within the scope described below.
+        </p>
+        <ul>
+          {siteConfig.contactEmail && (
+            <li>
+              Email:{" "}
+              <a href={`mailto:${siteConfig.contactEmail}`}>
+                {siteConfig.contactEmail}
+              </a>
+            </li>
+          )}
+          {siteConfig.contactPhone && <li>Phone: {siteConfig.contactPhone}</li>}
+          <li>Website: {siteConfig.domain}</li>
+        </ul>
+
+        <h2>2. Personal Data We Process</h2>
+        <p>
+          Only the data you share with us directly is collected on this site.
+          There is no membership system, payment infrastructure or profile
+          creation feature.
+        </p>
+        <h3>a) Contact form</h3>
+        <p>
+          When you fill out the <a href="/en/contact">form on the contact
+          page</a>, the following data is processed: full name, email
+          address, phone number (optional), business name (optional) and the
+          content you write in the message field.
+        </p>
+        <h3>b) Appointment (strategy call) request</h3>
+        <p>
+          The embedded booking calendar on this site runs on Google
+          Calendar. When you pick a time, your name and email are collected
+          directly by Google and forwarded to us as an appointment record.
+          Google's own privacy policy also applies at this step.
+        </p>
+        <h3>c) Technical records</h3>
+        <p>
+          When you visit the site, standard server records such as IP
+          address, browser information and access time are automatically
+          kept by the hosting infrastructure for security and error
+          tracking.
+        </p>
+
+        <h2>3. Purposes and Legal Grounds of Processing</h2>
+        <ul>
+          <li>
+            <strong>Responding to your request and making an offer</strong> —
+            the <em>explicit consent</em> you give when submitting the form
+            (KVKK Art. 5/1) and direct relation to the establishment of a
+            contract (Art. 5/2-c).
+          </li>
+          <li>
+            <strong>Scheduling appointments and conducting the call</strong> —
+            the explicit consent you give together with your appointment
+            request.
+          </li>
+          <li>
+            <strong>Ensuring site security and fixing errors</strong> — the
+            data controller's legitimate interest (Art. 5/2-f).
+          </li>
+        </ul>
+        <p>
+          Your personal data is never added to marketing lists without your
+          permission and is not sold to third parties.
+        </p>
+
+        <h2>4. Transfers and Transfers Abroad</h2>
+        <p>
+          Your data is processed through the following infrastructure
+          providers so the service can technically operate. As these
+          providers' servers are located abroad, your form and appointment
+          data are deemed transferred abroad under KVKK Art. 9; you consent
+          to this transfer with the approval you give when submitting the
+          form.
+        </p>
+        <ul>
+          <li>
+            <strong>Netlify</strong> — hosting the site and storing contact
+            form submissions.
+          </li>
+          <li>
+            <strong>Google (Google Calendar)</strong> — running the booking
+            calendar.
+          </li>
+        </ul>
+        <p>
+          Apart from this, your personal data may be shared with authorized
+          public authorities only where a legal obligation arises.
+        </p>
+
+        <h2>5. Retention Period</h2>
+        <p>
+          Your contact and appointment requests are retained for as long as
+          necessary to evaluate your request and run a potential working
+          relationship; after this purpose ceases to exist, they are
+          retained for at most 2 further years. At the end of this period
+          the data is deleted or anonymized. If you request it, it is
+          deleted even before this period ends.
+        </p>
+
+        <h2>6. Cookies</h2>
+        <p>
+          This site <strong>does not use</strong> advertising or tracking
+          cookies, pixels or third-party analytics tools. Only the embedded
+          Google Calendar booking calendar may place Google-owned cookies
+          for its own operation. You can block cookies in your browser
+          settings; in that case only the embedded calendar may stop working
+          properly — the rest of the site is unaffected.
+        </p>
+
+        <h2>7. Your Rights under KVKK Art. 11</h2>
+        <p>Regarding your personal data, you have the following rights:</p>
+        <ul>
+          <li>To learn whether your personal data is being processed,</li>
+          <li>To request information if it has been processed,</li>
+          <li>
+            To learn the purpose of processing and whether it is used
+            consistently with that purpose,
+          </li>
+          <li>
+            To know the third parties to whom it is transferred, domestically
+            or abroad,
+          </li>
+          <li>To request correction if it is incomplete or inaccurately processed,</li>
+          <li>
+            To request its erasure or destruction within the conditions set
+            out in the law,
+          </li>
+          <li>
+            To request that correction, erasure and destruction operations be
+            notified to the third parties to whom the data was transferred,
+          </li>
+          <li>
+            To object to any adverse result arising from analysis carried out
+            exclusively by automated systems,
+          </li>
+          <li>
+            To claim compensation for damages if you suffer loss due to
+            unlawful processing.
+          </li>
+        </ul>
+        <p>
+          To exercise these rights, you can write to
+          {siteConfig.contactEmail && (
+            <>
+              {" "}
+              <a href={`mailto:${siteConfig.contactEmail}`}>
+                {siteConfig.contactEmail}
+              </a>{" "}
+            </>
+          )}
+          . Your request is resolved free of charge within 30 days at the
+          latest from the date it reaches us.
+        </p>
+
+        <h2>8. Changes</h2>
+        <p>
+          This notice is updated as the data flows on the site change (for
+          example, if an analytics tool is added). The current version is
+          always published on this page, together with the "last updated"
+          date above.
+        </p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

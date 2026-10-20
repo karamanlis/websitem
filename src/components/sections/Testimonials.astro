@@ -9,8 +9,22 @@
  */
 import SectionHeading from "../ui/SectionHeading.astro";
 import { siteConfig, type Testimonial } from "../../lib/site-config";
+import { getDict, getLocale, type Locale } from "../../lib/i18n";
 
-const testimonials = siteConfig.testimonials;
+const locale: Locale = getLocale(Astro.url.pathname);
+const t = getDict(Astro.url.pathname);
+
+/**
+ * Görüş alanını dile göre seçer: `quoteEn`/`resultEn`/`sectorEn` doluysa
+ * İngilizce'de onlar, boşsa özgün Türkçe metin gösterilir (gerçek görüş,
+ * çeviriyle değiştirilmeden).
+ */
+const testimonials: Testimonial[] = siteConfig.testimonials.map((item) => ({
+  ...item,
+  quote: locale === "en" ? (item.quoteEn ?? item.quote) : item.quote,
+  result: locale === "en" ? (item.resultEn ?? item.result) : item.result,
+  sector: locale === "en" ? (item.sectorEn ?? item.sector) : item.sector,
+}));
 const [featured, ...rest] = testimonials;
 
 /** Logo yoksa işletme adından monogram üretilir: "Lavinya Çocuk Kulübü" → "LÇ" */
@@ -34,8 +48,8 @@ function monogram(t: Testimonial) {
 
       <div class="section-body mx-auto max-w-6xl px-24 py-64 lg:px-32 lg:py-96">
         <SectionHeading
-          eyebrow="Müşteri Görüşleri"
-          title="Bizimle çalışan işletmeler ne söylüyor?"
+          eyebrow={t.testimonials.eyebrow}
+          title={t.testimonials.title}
           class="max-w-2xl"
         />
 

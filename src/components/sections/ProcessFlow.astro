@@ -1,13 +1,9 @@
 ---
 import SectionHeading from "../ui/SectionHeading.astro";
+import { getDict } from "../../lib/i18n";
 
-const steps = [
-  { number: "01", name: "Analiz", note: "Mevcut sitenizi, reklamlarınızı ve verinizi inceliyoruz." },
-  { number: "02", name: "Strateji", note: "İşletmenize özel bir büyüme yol haritası kuruyoruz." },
-  { number: "03", name: "Sistem Kurulumu", note: "Web sitesi, reklam ve otomasyon altyapısını devreye alıyoruz." },
-  { number: "04", name: "Optimizasyon", note: "Verilere göre sistemi sürekli iyileştiriyoruz." },
-  { number: "05", name: "Büyüme", note: "Sistem, öngörülebilir sonuçlar üretmeye başlıyor." },
-];
+const t = getDict(Astro.url.pathname);
+const process = t.process;
 ---
 
 {/*
@@ -26,8 +22,8 @@ const steps = [
 
   <div class="section-body mx-auto max-w-6xl px-24 py-64 lg:px-32 lg:py-96">
     <SectionHeading
-      eyebrow="Süreç"
-      title="Nasıl çalışıyorum?"
+      eyebrow={process.eyebrow}
+      title={process.title}
       align="center"
       class="mx-auto max-w-2xl"
     />
@@ -41,7 +37,7 @@ const steps = [
       </div>
 
       {
-        steps.map((step) => (
+        process.steps.map((step) => (
           <li
             data-reveal
             class="group relative flex flex-col items-start gap-16 rounded-xl px-16 py-24 transition-colors duration-500 ease-premium hover:bg-neutral-50/4"
@@ -66,7 +62,7 @@ const steps = [
       >
       </div>
       {
-        steps.map((step) => (
+        process.steps.map((step) => (
           <li class="relative">
             <span
               aria-hidden="true"

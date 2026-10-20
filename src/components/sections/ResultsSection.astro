@@ -1,21 +1,14 @@
 ---
 import SectionHeading from "../ui/SectionHeading.astro";
+import { getDict } from "../../lib/i18n";
 
-const outcomes = [
-  "Daha fazla nitelikli potansiyel müşteri",
-  "Daha fazla satış",
-  "Daha yüksek dönüşüm oranları",
-  "Daha düşük müşteri kazanım maliyeti",
-  "Daha güçlü müşteri deneyimi",
-  "Daha verimli pazarlama operasyonları",
-];
+const t = getDict(Astro.url.pathname);
+const results = t.results;
 ---
 
 {/*
-  Sayfanın tek açık "nefes" bölümü: koyu akışın ortasında yüzen, yumuşak
-  fildişi bir panel. Tam genişlik yerine yuvarlatılmış bir yüzey olarak
-  durur — bölüm ayrımı sert kenarlıkla değil, ışık farkıyla kurulur.
-  Kontrast: neutral-900 metin + neutral-50 zemin = 15.8:1 (AAA).
+  Sonuçlar bölümü — artık sitenin koyu temasıyla tam uyumlu, cam panel
+  üzerinde altın vurgulu kartlar. Aurora ve gren ile derinlik kazanır.
 */}
 <section id="sonuclar" class="section-shell">
   <div aria-hidden="true" class="pointer-events-none absolute inset-0 -z-10">
@@ -27,31 +20,29 @@ const outcomes = [
 
   <div class="section-body mx-auto max-w-6xl px-24 py-64 lg:px-32 lg:py-96">
     <div
-      class="relative overflow-hidden rounded-3xl bg-[linear-gradient(155deg,var(--color-neutral-50),var(--color-neutral-100)_55%,var(--color-neutral-200))] px-24 py-64 shadow-[0_40px_100px_-40px_rgba(0,0,0,0.9)] ring-1 ring-neutral-900/8 lg:px-64"
+      class="glass-deep relative overflow-hidden rounded-3xl px-24 py-64 shadow-[0_40px_100px_-40px_rgba(0,0,0,0.9)] ring-1 ring-neutral-50/8 lg:px-64"
     >
       <div aria-hidden="true" class="pointer-events-none absolute inset-0">
         <div
-          class="absolute inset-0 bg-[radial-gradient(ellipse_70%_60%_at_85%_0%,rgba(37,107,76,0.10),transparent_70%)]"
+          class="absolute inset-0 bg-[radial-gradient(ellipse_70%_60%_at_85%_0%,rgba(212,175,94,0.08),transparent_70%)]"
         >
         </div>
-        {/* Açık panelde gren, harmanlama modu olmadan koyu bir doku olarak durur */}
-        <div class="noise-layer opacity-[0.12]"></div>
+        <div class="noise-layer opacity-[0.08]"></div>
       </div>
 
       <div class="relative">
         <SectionHeading
-          eyebrow="Sonuçlar"
-          title="Sistemin ürettiği, işletmeniz için anlamlı sonuçlar."
-          tone="light"
+          eyebrow={results.eyebrow}
+          title={results.title}
           class="max-w-2xl"
         />
 
         <ul class="mt-48 grid gap-16 lg:grid-cols-2">
           {
-            outcomes.map((outcome) => (
+            results.items.map((outcome) => (
               <li
                 data-reveal
-                class="group flex items-start gap-16 rounded-xl border border-neutral-900/8 bg-neutral-50/70 px-24 py-24 shadow-[0_12px_30px_-24px_rgba(14,42,31,0.55)] transition-all duration-500 ease-premium hover:-translate-y-0.5 hover:border-primary-600/30 hover:shadow-[0_20px_44px_-24px_rgba(37,107,76,0.5)]"
+                class="group flex items-start gap-16 rounded-xl border border-neutral-50/8 bg-neutral-50/4 px-24 py-24 shadow-[0_12px_30px_-24px_rgba(0,0,0,0.55)] transition-all duration-500 ease-premium hover:-translate-y-0.5 hover:border-accent-400/30 hover:shadow-[0_20px_44px_-24px_rgba(212,175,94,0.3)]"
               >
                 {/* Onay işareti: yeşil gradyan disk */}
                 <span
@@ -71,7 +62,7 @@ const outcomes = [
                     <path d="M4 12.5 9.5 18 20 6.5" />
                   </svg>
                 </span>
-                <p class="text-lg leading-snug text-neutral-900">{outcome}</p>
+                <p class="text-lg leading-snug text-neutral-200">{outcome}</p>
               </li>
             ))
           }

@@ -1,5 +1,9 @@
 ---
+import { getDict } from "../../lib/i18n";
 import { siteConfig } from "../../lib/site-config";
+
+/* Dil, URL'den çözülür (BaseLayout'tan prop'a gerek yok). */
+const { nav, tagline, footer: t } = getDict(Astro.url.pathname);
 
 const year = new Date().getFullYear();
 ---
@@ -27,24 +31,23 @@ const year = new Date().getFullYear();
         <p class="flex items-center gap-16 font-display text-xl font-semibold text-neutral-50">
           <span
             aria-hidden="true"
-            class="grid h-32 w-32 place-items-center rounded-full bg-[linear-gradient(140deg,var(--color-primary-400),var(--color-primary-700))] text-xs font-bold text-neutral-50 shadow-[0_0_20px_-4px_rgba(47,128,96,0.8)] ring-1 ring-neutral-50/15"
+            class="h-32 w-32 shrink-0 rounded-full bg-[linear-gradient(140deg,var(--color-primary-400),var(--color-primary-700))] shadow-[0_0_20px_-4px_rgba(47,128,96,0.8)] ring-1 ring-neutral-50/15"
           >
-            C
           </span>
           {siteConfig.name}
         </p>
         <p class="mt-24 max-w-sm text-sm leading-relaxed text-neutral-400">
-          {siteConfig.tagline}
+          {tagline}
         </p>
       </div>
 
       <div>
         <p class="text-xs font-semibold uppercase tracking-[0.14em] text-accent-300">
-          Site
+          {t.site}
         </p>
         <ul class="mt-24 flex flex-col gap-16">
           {
-            siteConfig.nav.map((item) => (
+            nav.map((item) => (
               <li>
                 <a
                   href={item.href}
@@ -60,7 +63,7 @@ const year = new Date().getFullYear();
 
       <div>
         <p class="text-xs font-semibold uppercase tracking-[0.14em] text-accent-300">
-          İletişim
+          {t.contact}
         </p>
         <ul class="mt-24 flex flex-col gap-16 text-sm text-neutral-400">
           {
@@ -95,23 +98,23 @@ const year = new Date().getFullYear();
                   class="transition-colors duration-300 ease-premium hover:text-neutral-50"
                   rel="noopener"
                 >
-                  WhatsApp
+                  {t.whatsapp}
                 </a>
               </li>
             )
           }
           <li>
             <a
-              href="/iletisim"
+              href={t.contactFormHref}
               class="transition-colors duration-300 ease-premium hover:text-neutral-50"
-              >İletişim Formu</a
+              >{t.contactForm}</a
             >
           </li>
           <li>
             <a
-              href="/gizlilik-politikasi"
+              href={t.privacyHref}
               class="transition-colors duration-300 ease-premium hover:text-neutral-50"
-              >Gizlilik Politikası</a
+              >{t.privacy}</a
             >
           </li>
         </ul>
@@ -121,7 +124,7 @@ const year = new Date().getFullYear();
     <div class="mt-64">
       <div aria-hidden="true" class="hairline opacity-50"></div>
       <p class="pt-24 text-xs text-neutral-500">
-        &copy; {year} {siteConfig.name}. Tüm hakları saklıdır.
+        &copy; {year} {siteConfig.name}. {t.rights}
       </p>
     </div>
   </div>

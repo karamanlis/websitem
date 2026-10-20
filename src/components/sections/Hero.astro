@@ -1,6 +1,10 @@
 ---
 import Button from "../ui/Button.astro";
 import { siteConfig } from "../../lib/site-config";
+import { getDict } from "../../lib/i18n";
+
+const t = getDict(Astro.url.pathname);
+const hero = t.hero;
 ---
 
 {/*
@@ -51,20 +55,16 @@ import { siteConfig } from "../../lib/site-config";
 
       <h1
         class="mt-24 font-display text-[clamp(2.25rem,1.2rem+4.4vw,4rem)] font-semibold leading-[1.04] tracking-[-0.025em] text-balance text-neutral-50"
+        set:html={hero.titleHtml}
       >
-        İşletmeler için <span class="text-gold">dijital büyüme sistemleri</span
-        > kuruyoruz.
       </h1>
 
       <p class="mt-32 max-w-lg text-lg leading-relaxed text-neutral-400">
-        Web sitenizi, reklamlarınızı ve otomasyonlarınızı birbirinden kopuk
-        araçlar olarak değil, tek bir büyüme sistemi olarak tasarlıyoruz —
-        butik otellerden kliniklere, hizmet işletmelerinin daha fazla
-        müşteri ve daha karlı bir pazarlama operasyonu kurmasını sağlıyoruz.
+        {hero.paragraph}
       </p>
 
       <div class="mt-48 flex flex-wrap items-center gap-24">
-        <Button href="#iletisim" variant="solid">{siteConfig.ctaLabel}</Button>
+        <Button href="#iletisim" variant="solid">{t.ctaLabel}</Button>
       </div>
     </div>
 
@@ -113,7 +113,7 @@ import { siteConfig } from "../../lib/site-config";
           siteConfig.heroImageUrl ? (
             <img
               src={siteConfig.heroImageUrl}
-              alt={siteConfig.heroImageAlt || `${siteConfig.name} kurucusu`}
+              alt={hero.imageAlt || `${siteConfig.name} kurucusu`}
               width="1080"
               height="1350"
               fetchpriority="high"
@@ -136,9 +136,9 @@ import { siteConfig } from "../../lib/site-config";
         kendi kutusu yok; ayrımı yalnızca üstteki ince altın çizgi veriyor.
       */}
       {
-        siteConfig.heroStats.length > 0 && (
+        hero.stats.length > 0 && (
           <dl class="mt-24 grid grid-cols-3 gap-8 border-t border-accent-400/15 pt-24 text-center">
-            {siteConfig.heroStats.map((stat) => (
+            {hero.stats.map((stat) => (
               /*
                 DOM sırası dt → dd (etiket, sonra değer) olduğu için ekran
                 okuyucu "Deneyim: +5 Yıl" diye okur; `flex-col-reverse`

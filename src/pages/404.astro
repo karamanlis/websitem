@@ -21,7 +21,13 @@ import Button from "../components/ui/Button.astro";
       >
         404
       </p>
-      <p class="text-lg text-neutral-400">Aradığınız sayfa bulunamadı.</p>
+      {/* Tek bir 404 sayfası her iki dile hizmet eder — iki dil birlikte gösterilir */}
+      <p class="text-lg text-neutral-400">
+        Aradığınız sayfa bulunamadı.
+        <span class="mt-8 block text-sm text-neutral-500">
+          The page you're looking for couldn't be found.
+        </span>
+      </p>
       <Button href="/" variant="solid" class="mt-16">Ana sayfaya dön</Button>
     </div>
   </section>

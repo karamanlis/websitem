@@ -14,15 +14,18 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import Button from "../components/ui/Button.astro";
 import SectionHeading from "../components/ui/SectionHeading.astro";
 import { siteConfig } from "../lib/site-config";
+import { getDict } from "../lib/i18n";
 
 const fieldClass =
   "w-full rounded-xl border border-neutral-50/12 bg-neutral-50/4 px-24 py-16 text-[15px] text-neutral-100 transition-[border-color,box-shadow,background-color] duration-300 ease-premium placeholder:text-neutral-500 hover:border-neutral-50/20 focus:border-accent-400/50 focus:bg-neutral-50/6 focus:shadow-[0_0_0_4px_rgba(212,175,94,0.10)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent-400";
 const labelClass = "mb-8 block text-sm font-semibold text-neutral-200";
+const { ctaLabel } = getDict(Astro.url.pathname);
 ---
 
 <BaseLayout
   title="İletişim"
   description={`${siteConfig.name} ile iletişime geçin: ücretsiz strateji görüşmesi planlayın veya projenizi anlatın.`}
+  altHref="/en/contact"
 >
   <section class="section-shell">
     <div aria-hidden="true" class="pointer-events-none absolute inset-0 -z-10">
@@ -59,7 +62,7 @@ const labelClass = "mb-8 block text-sm font-semibold text-neutral-200";
           <form
             name="iletisim"
             method="POST"
-            action="/tesekkurler"
+            action="/tesekkurler/"
             data-netlify="true"
             data-netlify-honeypot="bot-field"
             class="mt-32 flex flex-col gap-24"
@@ -231,7 +234,7 @@ const labelClass = "mb-8 block text-sm font-semibold text-neutral-200";
           </div>
 
           <h2 class="font-display text-xl font-semibold text-neutral-50">
-            {siteConfig.ctaLabel}
+            {ctaLabel}
           </h2>
           <p class="mt-16 leading-relaxed text-neutral-400">
             30 dakika, satış sunumu değil: mevcut durumunuzu inceleyip somut
@@ -243,7 +246,7 @@ const labelClass = "mb-8 block text-sm font-semibold text-neutral-200";
               href={siteConfig.bookingUrl || `mailto:${siteConfig.contactEmail}`}
               target={siteConfig.bookingUrl ? "_blank" : undefined}
             >
-              {siteConfig.ctaLabel}
+              {ctaLabel}
             </Button>
 
             <p class="text-sm text-neutral-500">

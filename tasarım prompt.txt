@@ -1,0 +1,104 @@
+The website functionality, content hierarchy, sections, and responsive structure are already completed. DO NOT rebuild the website from scratch.
+
+Your task is ONLY to redesign the visual language of the website.
+
+Current website:
+http://localhost:4321/
+
+Use the design language and premium feeling of:
+https://furkanrsd.com/
+
+Important:
+
+- Keep ALL existing sections and content.
+- Keep the same component structure.
+- Do NOT change any texts or business logic.
+- Do NOT remove any existing animations unless they look outdated.
+- This is NOT a website redesign project. It is ONLY a visual and UI refinement project.
+
+I want the website to feel like a premium digital agency / AI company.
+
+Design requirements:
+
+1. Background Design
+- Remove the plain white background.
+- Use layered backgrounds similar to Furkan RSD.
+- Create depth using subtle gradients, blurred elements and soft shadows.
+- Use dark and light combinations where necessary.
+- Add premium glow effects and soft grain/noise textures.
+- Sections should feel separated without using hard borders.
+
+2. Premium Visual Language
+- Apple + Linear + Furkan RSD inspired aesthetics.
+- Minimal but luxurious.
+- Spacious layout with excellent whitespace management.
+- Premium typography hierarchy.
+- Modern glassmorphism effects where appropriate.
+- Smooth hover animations.
+
+3. Hero Section
+- Add an elegant background effect.
+- Use animated gradient blobs or subtle moving lights.
+- Give the feeling of an expensive SaaS or AI startup website.
+- The hero section must immediately communicate a premium brand image.
+
+4. Cards and Components
+- Replace flat white cards.
+- Use soft shadows and subtle glass effects.
+- Rounded corners.
+- Premium hover transitions.
+- Better spacing and visual hierarchy.
+
+5. Section Backgrounds
+Avoid using a single background color throughout the page.
+
+Example:
+- Hero section -> premium gradient background.
+- Services section -> subtle noise texture.
+- Features section -> blurred radial gradients.
+- Testimonials -> glass cards.
+- CTA section -> darker premium gradient.
+
+Each section should have its own visual identity while maintaining consistency.
+
+6. Animations
+Add subtle animations such as:
+- gradient movement
+- fade-up on scroll
+- hover glow effects
+- mouse parallax effects where appropriate
+
+Avoid excessive animations.
+
+7. Color System
+
+DO NOT use:
+- plain white backgrounds
+- generic blue SaaS templates
+- excessive neon colors
+
+Use:
+- elegant neutral tones
+- soft gradients
+- premium blacks and whites
+- subtle accent colors
+- luxury startup aesthetics
+
+8. Inspiration
+
+The website should look like a combination of:
+
+- Furkan RSD
+- Linear.app
+- Apple
+- Framer premium templates
+- Modern AI startup landing pages
+
+Final Goal:
+
+When someone visits the website, it should feel like a high-ticket premium digital product worth thousands of dollars.
+
+Again:
+
+DO NOT change the website structure or content.
+ONLY improve the UI, backgrounds, spacing, colors, typography, animations and premium visual experience.

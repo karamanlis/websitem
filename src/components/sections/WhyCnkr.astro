@@ -1,13 +1,9 @@
 ---
 import SectionHeading from "../ui/SectionHeading.astro";
+import { getDict } from "../../lib/i18n";
 
-const traits = [
-  { name: "Stratejik düşünce", note: "Taktik önermeden önce işletmenizin büyüme mantığını çözeriz." },
-  { name: "Dijital uzmanlık", note: "Web, reklam ve içerik disiplinlerini tek çatı altında yönetiriz." },
-  { name: "AI sistemleri uzmanlığı", note: "Otomasyonu bir eklenti değil, sistemin omurgası olarak kurarız." },
-  { name: "Dönüşüm odağı", note: "Trafik değil, ölçülebilir iş sonuçları için tasarlarız." },
-  { name: "Uzun vadeli büyüme anlayışı", note: "Tek seferlik kampanya değil, sürdürülebilir sistem kurarız." },
-];
+const t = getDict(Astro.url.pathname);
+const traits = t.why;
 ---
 
 {/*
@@ -30,11 +26,11 @@ const traits = [
   <div
     class="section-body mx-auto grid max-w-6xl gap-48 px-24 py-64 lg:grid-cols-[0.9fr_1.1fr] lg:px-32 lg:py-96"
   >
-    <SectionHeading eyebrow="Neden CNKR?" title="Taktik değil, metodoloji satarız." />
+    <SectionHeading eyebrow={traits.eyebrow} title={traits.title} />
 
     <ul class="flex flex-col gap-8">
       {
-        traits.map((trait) => (
+        traits.traits.map((trait) => (
           <li
             data-reveal
             class="group relative rounded-xl py-24 pl-32 pr-24 transition-colors duration-500 ease-premium hover:bg-neutral-50/4"
