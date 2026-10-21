@@ -1,0 +1,147 @@
+---
+import "../styles/global.css";
+import Header from "../components/layout/Header.astro";
+import Footer from "../components/layout/Footer.astro";
+import ScrollReveal from "../components/ScrollReveal.astro";
+import { siteConfig } from "../lib/site-config";
+import { getDict, getLocale, localeTags } from "../lib/i18n";
+
+interface Props {
+  title: string;
+  description: string;
+  ogImage?: string;
+  /** Teşekkür/onay sayfaları gibi arama sonuçlarında yeri olmayan sayfalar için. */
+  noindex?: boolean;
+  /**
+   * Bu sayfanın diğer dildeki karşılığının yolu. Verildiğinde head'e
+   * hreflang çifti (tr + en + x-default) basılır; verilmemesi sayfaya
+   * eşdeğer çeviri olmadığını gösterir (blog gibi) — o durumda yalnızca
+   * x-default işaretlenir.
+   */
+  altHref?: string;
+}
+
+const { title, description, ogImage, noindex = false, altHref } = Astro.props;
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const locale = getLocale(Astro.url.pathname);
+const t = getDict(Astro.url.pathname);
+
+/*
+ * altHref'i klasör biçimine (sonda eğik çizgi) normalize ederiz; böylece
+ * hreflang hedefleri canonical ile aynı biçimde olur ve tarayıcıda
+ * gereksiz 308 yönlendirmesi oluşmaz.
+ */
+let normalizedAltHref = altHref;
+if (normalizedAltHref && !normalizedAltHref.endsWith("/") && !normalizedAltHref.includes(".")) {
+  normalizedAltHref = `${normalizedAltHref}/`;
+}
+const altURL = normalizedAltHref ? new URL(normalizedAltHref, Astro.site) : undefined;
+
+/*
+ * Organization şeması sitenin her sayfasında sabit kalır — marka kimliğini
+ * ve kurucuyu (isim aramaları için) Google'a bir kez, tutarlı biçimde
+ * bildirir. Sayfaya özel FAQ/Article şemaları ilgili bileşenlerde ayrıca
+ * eklenir (bkz. FaqSection.astro). Kurucu ünvanı ve açıklama dile göre
+ * değişir.
+ */
+const organizationSchema = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: siteConfig.name,
+  url: Astro.site?.toString(),
+  logo: new URL("/logo-mark.jpg", Astro.site).toString(),
+  image: new URL("/logo-mark.jpg", Astro.site).toString(),
+  description: t.tagline,
+  email: siteConfig.contactEmail,
+  telephone: siteConfig.whatsappNumber ? `+${siteConfig.whatsappNumber}` : undefined,
+  founder: {
+    "@type": "Person",
+    name: siteConfig.logoText,
+    jobTitle: t.founderJobTitle,
+  },
+};
+---
+
+<!doctype html>
+<html lang={locale}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="google-site-verification" content="HGmP6Bfy5a1xX4AdBo-lvOtOGaXj3cixaGOZCIdLSgM" />
+    <link rel="canonical" href={canonicalURL} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    {
+      /* Karşılıklı hreflang çifti + varsayılan dil (tr) işareti.
+         Eşdeğer çevirisi olmayan sayfalara (blog gibi) hreflang basılmaz. */
+      altURL && (
+        <>
+          <link
+            rel="alternate"
+            hreflang={localeTags.tr}
+            href={(locale === "tr" ? canonicalURL : altURL).toString()}
+          />
+          <link
+            rel="alternate"
+            hreflang={localeTags.en}
+            href={(locale === "en" ? canonicalURL : altURL).toString()}
+          />
+          <link
+            rel="alternate"
+            hreflang="x-default"
+            href={(locale === "tr" ? canonicalURL : altURL).toString()}
+          />
+        </>
+      )
+    }
+
+    <title>{title} · {siteConfig.name}</title>
+    <meta name="description" content={description} />
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:locale" content={localeTags[locale]} />
+    {ogImage && <meta property="og:image" content={new URL(ogImage, Astro.site)} />}
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <meta name="generator" content={Astro.generator} />
+
+    <script type="application/ld+json" set:html={JSON.stringify(organizationSchema)} />
+
+    {/* Meta Pixel Code */}
+    <script is:inline>
+      !function(f,b,e,v,n,t,s)
+      {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+      n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+      if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+      n.queue=[];t=b.createElement(e);t.async=!0;
+      t.src=v;s=b.getElementsByTagName(e)[0];
+      s.parentNode.insertBefore(t,s)}(window, document,'script',
+      'https://connect.facebook.net/en_US/fbevents.js');
+      fbq('init', '130917982886094');
+      fbq('track', 'PageView');
+    </script>
+    <noscript>
+      <img
+        height="1"
+        width="1"
+        style="display:none"
+        src="https://www.facebook.com/tr?id=130917982886094&ev=PageView&noscript=1"
+        alt=""
+      />
+    </noscript>
+    {/* End Meta Pixel Code */}
+  </head>
+  <body>
+    <a href="#icerik" class="skip-link">{t.skipToContent}</a>
+    <Header locale={locale} altHref={altHref} />
+    <main id="icerik">
+      <slot />
+    </main>
+    <Footer />
+    <ScrollReveal />
+  </body>
+</html>

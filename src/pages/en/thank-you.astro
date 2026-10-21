@@ -1,0 +1,75 @@
+---
+/**
+ * English thank-you page (Netlify form `action` target for iletisim-en).
+ * `noindex` — no value in search results and it would pollute conversion
+ * measurement.
+ */
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Button from "../../components/ui/Button.astro";
+import { siteConfig } from "../../lib/site-config";
+import { getDict } from "../../lib/i18n";
+
+const { ctaLabel } = getDict(Astro.url.pathname);
+---
+
+<BaseLayout
+  title="Your message reached us"
+  description="Your message has reached us. We'll get back to you shortly."
+  noindex
+  altHref="/tesekkurler"
+>
+  {/*
+    Meta Pixel conversion event. This page only opens after the form is
+    successfully submitted, so `Lead` fires here — failed submissions
+    aren't counted as conversions.
+  */}
+  <script is:inline>
+    if (typeof fbq === "function") fbq("track", "Lead");
+  </script>
+
+  <section class="section-shell">
+    <div aria-hidden="true" class="pointer-events-none absolute inset-0 -z-10">
+      <div
+        class="aurora left-1/2 top-[30%] h-[440px] w-[640px] -translate-x-1/2 animate-aurora bg-primary-500/28"
+      >
+      </div>
+      <div
+        class="aurora left-1/2 top-[52%] h-[240px] w-[420px] -translate-x-1/2 animate-glow-pulse bg-accent-500/20"
+      >
+      </div>
+      <div class="grid-mask"></div>
+    </div>
+
+    <div class="section-body mx-auto max-w-2xl px-24 py-96 text-center lg:px-32">
+      <p class="eyebrow">Thank you</p>
+
+      <h1
+        class="text-sheen mt-24 font-display text-[clamp(1.875rem,1.1rem+3.2vw,3rem)] font-semibold leading-[1.08] tracking-[-0.02em]"
+      >
+        Your message has reached us.
+      </h1>
+
+      <p class="mx-auto mt-32 max-w-lg text-lg leading-relaxed text-neutral-400">
+        We'll get back to you within 1 business day. If you'd rather not
+        wait, you can pick a time directly from the calendar.
+      </p>
+
+      <div class="mt-48 flex flex-wrap items-center justify-center gap-24">
+        <Button href={siteConfig.bookingUrl || "/en/contact"} variant="solid">
+          {ctaLabel}
+        </Button>
+        <a
+          href="/en/"
+          class="group inline-flex items-center gap-8 text-sm font-semibold text-neutral-300 transition-colors duration-300 ease-premium hover:text-accent-200"
+        >
+          Back to home
+          <span
+            aria-hidden="true"
+            class="transition-transform duration-300 ease-premium group-hover:translate-x-1"
+            >→</span
+          >
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,49 @@
+---
+import SectionHeading from "../ui/SectionHeading.astro";
+import { getDict } from "../../lib/i18n";
+
+const t = getDict(Astro.url.pathname);
+const services = t.services;
+---
+
+{/*
+  Bölümün görsel kimliği: nokta dokusu + sağ üstte altın leke. Kartlar cam
+  yüzeylerdir; hover'da yükselip imleci izleyen bir ışıkla aydınlanır.
+*/}
+<section id="hizmetler" class="section-shell">
+  <div aria-hidden="true" class="pointer-events-none absolute inset-0 -z-10">
+    <div
+      class="aurora right-[-8%] top-[-8%] h-[380px] w-[480px] bg-accent-600/14"
+    >
+    </div>
+    <div class="dot-mask"></div>
+  </div>
+
+  <div class="section-body mx-auto max-w-6xl px-24 py-64 lg:px-32 lg:py-96">
+    <SectionHeading
+      eyebrow={services.eyebrow}
+      title={services.title}
+      align="center"
+      sheen
+      class="mx-auto max-w-2xl [&_.eyebrow]:mx-auto"
+    />
+
+    <div class="mt-48 grid gap-24 sm:grid-cols-2 lg:grid-cols-3">
+      {
+        services.items.map((service) => (
+          <div
+            data-reveal
+            class="glass card-lift card-spotlight flex flex-col gap-16 rounded-2xl p-32"
+          >
+            <h3 class="font-display text-lg font-semibold leading-snug text-neutral-50">
+              {service.name}
+            </h3>
+            <p class="text-sm leading-relaxed text-neutral-400">
+              {service.note}
+            </p>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>

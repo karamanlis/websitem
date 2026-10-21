@@ -1,0 +1,133 @@
+---
+/**
+ * Sosyal kanıt bölümü.
+ *
+ * Uydurma görüş kullanılmaz: `siteConfig.testimonials` boşken bu bölüm
+ * sayfada hiç render edilmez. İlk görüş "öne çıkan" olarak büyük tipografiyle,
+ * kalanlar yanında daha küçük blok olarak dizilir — brief'in "her yerde
+ * simetrik grid kullanma" kuralına uygun asimetrik bir düzen.
+ */
+import SectionHeading from "../ui/SectionHeading.astro";
+import { siteConfig, type Testimonial } from "../../lib/site-config";
+import { getDict, getLocale, type Locale } from "../../lib/i18n";
+
+const locale: Locale = getLocale(Astro.url.pathname);
+const t = getDict(Astro.url.pathname);
+
+/**
+ * Görüş alanını dile göre seçer: `quoteEn`/`resultEn`/`sectorEn` doluysa
+ * İngilizce'de onlar, boşsa özgün Türkçe metin gösterilir (gerçek görüş,
+ * çeviriyle değiştirilmeden).
+ */
+const testimonials: Testimonial[] = siteConfig.testimonials.map((item) => ({
+  ...item,
+  quote: locale === "en" ? (item.quoteEn ?? item.quote) : item.quote,
+  result: locale === "en" ? (item.resultEn ?? item.result) : item.result,
+  sector: locale === "en" ? (item.sectorEn ?? item.sector) : item.sector,
+}));
+const [featured, ...rest] = testimonials;
+
+/** Logo yoksa işletme adından monogram üretilir: "Lavinya Çocuk Kulübü" → "LÇ" */
+function monogram(t: Testimonial) {
+  return t.company
+    .split(/\s+/)
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((part) => part[0]?.toLocaleUpperCase("tr-TR") ?? "")
+    .join("");
+}
+---
+
+{
+  testimonials.length > 0 && (
+    <section id="gorusler" class="section-shell">
+      <div aria-hidden="true" class="pointer-events-none absolute inset-0 -z-10">
+        <div class="aurora right-[-12%] top-[6%] h-[460px] w-[560px] animate-aurora-slow bg-accent-600/16" />
+        <div class="aurora left-[-10%] bottom-[-10%] h-[420px] w-[520px] bg-primary-600/20" />
+      </div>
+
+      <div class="section-body mx-auto max-w-6xl px-24 py-64 lg:px-32 lg:py-96">
+        <SectionHeading
+          eyebrow={t.testimonials.eyebrow}
+          title={t.testimonials.title}
+          class="max-w-2xl"
+        />
+
+        <div class="mt-48 grid gap-32 lg:grid-cols-[1.15fr_0.85fr] lg:items-start">
+          {/* Öne çıkan görüş: büyük cam panel, köşesinde dev tırnak işareti */}
+          <figure
+            data-reveal
+            class="glass-deep card-spotlight relative overflow-hidden rounded-3xl px-32 py-48 lg:px-48"
+          >
+            <span
+              aria-hidden="true"
+              class="pointer-events-none absolute -right-8 -top-24 font-display text-[10rem] leading-none text-accent-400/10"
+            >
+              &rdquo;
+            </span>
+
+            {featured.result && (
+              <p class="eyebrow mb-24">{featured.result}</p>
+            )}
+
+            <blockquote class="relative font-display text-2xl font-semibold leading-[1.35] text-neutral-50 lg:text-3xl">
+              {featured.quote}
+            </blockquote>
+
+            <figcaption class="mt-32 flex items-center gap-16">
+              {featured.logo ? (
+                <img
+                  src={featured.logo}
+                  alt={`${featured.company} logosu`}
+                  class="h-48 w-48 shrink-0 rounded-full object-contain ring-1 ring-neutral-50/15"
+                  loading="lazy"
+                />
+              ) : (
+                <span
+                  class="grid h-48 w-48 shrink-0 place-items-center rounded-full bg-[linear-gradient(140deg,var(--color-primary-500),var(--color-primary-800))] font-display text-sm font-semibold text-neutral-50 ring-1 ring-accent-400/25"
+                  aria-hidden="true"
+                >
+                  {monogram(featured)}
+                </span>
+              )}
+              <span class="text-sm">
+                <span class="block font-semibold text-neutral-50">
+                  {featured.company}
+                </span>
+                <span class="block text-neutral-400">{featured.sector}</span>
+              </span>
+            </figcaption>
+          </figure>
+
+          {rest.length > 0 && (
+            <div class="flex flex-col gap-16 lg:mt-32">
+              {rest.map((t) => (
+                <figure
+                  data-reveal
+                  class="glass card-lift card-spotlight rounded-2xl px-24 py-32"
+                >
+                  {t.result && (
+                    <p class="mb-16 text-xs font-semibold uppercase tracking-[0.14em] text-accent-300">
+                      {t.result}
+                    </p>
+                  )}
+                  <blockquote class="leading-relaxed text-neutral-300">
+                    {t.quote}
+                  </blockquote>
+                  <figcaption class="mt-24 flex items-center gap-8 text-sm">
+                    <span
+                      aria-hidden="true"
+                      class="h-8 w-8 rounded-full bg-accent-400 shadow-[0_0_10px_2px_rgba(212,175,94,0.5)]"
+                    />
+                    <span class="font-semibold text-neutral-100">{t.company}</span>
+                    <span class="text-neutral-500">— {t.sector}</span>
+                  </figcaption>
+                </figure>
+              ))}
+            </div>
+          )}
+        </div>
+      </div>
+    </section>
+  )
+}

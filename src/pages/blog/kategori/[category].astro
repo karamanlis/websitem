@@ -1,0 +1,59 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import SectionHeading from "../../../components/ui/SectionHeading.astro";
+import { categoryLabels } from "../../../content.config";
+
+export async function getStaticPaths() {
+  return Object.keys(categoryLabels).map((category) => ({ params: { category } }));
+}
+
+const { category } = Astro.params;
+const label = categoryLabels[category as keyof typeof categoryLabels];
+
+const posts = (await getCollection("blog", ({ data }) => !data.draft && data.category === category)).sort(
+  (a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf()
+);
+---
+
+<BaseLayout title={label} description={`${label} kategorisindeki yazılar.`}>
+  <section class="section-shell">
+    <div aria-hidden="true" class="pointer-events-none absolute inset-0 -z-10">
+      <div
+        class="aurora left-[-10%] top-[-10%] h-[460px] w-[520px] animate-aurora bg-primary-500/20"
+      >
+      </div>
+      <div class="dot-mask"></div>
+    </div>
+
+    <div class="section-body mx-auto max-w-6xl px-24 py-64 lg:px-32 lg:py-96">
+      <SectionHeading eyebrow="Blog kategorisi" title={label} sheen />
+
+      <div class="mt-48 grid gap-24 lg:grid-cols-3">
+        {posts.map((post) => (
+          <a
+            href={`/blog/${post.id}`}
+            data-reveal
+            class="glass card-lift card-spotlight group flex flex-col gap-16 rounded-2xl p-32"
+          >
+            <p class="font-display text-lg font-semibold leading-snug text-neutral-50">
+              {post.data.title}
+            </p>
+            <p class="text-sm leading-relaxed text-neutral-400">
+              {post.data.description}
+            </p>
+            <span
+              aria-hidden="true"
+              class="mt-8 text-lg text-neutral-500 transition-all duration-300 ease-premium group-hover:translate-x-1 group-hover:text-accent-300"
+            >
+              →
+            </span>
+          </a>
+        ))}
+        {posts.length === 0 && (
+          <p class="text-neutral-400">Bu kategoride henüz yazı yok.</p>
+        )}
+      </div>
+    </div>
+  </section>
+</BaseLayout>

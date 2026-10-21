@@ -1,0 +1,222 @@
+---
+/**
+ * KVKK (6698 sayılı Kanun) aydınlatma metni + gizlilik politikası.
+ *
+ * Metin, sitede fiilen var olan veri akışlarına göre yazıldı — varsayımsal
+ * değil: (1) Netlify Forms ile çalışan iletişim formu, (2) Google Calendar
+ * randevu iframe'i, (3) barındırma sunucusu kayıtları. Siteye analitik,
+ * piksel veya pazarlama çerezi eklendiğinde bu metnin 4. ve 6. bölümleri
+ * güncellenmelidir.
+ *
+ * İletişim bilgileri site-config'ten okunuyor; veri sorumlusu bilgisi tek
+ * yerden yönetiliyor.
+ */
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { siteConfig } from "../lib/site-config";
+
+/** Metnin son güncellenme tarihi — içerik değiştikçe elle güncelleyin. */
+const lastUpdated = new Date("2026-07-20");
+const lastUpdatedLabel = lastUpdated.toLocaleDateString("tr-TR", {
+  year: "numeric",
+  month: "long",
+  day: "numeric",
+});
+---
+
+<BaseLayout
+  title="Gizlilik Politikası ve KVKK Aydınlatma Metni"
+  description={`${siteConfig.name} olarak kişisel verilerinizi hangi amaçla topladığımızı, nasıl sakladığımızı ve KVKK kapsamındaki haklarınızı açıklıyoruz.`}
+  altHref="/en/privacy-policy"
+>
+  <section class="section-shell">
+    <div aria-hidden="true" class="pointer-events-none absolute inset-0 -z-10">
+      <div
+        class="aurora left-1/2 top-[-12%] h-[420px] w-[700px] -translate-x-1/2 bg-primary-600/18"
+      >
+      </div>
+    </div>
+
+    <div class="section-body mx-auto max-w-3xl px-24 py-64 lg:px-32 lg:py-96">
+      <h1
+        class="font-display text-[clamp(1.875rem,1.1rem+3.2vw,3rem)] font-semibold leading-[1.08] tracking-[-0.02em] text-balance text-neutral-50"
+      >
+        Gizlilik Politikası ve KVKK Aydınlatma Metni
+      </h1>
+      <p class="mt-24 text-sm text-neutral-500">
+        Son güncelleme: {lastUpdatedLabel}
+      </p>
+
+      <div aria-hidden="true" class="hairline mt-48 opacity-60"></div>
+
+      <div
+        class="prose prose-cnkr mt-48 max-w-none prose-headings:font-display prose-a:no-underline hover:prose-a:underline prose-a:underline-offset-4"
+      >
+        <p>
+          Bu metin, 6698 sayılı Kişisel Verilerin Korunması Kanunu (“KVKK”)
+          kapsamında, {siteConfig.name} ({siteConfig.domain}) web sitesi
+          üzerinden toplanan kişisel verilerin hangi amaçla işlendiğini,
+          kimlerle paylaşıldığını ve bu konudaki haklarınızı açıklamak
+          amacıyla hazırlanmıştır.
+        </p>
+
+        <h2>1. Veri Sorumlusu</h2>
+        <p>
+          Kişisel verileriniz, veri sorumlusu sıfatıyla {siteConfig.name}
+          tarafından aşağıda açıklanan kapsamda işlenmektedir.
+        </p>
+        <ul>
+          {siteConfig.contactEmail && (
+            <li>
+              E-posta:{" "}
+              <a href={`mailto:${siteConfig.contactEmail}`}>
+                {siteConfig.contactEmail}
+              </a>
+            </li>
+          )}
+          {siteConfig.contactPhone && <li>Telefon: {siteConfig.contactPhone}</li>}
+          <li>Web sitesi: {siteConfig.domain}</li>
+        </ul>
+
+        <h2>2. İşlenen Kişisel Veriler</h2>
+        <p>
+          Bu sitede yalnızca sizin doğrudan paylaştığınız veriler toplanır.
+          Üyelik sistemi, ödeme altyapısı veya profil oluşturma özelliği
+          bulunmamaktadır.
+        </p>
+        <h3>a) İletişim formu</h3>
+        <p>
+          <a href="/iletisim">İletişim sayfasındaki</a> formu doldurduğunuzda
+          şu veriler işlenir: ad soyad, e-posta adresi, telefon numarası
+          (isteğe bağlı), işletme adı (isteğe bağlı) ve mesaj alanına
+          yazdığınız içerik.
+        </p>
+        <h3>b) Randevu (strateji görüşmesi) talebi</h3>
+        <p>
+          Sitede gömülü randevu takvimi Google Calendar altyapısını kullanır.
+          Bir saat seçtiğinizde ad ve e-posta bilgileriniz doğrudan Google
+          tarafından toplanır ve randevu kaydı olarak tarafımıza iletilir.
+          Bu adımda Google’ın kendi gizlilik politikası da geçerlidir.
+        </p>
+        <h3>c) Teknik kayıtlar</h3>
+        <p>
+          Siteyi ziyaret ettiğinizde, barındırma altyapısı tarafından IP
+          adresi, tarayıcı bilgisi ve erişim zamanı gibi standart sunucu
+          kayıtları güvenlik ve hata takibi amacıyla otomatik olarak tutulur.
+        </p>
+
+        <h2>3. İşleme Amaçları ve Hukuki Sebepleri</h2>
+        <ul>
+          <li>
+            <strong>Talebinize dönüş yapmak ve teklif sunmak</strong> — Formu
+            gönderirken verdiğiniz <em>açık rıza</em> (KVKK m.5/1) ve
+            sözleşmenin kurulmasıyla doğrudan ilgili olması (m.5/2-c).
+          </li>
+          <li>
+            <strong>Randevu planlamak ve görüşmeyi yürütmek</strong> —
+            Randevu talebinizle birlikte verdiğiniz açık rıza.
+          </li>
+          <li>
+            <strong>Site güvenliğini sağlamak, hataları gidermek</strong> —
+            Veri sorumlusunun meşru menfaati (m.5/2-f).
+          </li>
+        </ul>
+        <p>
+          Kişisel verileriniz, izniniz olmadan pazarlama listelerine eklenmez
+          ve üçüncü taraflara satılmaz.
+        </p>
+
+        <h2>4. Aktarım ve Yurt Dışına Aktarım</h2>
+        <p>
+          Verileriniz, hizmetin teknik olarak yürütülebilmesi için aşağıdaki
+          altyapı sağlayıcıları üzerinden işlenmektedir. Bu sağlayıcıların
+          sunucuları yurt dışında bulunduğundan, form ve randevu verileriniz
+          KVKK m.9 kapsamında yurt dışına aktarılmış sayılır; bu aktarıma
+          formu gönderirken verdiğiniz onayla rıza göstermiş olursunuz.
+        </p>
+        <ul>
+          <li>
+            <strong>Netlify</strong> — sitenin barındırılması ve iletişim
+            formu gönderimlerinin saklanması.
+          </li>
+          <li>
+            <strong>Google (Google Calendar)</strong> — randevu takviminin
+            çalıştırılması.
+          </li>
+        </ul>
+        <p>
+          Bunun dışında kişisel verileriniz, yalnızca yasal bir yükümlülük
+          doğması hâlinde yetkili kamu kurumlarıyla paylaşılabilir.
+        </p>
+
+        <h2>5. Saklama Süresi</h2>
+        <p>
+          İletişim ve randevu talepleriniz, talebinizin değerlendirilmesi ve
+          olası bir çalışma ilişkisinin yürütülmesi için gerekli olan süre
+          boyunca; bu amaç ortadan kalktıktan sonra en fazla 2 yıl süreyle
+          saklanır. Sürenin sonunda veriler silinir veya anonim hâle
+          getirilir. Talep etmeniz hâlinde bu süreden önce de silinir.
+        </p>
+
+        <h2>6. Çerezler</h2>
+        <p>
+          Bu sitede reklam veya takip amaçlı çerez, piksel ya da üçüncü
+          taraf analitik aracı <strong>kullanılmamaktadır</strong>. Yalnızca
+          gömülü Google Calendar randevu takvimi, kendi çalışması için
+          Google’a ait çerezler yerleştirebilir. Tarayıcı ayarlarınızdan
+          çerezleri engelleyebilirsiniz; bu durumda yalnızca gömülü takvim
+          düzgün çalışmayabilir, sitenin geri kalanı etkilenmez.
+        </p>
+
+        <h2>7. KVKK m.11 Kapsamındaki Haklarınız</h2>
+        <p>Kişisel verilerinizle ilgili olarak şu haklara sahipsiniz:</p>
+        <ul>
+          <li>Kişisel verinizin işlenip işlenmediğini öğrenme,</li>
+          <li>İşlenmişse buna ilişkin bilgi talep etme,</li>
+          <li>
+            İşlenme amacını ve amacına uygun kullanılıp kullanılmadığını
+            öğrenme,
+          </li>
+          <li>Yurt içinde veya yurt dışında aktarıldığı üçüncü kişileri bilme,</li>
+          <li>Eksik veya yanlış işlenmişse düzeltilmesini isteme,</li>
+          <li>
+            Kanundaki şartlar çerçevesinde silinmesini veya yok edilmesini
+            isteme,
+          </li>
+          <li>
+            Düzeltme, silme ve yok etme işlemlerinin verilerin aktarıldığı
+            üçüncü kişilere bildirilmesini isteme,
+          </li>
+          <li>
+            Münhasıran otomatik sistemlerle analiz edilmesi suretiyle
+            aleyhinize bir sonucun ortaya çıkmasına itiraz etme,
+          </li>
+          <li>
+            Kanuna aykırı işlenmesi sebebiyle zarara uğramanız hâlinde
+            zararın giderilmesini talep etme.
+          </li>
+        </ul>
+        <p>
+          Bu haklarınızı kullanmak için
+          {siteConfig.contactEmail && (
+            <>
+              {" "}
+              <a href={`mailto:${siteConfig.contactEmail}`}>
+                {siteConfig.contactEmail}
+              </a>{" "}
+            </>
+          )}
+          adresine yazabilirsiniz. Talebiniz, ulaştığı tarihten itibaren en
+          geç 30 gün içinde ücretsiz olarak sonuçlandırılır.
+        </p>
+
+        <h2>8. Değişiklikler</h2>
+        <p>
+          Bu metin, sitedeki veri akışları değiştikçe (örneğin analitik aracı
+          eklenmesi hâlinde) güncellenir. Güncel sürüm her zaman bu sayfada
+          yayımlanır ve yukarıdaki “son güncelleme” tarihi ile birlikte
+          gösterilir.
+        </p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

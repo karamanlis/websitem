@@ -1,0 +1,131 @@
+---
+import { getDict } from "../../lib/i18n";
+import { siteConfig } from "../../lib/site-config";
+
+/* Dil, URL'den çözülür (BaseLayout'tan prop'a gerek yok). */
+const { nav, tagline, footer: t } = getDict(Astro.url.pathname);
+
+const year = new Date().getFullYear();
+---
+
+{/*
+  Footer, Final CTA'nın koyu gradyanını kesmeden devam ettirir: sert bir
+  üst kenarlık yerine kenarlara doğru sönümlenen gradyan saç teli ve
+  alttan yükselen yumuşak bir yeşil glow kullanır.
+*/}
+<footer class="section-shell text-neutral-300">
+  <div aria-hidden="true" class="hairline"></div>
+
+  <div aria-hidden="true" class="pointer-events-none absolute inset-0 -z-10">
+    <div class="absolute inset-0 bg-[linear-gradient(to_bottom,transparent,rgba(5,12,9,0.85))]"></div>
+    <div
+      class="aurora left-1/2 bottom-[-40%] h-[420px] w-[820px] -translate-x-1/2 bg-primary-600/22"
+    >
+    </div>
+    <div class="noise-layer"></div>
+  </div>
+
+  <div class="section-body mx-auto max-w-6xl px-24 py-64 lg:px-32">
+    <div class="grid gap-48 lg:grid-cols-[2fr_1fr_1fr]">
+      <div>
+        <p class="flex items-center gap-16 font-display text-xl font-semibold text-neutral-50">
+          <span
+            aria-hidden="true"
+            class="h-32 w-32 shrink-0 rounded-full bg-[linear-gradient(140deg,var(--color-primary-400),var(--color-primary-700))] shadow-[0_0_20px_-4px_rgba(47,128,96,0.8)] ring-1 ring-neutral-50/15"
+          >
+          </span>
+          {siteConfig.name}
+        </p>
+        <p class="mt-24 max-w-sm text-sm leading-relaxed text-neutral-400">
+          {tagline}
+        </p>
+      </div>
+
+      <div>
+        <p class="text-xs font-semibold uppercase tracking-[0.14em] text-accent-300">
+          {t.site}
+        </p>
+        <ul class="mt-24 flex flex-col gap-16">
+          {
+            nav.map((item) => (
+              <li>
+                <a
+                  href={item.href}
+                  class="text-sm text-neutral-400 transition-colors duration-300 ease-premium hover:text-neutral-50"
+                >
+                  {item.label}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+      <div>
+        <p class="text-xs font-semibold uppercase tracking-[0.14em] text-accent-300">
+          {t.contact}
+        </p>
+        <ul class="mt-24 flex flex-col gap-16 text-sm text-neutral-400">
+          {
+            siteConfig.contactEmail && (
+              <li>
+                <a
+                  href={`mailto:${siteConfig.contactEmail}`}
+                  class="transition-colors duration-300 ease-premium hover:text-neutral-50"
+                >
+                  {siteConfig.contactEmail}
+                </a>
+              </li>
+            )
+          }
+          {
+            siteConfig.contactPhone && (
+              <li>
+                <a
+                  href={`tel:${siteConfig.contactPhone.replace(/\s/g, "")}`}
+                  class="transition-colors duration-300 ease-premium hover:text-neutral-50"
+                >
+                  {siteConfig.contactPhone}
+                </a>
+              </li>
+            )
+          }
+          {
+            siteConfig.whatsappNumber && (
+              <li>
+                <a
+                  href={`https://wa.me/${siteConfig.whatsappNumber}`}
+                  class="transition-colors duration-300 ease-premium hover:text-neutral-50"
+                  rel="noopener"
+                >
+                  {t.whatsapp}
+                </a>
+              </li>
+            )
+          }
+          <li>
+            <a
+              href={t.contactFormHref}
+              class="transition-colors duration-300 ease-premium hover:text-neutral-50"
+              >{t.contactForm}</a
+            >
+          </li>
+          <li>
+            <a
+              href={t.privacyHref}
+              class="transition-colors duration-300 ease-premium hover:text-neutral-50"
+              >{t.privacy}</a
+            >
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="mt-64">
+      <div aria-hidden="true" class="hairline opacity-50"></div>
+      <p class="pt-24 text-xs text-neutral-500">
+        &copy; {year} {siteConfig.name}. {t.rights}
+      </p>
+    </div>
+  </div>
+</footer>

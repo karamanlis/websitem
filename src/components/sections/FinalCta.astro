@@ -1,0 +1,62 @@
+---
+import { siteConfig } from "../../lib/site-config";
+import { getDict, getLocale } from "../../lib/i18n";
+import Button from "../ui/Button.astro";
+
+const locale = getLocale(Astro.url.pathname);
+const t = getDict(Astro.url.pathname);
+---
+
+{/*
+  Sayfanın kapanışı ve en koyu noktası: merkezden yükselen çift glow,
+  ızgara dokusu ve gren. CTA butonu bu zeminde fildişi (`onDark`) varyantla
+  17:1 kontrast taşır — sayfadaki en yüksek görsel ağırlıklı öğe.
+*/}
+<section id="iletisim" class="section-shell">
+  <div aria-hidden="true" class="pointer-events-none absolute inset-0 -z-10">
+    <div
+      class="absolute inset-0 bg-[radial-gradient(ellipse_80%_70%_at_50%_50%,rgba(14,42,31,0.85),rgba(5,12,9,0.95))]"
+    >
+    </div>
+    <div
+      class="aurora left-1/2 top-1/2 h-[520px] w-[820px] -translate-x-1/2 -translate-y-1/2 animate-aurora bg-primary-500/30"
+    >
+    </div>
+    <div
+      class="aurora left-1/2 top-[62%] h-[300px] w-[520px] -translate-x-1/2 animate-glow-pulse bg-accent-500/22"
+    >
+    </div>
+    <div class="grid-mask"></div>
+    <div class="noise-layer"></div>
+  </div>
+
+  <div
+    class="section-body mx-auto max-w-4xl px-24 py-96 text-center lg:px-32 lg:py-96"
+  >
+    <h2
+      class="font-display text-[clamp(2rem,1.2rem+3.6vw,3.5rem)] font-semibold leading-[1.06] tracking-[-0.02em] text-balance text-sheen"
+    >
+      {t.finalCta.title}
+    </h2>
+
+    <p class="mx-auto mt-32 max-w-xl text-lg leading-relaxed text-neutral-400">
+      {t.finalCta.paragraph}
+    </p>
+
+    <div class="mt-48 flex flex-col items-center gap-24">
+      <Button
+        href={siteConfig.bookingUrl || (locale === "en" ? "/en/contact" : "/iletisim")}
+        variant="onDark"
+        target={siteConfig.bookingUrl ? "_blank" : undefined}
+      >
+        {t.ctaLabel}
+      </Button>
+
+      <p
+        class="inline-flex flex-wrap items-center justify-center gap-8 text-sm text-neutral-400"
+      >
+        {t.finalCta.note}
+      </p>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,74 @@
+{/*
+  İki aşamalı geliştirme katmanı:
+
+  1. `data-reveal` öğeleri varsayılan olarak tam görünürdür (JS'siz/erişilebilir).
+     Yalnızca JS çalışıyorsa VE prefers-reduced-motion kapalıysa, öğeler JS
+     tarafından gizlenip IntersectionObserver ile görünüme girince ortaya
+     çıkarılır — böylece animasyon bir bağımlılık değil, aşamalı bir katmandır.
+
+  2. `.card-spotlight` kartlarında imleç konumu `--mx`/`--my` CSS değişkenleri
+     olarak yazılır; global.css'teki ::after katmanı bu konumda yumuşak bir
+     ışık gösterir. Script çalışmazsa katman görünmez kalır.
+*/}
+<script>
+  const prefersReducedMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)"
+  ).matches;
+
+  /* ---- 1. Scroll ile ortaya çıkma ---- */
+  if (!prefersReducedMotion) {
+    const elements = document.querySelectorAll<HTMLElement>("[data-reveal]");
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting && entry.target instanceof HTMLElement) {
+            entry.target.style.transition = `opacity 700ms var(--ease-premium), transform 700ms var(--ease-premium)`;
+            entry.target.style.opacity = "1";
+            entry.target.style.transform = "none";
+            observer.unobserve(entry.target);
+          }
+        }
+      },
+      { threshold: 0.15, rootMargin: "0px 0px -6% 0px" }
+    );
+
+    elements.forEach((el, index) => {
+      el.style.opacity = "0";
+      el.style.transform = "translateY(20px)";
+      /* Aynı grid/liste içindeki kartlar sırayla belirsin (kademeli gecikme) */
+      el.style.transitionDelay = `${(index % 4) * 90}ms`;
+      observer.observe(el);
+    });
+  }
+
+  /* ---- 2. İmleci izleyen kart ışığı ---- */
+  if (!prefersReducedMotion && window.matchMedia("(pointer: fine)").matches) {
+    const cards = document.querySelectorAll<HTMLElement>(".card-spotlight");
+
+    for (const card of cards) {
+      let pending = false;
+      let x = 0;
+      let y = 0;
+
+      card.addEventListener(
+        "pointermove",
+        (event) => {
+          const rect = card.getBoundingClientRect();
+          x = ((event.clientX - rect.left) / rect.width) * 100;
+          y = ((event.clientY - rect.top) / rect.height) * 100;
+
+          if (!pending) {
+            pending = true;
+            requestAnimationFrame(() => {
+              card.style.setProperty("--mx", `${x}%`);
+              card.style.setProperty("--my", `${y}%`);
+              pending = false;
+            });
+          }
+        },
+        { passive: true }
+      );
+    }
+  }
+</script>

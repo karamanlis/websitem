@@ -1,0 +1,49 @@
+---
+interface Props {
+  eyebrow?: string;
+  title: string;
+  align?: "left" | "center";
+  /**
+   * `dark` (varsayılan): koyu zemin üzerinde fildişi başlık + altın etiket.
+   * `light`: açık "nefes" bölümlerinde ters kontrast (koyu başlık, yeşil etiket).
+   */
+  tone?: "dark" | "light";
+  /** Başlığa yavaşça kayan metalik gradyan uygular (yalnızca koyu zeminde). */
+  sheen?: boolean;
+  class?: string;
+}
+
+const {
+  eyebrow,
+  title,
+  align = "left",
+  tone = "dark",
+  sheen = false,
+  class: className = "",
+} = Astro.props;
+
+const isLight = tone === "light";
+const useSheen = sheen && !isLight;
+---
+
+<div
+  class={`${align === "center" ? "text-center" : "text-left"} ${className}`}
+>
+  {
+    eyebrow && (
+      <p class={`eyebrow ${isLight ? "eyebrow-on-light" : ""} mb-24`}>
+        {eyebrow}
+      </p>
+    )
+  }
+  <h2
+    class:list={[
+      "font-display font-semibold text-balance",
+      "text-[clamp(1.875rem,1.1rem+3.2vw,3rem)] leading-[1.08] tracking-[-0.02em]",
+      useSheen ? "text-sheen" : isLight ? "text-neutral-900" : "text-neutral-50",
+    ]}
+  >
+    {title}
+  </h2>
+  <slot />
+</div>

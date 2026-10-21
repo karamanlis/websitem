@@ -1,0 +1,83 @@
+---
+import SectionHeading from "../ui/SectionHeading.astro";
+import { getDict } from "../../lib/i18n";
+
+const t = getDict(Astro.url.pathname);
+const process = t.process;
+---
+
+{/*
+  Bölümün görsel kimliği: sakin gren dokusu + soldan sağa akan tek bir
+  gradyan hat. Adım numaraları ikon baloncuğu yerine büyük, altın gradyanlı
+  rakamlar olarak kalır (stratejik/profesyonel ton).
+*/}
+<section id="surec" class="section-shell">
+  <div aria-hidden="true" class="pointer-events-none absolute inset-0 -z-10">
+    <div
+      class="aurora left-[-8%] bottom-[-15%] h-[400px] w-[560px] bg-primary-500/18"
+    >
+    </div>
+    <div class="noise-layer"></div>
+  </div>
+
+  <div class="section-body mx-auto max-w-6xl px-24 py-64 lg:px-32 lg:py-96">
+    <SectionHeading
+      eyebrow={process.eyebrow}
+      title={process.title}
+      align="center"
+      class="mx-auto max-w-2xl"
+    />
+
+    <ol class="relative mt-64 hidden lg:grid lg:grid-cols-5 lg:gap-16">
+      {/* Adımları birbirine bağlayan akış hattı */}
+      <div
+        class="absolute inset-x-16 top-32 h-px bg-[linear-gradient(90deg,transparent,rgba(212,175,94,0.45),rgba(127,174,148,0.45),transparent)]"
+        aria-hidden="true"
+      >
+      </div>
+
+      {
+        process.steps.map((step) => (
+          <li
+            data-reveal
+            class="group relative flex flex-col items-start gap-16 rounded-xl px-16 py-24 transition-colors duration-500 ease-premium hover:bg-neutral-50/4"
+          >
+            <span class="font-display text-3xl font-semibold leading-none text-transparent [background-clip:text] [-webkit-background-clip:text] bg-[linear-gradient(140deg,var(--color-accent-300),var(--color-primary-400))]">
+              {step.number}
+            </span>
+            <p class="font-display text-base font-semibold text-neutral-50">
+              {step.name}
+            </p>
+            <p class="text-sm leading-relaxed text-neutral-400">{step.note}</p>
+          </li>
+        ))
+      }
+    </ol>
+
+    {/* Mobil: dikey zaman çizelgesi */}
+    <ol class="relative mt-48 flex flex-col gap-32 pl-32 lg:hidden">
+      <div
+        class="absolute bottom-8 left-8 top-8 w-px bg-[linear-gradient(to_bottom,rgba(212,175,94,0.5),rgba(127,174,148,0.35),transparent)]"
+        aria-hidden="true"
+      >
+      </div>
+      {
+        process.steps.map((step) => (
+          <li class="relative">
+            <span
+              aria-hidden="true"
+              class="absolute -left-32 top-8 h-8 w-8 rounded-full bg-accent-400 shadow-[0_0_12px_2px_rgba(212,175,94,0.5)]"
+            />
+            <span class="font-display text-xl font-semibold text-accent-300">
+              {step.number}
+            </span>
+            <p class="mt-8 font-display text-base font-semibold text-neutral-50">
+              {step.name}
+            </p>
+            <p class="mt-8 text-sm leading-relaxed text-neutral-400">{step.note}</p>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</section>
