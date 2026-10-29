@@ -4,6 +4,8 @@ import Header from "../components/layout/Header.astro";
 import Footer from "../components/layout/Footer.astro";
 import ScrollReveal from "../components/ScrollReveal.astro";
 import manropeLatin from "@fontsource-variable/manrope/files/manrope-latin-wght-normal.woff2?url";
+import manropeExt from "@fontsource-variable/manrope/files/manrope-latin-ext-wght-normal.woff2?url";
+import frauncesExt from "@fontsource-variable/fraunces/files/fraunces-latin-ext-wght-normal.woff2?url";
 import fraunces from "@fontsource-variable/fraunces/files/fraunces-latin-wght-normal.woff2?url";
 import { siteConfig } from "../lib/site-config";
 import { getDict, getLocale, localeTags } from "../lib/i18n";
@@ -74,6 +76,9 @@ const organizationSchema = {
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="preload" as="font" type="font/woff2" href={manropeLatin} crossorigin />
     <link rel="preload" as="font" type="font/woff2" href={fraunces} crossorigin />
+    {/* Türkçe karakterler (İ, ş, ğ) latin-ext alt kümesinde; geç inerse başlık yeniden dizilip CLS yaratıyor. */}
+    <link rel="preload" as="font" type="font/woff2" href={manropeExt} crossorigin />
+    <link rel="preload" as="font" type="font/woff2" href={frauncesExt} crossorigin />
 
     {
       /* Karşılıklı hreflang çifti + varsayılan dil (tr) işareti.
@@ -117,13 +122,18 @@ const organizationSchema = {
 
     {/* Meta Pixel Code */}
     <script is:inline>
+      /* fbq kuyruğu hemen tanımlanır (olaylar kaybolmaz); fbevents.js ise sayfa
+         yüklendikten sonra boşta indirilir — LCP/TBT'yi bloklamasın. */
       !function(f,b,e,v,n,t,s)
       {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
       n.callMethod.apply(n,arguments):n.queue.push(arguments)};
       if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-      n.queue=[];t=b.createElement(e);t.async=!0;
+      n.queue=[];
+      var load=function(){t=b.createElement(e);t.async=!0;
       t.src=v;s=b.getElementsByTagName(e)[0];
-      s.parentNode.insertBefore(t,s)}(window, document,'script',
+      s.parentNode.insertBefore(t,s)};
+      var idle=function(){(f.requestIdleCallback||function(c){setTimeout(c,1)})(load)};
+      b.readyState==='complete'?idle():f.addEventListener('load',idle)}(window, document,'script',
       'https://connect.facebook.net/en_US/fbevents.js');
       fbq('init', '130917982886094');
       fbq('track', 'PageView');

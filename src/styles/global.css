@@ -117,7 +117,14 @@
     üzerine binip okunabilirliği düşürmez, yalnızca zemine dokunsal bir
     premium katman ekler.
   */
+  /*
+    Performans: gürültü dokusu (feTurbulence) ve .grid-mask (maskeli ızgara)
+    mobilde tam ekran GPU rasterı gerektirip ilk boyamayı ~2 sn geciktiriyordu
+    (Lighthouse mobil: 84 → 98). Çok düşük opaklıklı dekoratif katmanlar
+    oldukları için yalnızca md ve üstünde gösterilir.
+  */
   body::after {
+    display: none;
     content: "";
     position: fixed;
     inset: 0;
@@ -134,6 +141,12 @@
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.35'/%3E%3C/svg%3E");
     background-size: 180px 180px;
   }
+  @media (min-width: 768px) {
+    body::after {
+      display: block;
+    }
+  }
+
 
   /* Sabit konumlu gren katmanının üstünde kalmaları için */
   body > header,
@@ -355,6 +368,16 @@
     bir GPU katmanına terfi ettirir ve büyük blur yarıçapıyla birlikte
     sayfa genelinde yüzlerce MB doku belleği tüketir.
   */
+  /*
+    Performans: blur(72px) lekeleri mobilde GPU'yu boğup ilk boyamayı
+    geciktiriyordu; dar ekranda gizlenir (md ve üstünde aynen çalışır).
+  */
+  @media (max-width: 767.98px) {
+    .aurora {
+      display: none;
+    }
+  }
+
   .aurora {
     position: absolute;
     border-radius: 999px;
@@ -374,6 +397,12 @@
   }
 
   /* İnce ızgara dokusu — kenarlara doğru maskeyle söner */
+  @media (max-width: 767.98px) {
+    .grid-mask {
+      display: none;
+    }
+  }
+
   .grid-mask {
     position: absolute;
     inset: 0;

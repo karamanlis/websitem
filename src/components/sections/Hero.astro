@@ -1,4 +1,6 @@
 ---
+import { Image } from "astro:assets";
+import heroPoster from "../../assets/hero-poster.jpg";
 import Button from "../ui/Button.astro";
 import { siteConfig } from "../../lib/site-config";
 import { getDict } from "../../lib/i18n";
@@ -14,23 +16,33 @@ const hero = t.hero;
 */}
 <section class="section-shell">
   <div aria-hidden="true" class="pointer-events-none absolute inset-0 -z-10">
-    {/* Ana sayfa arka plan videosu (sessiz, döngülü) + okunabilirlik için koyu katman */}
+    {/*
+      Arka plan: LCP öğesi sıradan bir <img> (poster). Video LCP adayı
+      olduğunda ilk karenin boyanması ~2 sn gecikiyordu; bu yüzden video
+      HTML'de yok — aşağıdaki script sayfa yüklendikten sonra ekler (yalnızca
+      geniş ekran, hareket azaltma/veri tasarrufu kapalıyken) ve poster
+      üzerine yumuşakça açılır.
+    */}
+    <Image
+      src={heroPoster}
+      alt=""
+      widths={[640, 960, 1280]}
+      sizes="100vw"
+      format="webp"
+      quality={65}
+      priority
+      class="absolute inset-0 h-full w-full object-cover"
+    />
     <video
-      class="absolute inset-0 h-full w-full object-cover motion-reduce:hidden"
-      src="/hero-video.mp4"
-      poster="/hero-poster.jpg"
-      autoplay
+      id="hero-video"
+      data-src="/hero-video.mp4"
+      class="absolute inset-0 h-full w-full object-cover opacity-0 transition-opacity duration-700"
       muted
       loop
       playsinline
-      preload="auto"
+      preload="none"
     >
     </video>
-    <img
-      src="/hero-poster.jpg"
-      alt=""
-      class="absolute inset-0 hidden h-full w-full object-cover motion-reduce:block"
-    />
     <div class="absolute inset-0 bg-[rgba(5,12,9,0.62)]"></div>
 
     {/* Üstten inen spotlight */}
@@ -41,15 +53,15 @@ const hero = t.hero;
 
     {/* Yavaşça sürüklenen ışık lekeleri */}
     <div
-      class="aurora left-[-14%] top-[-18%] h-[560px] w-[560px] animate-aurora bg-primary-500/30"
+      class="aurora hidden md:block left-[-14%] top-[-18%] h-[560px] w-[560px] animate-aurora bg-primary-500/30"
     >
     </div>
     <div
-      class="aurora right-[-12%] top-[6%] h-[480px] w-[480px] animate-aurora-slow bg-accent-500/16"
+      class="aurora hidden md:block right-[-12%] top-[6%] h-[480px] w-[480px] animate-aurora-slow bg-accent-500/16"
     >
     </div>
     <div
-      class="aurora bottom-[-28%] left-[34%] h-[520px] w-[620px] animate-aurora bg-primary-700/34 [animation-delay:-9s]"
+      class="aurora hidden md:block bottom-[-28%] left-[34%] h-[520px] w-[620px] animate-aurora bg-primary-700/34 [animation-delay:-9s]"
     >
     </div>
 
@@ -106,3 +118,30 @@ const hero = t.hero;
     </div>
   </div>
 </section>
+
+<script>
+  /*
+    Hero videosunu sayfa yüklendikten ve tarayıcı boşa çıktıktan sonra başlatır:
+    küçük ekran, hareket azaltma ve veri tasarrufu modunda hiç indirilmez
+    (poster yeterli). Böylece 560 KB'lık video LCP/TBT'yi etkilemez.
+  */
+  const video = document.getElementById("hero-video") as HTMLVideoElement | null;
+  const conn = (navigator as any).connection;
+  const allowed =
+    video &&
+    window.matchMedia("(min-width: 768px)").matches &&
+    !window.matchMedia("(prefers-reduced-motion: reduce)").matches &&
+    !conn?.saveData;
+
+  if (video && allowed) {
+    const start = () => {
+      video.src = video.dataset.src!;
+      video.addEventListener("playing", () => video.classList.replace("opacity-0", "opacity-100"), { once: true });
+      video.play().catch(() => {});
+    };
+    const whenIdle = () =>
+      "requestIdleCallback" in window ? requestIdleCallback(start, { timeout: 3000 }) : setTimeout(start, 1500);
+    if (document.readyState === "complete") whenIdle();
+    else window.addEventListener("load", whenIdle, { once: true });
+  }
+</script>

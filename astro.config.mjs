@@ -18,6 +18,9 @@ export default defineConfig({
     },
   },
 
+  // 70 KB'lık CSS'i HTML'e gömer: render engelleyen ayrı CSS isteği kalkar.
+  build: { inlineStylesheets: 'always' },
+
   vite: {
     plugins: [tailwindcss()],
   },
