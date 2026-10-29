@@ -1,0 +1,44 @@
+---
+/** Küçük müşteri görüşü kartı (Testimonials bölümünün öne çıkan olmayan kartları). */
+import type { Testimonial } from "../../lib/site-config";
+
+interface Props {
+  t: Testimonial;
+  /** Mobilde sıralamayı korumak için tam Tailwind sınıfı: "order-3 lg:order-none" */
+  order: string;
+}
+
+const { t, order } = Astro.props;
+---
+
+<figure data-reveal class={`glass card-lift card-spotlight rounded-2xl px-24 py-32 ${order}`}>
+  {
+    t.result && (
+      <p class="mb-16 text-xs font-semibold uppercase tracking-[0.14em] text-accent-300">
+        {t.result}
+      </p>
+    )
+  }
+  <blockquote class="leading-relaxed text-neutral-300">
+    {t.quote}
+  </blockquote>
+  <figcaption class="mt-24 flex items-center gap-8 text-sm">
+    {
+      t.logo ? (
+        <img
+          src={t.logo}
+          alt={`${t.company} logosu`}
+          class="h-32 w-32 shrink-0 rounded-full bg-neutral-50 object-contain ring-1 ring-neutral-50/15"
+          loading="lazy"
+        />
+      ) : (
+        <span
+          aria-hidden="true"
+          class="h-8 w-8 rounded-full bg-accent-400 shadow-[0_0_10px_2px_rgba(212,175,94,0.5)]"
+        />
+      )
+    }
+    <span class="font-semibold text-neutral-100">{t.company}</span>
+    <span class="text-neutral-500">— {t.sector}</span>
+  </figcaption>
+</figure>

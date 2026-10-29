@@ -50,9 +50,9 @@ export const tr = {
     titleHtml:
       'İşletmeler için <span class="text-gold">dijital pazarlama ve büyüme sistemleri</span> kuruyoruz.',
     paragraph:
-      "Web sitenizi, reklamlarınızı ve otomasyonlarınızı birbirinden kopuk araçlar olarak değil, tek bir büyüme sistemi olarak tasarlıyoruz — 5 yıllık bilgi ve deneyimimiz ile mobilya işletmelerinden, eğitim kurumlarına, e-ticaret ve hizmet işletmelerine kadar maliyet etkin yöntemlerle işletmeler için daha karlı bir pazarlama operasyonu kurduk.",
+      "Web sitenizi, reklamlarınızı ve otomasyonlarınızı birbirinden kopuk araçlar olarak değil, tek bir büyüme sistemi olarak tasarlıyoruz — 2 yıllık bilgi ve deneyimimiz ile mobilya işletmelerinden, eğitim kurumlarına, e-ticaret ve hizmet işletmelerine kadar maliyet etkin yöntemlerle işletmeler için daha karlı bir pazarlama operasyonu kurduk.",
     stats: [
-      { value: "+5 Yıl", label: "Deneyim" },
+      { value: "+2 Yıl", label: "Deneyim" },
       { value: "10+", label: "Marka" },
       { value: "12.4x", label: "ROAS" },
     ],
@@ -118,14 +118,18 @@ export const tr = {
 
   testimonials: {
     eyebrow: "Müşteri Görüşleri",
-    title: "Bizimle çalışan işletmeler ne söylüyor?",
+    title: "Biz Değil Rakamlar Konuşuyor",
+    proofAlts: [
+      "3As Masa için yönetilen Meta reklam kampanyası sonuçları",
+      "Mondi için yönetilen Meta reklam kampanyası sonuçları",
+    ],
   },
 
   about: {
     eyebrow: "Hakkımda",
     title: "Emre Cenk kimdir ve farkım ne?",
     paragraphs: [
-      "5 yıldır dijital pazarlama alanında e-ticaret, eğitim ve perakende sektörü gibi birçok farklı sektördeki işletmelerle düzenli ve uzun soluklu iş birlikleri yaptım. Geldiğim noktada sonuç odaklı ve değer katan çalışmalarımla işletmelerin büyümesine katkı sağlamaya devam ediyorum.",
+      "2 yıldır dijital pazarlama alanında e-ticaret, eğitim ve perakende sektörü gibi birçok farklı sektördeki işletmelerle düzenli ve uzun soluklu iş birlikleri yaptım. Geldiğim noktada sonuç odaklı ve değer katan çalışmalarımla işletmelerin büyümesine katkı sağlamaya devam ediyorum.",
       "Her işletmenin kendine özgü ihtiyaçlarını keşfederek kişiselleştirilmiş bir çözüm haritası çıkarıyorum. Bilinen ajanslardan farklı olarak satış ve kâr odaklı, verilere dayalı, sistemli, şeffaf ve sınırlı sayıda marka ile çalışırım.",
       "Yaptığım her çalışmayı işletme çözüm ortağı sıfatıyla en verimli şekilde gerçekleştirmeye çalışırım.",
     ],

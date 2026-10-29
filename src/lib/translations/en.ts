@@ -42,9 +42,9 @@ export const en: Dictionary = {
     titleHtml:
       'We build <span class="text-gold">digital marketing and growth systems</span> for businesses.',
     paragraph:
-      "We design your website, ads and automations not as disconnected tools but as a single growth system — with 5 years of knowledge and experience, we have built a more profitable marketing operation for businesses, from furniture retailers and educational institutions to e-commerce and service companies, using cost-effective methods.",
+      "We design your website, ads and automations not as disconnected tools but as a single growth system — with 2 years of knowledge and experience, we have built a more profitable marketing operation for businesses, from furniture retailers and educational institutions to e-commerce and service companies, using cost-effective methods.",
     stats: [
-      { value: "5+ Yrs", label: "Experience" },
+      { value: "2+ Yrs", label: "Experience" },
       { value: "10+", label: "Brands" },
       { value: "12.4x", label: "ROAS" },
     ],
@@ -111,14 +111,18 @@ export const en: Dictionary = {
 
   testimonials: {
     eyebrow: "Client Voices",
-    title: "What do the businesses we work with say?",
+    title: "The Numbers Speak, Not Us",
+    proofAlts: [
+      "Results of the Meta ad campaign managed for 3As Masa",
+      "Results of the Meta ad campaign managed for Mondi",
+    ],
   },
 
   about: {
     eyebrow: "About me",
     title: "Who is Emre Cenk, and what makes my approach different?",
     paragraphs: [
-      "For 5 years in digital marketing, I have built steady, long-term collaborations with businesses across many sectors, including e-commerce, education and retail. Where I stand today, I keep contributing to the growth of businesses with results-driven, value-adding work.",
+      "For 2 years in digital marketing, I have built steady, long-term collaborations with businesses across many sectors, including e-commerce, education and retail. Where I stand today, I keep contributing to the growth of businesses with results-driven, value-adding work.",
       "I discover each business's unique needs and draw up a personalized solution map. Unlike well-known agencies, I work with a limited number of brands in a sales- and profit-focused, data-driven, systematic and transparent way.",
       "I carry out every piece of my work in the role of a business solution partner, as efficiently as possible.",
     ],

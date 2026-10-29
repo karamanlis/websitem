@@ -78,6 +78,7 @@ export const siteConfig = {
       result: "Etkileşim ve ciro artışı",
       resultEn: "Increased engagement and revenue",
       company: "3As Masa",
+      logo: "/logolar/3as.jpg",
       sector: "Perakende",
       sectorEn: "Retail",
     },
@@ -89,6 +90,7 @@ export const siteConfig = {
       result: "Satışlarda 2x büyüme",
       resultEn: "2x sales growth",
       company: "Ifdukkan",
+      logo: "/logolar/ifdukkan.png",
       sector: "E-Ticaret Markası",
       sectorEn: "E-commerce Brand",
     },
@@ -100,6 +102,7 @@ export const siteConfig = {
       result: "%50 yeni kayıt artışı",
       resultEn: "50% increase in new enrollments",
       company: "Lavinya Çocuk Kulübü",
+      logo: "/logolar/lavinya.jpg",
       sector: "Eğitim",
       sectorEn: "Education",
     },
@@ -111,6 +114,7 @@ export const siteConfig = {
       result: "%150 etkileşim artışı",
       resultEn: "150% increase in engagement",
       company: "Aybüş Aksesuar",
+      logo: "/logolar/aybus.jpg",
       sector: "Perakende",
       sectorEn: "Retail",
     },
@@ -120,8 +124,21 @@ export const siteConfig = {
       quoteEn:
         "CNKR Dijital increased not only our sales but also our brand's recognition in our region. We thank CNKR Dijital for their professional and sincere relationship.",
       company: "Burak Bey",
+      logo: "/logolar/mondi.jpg",
       sector: "Kurumsal Mobilya Mağaza Sahibi",
       sectorEn: "Corporate Furniture Store Owner",
+    },
+    {
+      quote:
+        "Qlines Gaziantep mağazası olarak Emre beyin sonuç odaklı - stratejik yaklaşımı ve markamıza gösterdiği özen sayesinde satışlarımızda gözle görülür bir artış yaşadık",
+      quoteEn:
+        "As the Qlines Gaziantep store, thanks to Emre's results-driven, strategic approach and the care he showed our brand, we saw a clearly visible increase in our sales.",
+      result: "Satışlarda gözle görülür artış",
+      resultEn: "Clearly visible sales increase",
+      company: "Mehmet Bey",
+      logo: "/logolar/qlines.jpg",
+      sector: "Qlines Mobilya Mağaza Temsilcisi",
+      sectorEn: "Qlines Furniture Store Representative",
     },
   ] as Testimonial[],
 };
