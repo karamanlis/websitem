@@ -8,3 +8,20 @@
 
 [build.environment]
   NODE_VERSION = "22.12.0"
+
+# Hash'li build çıktıları (CSS, JS, font, optimize görseller) değişmez → 1 yıl cache.
+[[headers]]
+  for = "/_astro/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# Sabit adlı statik dosyalar: 1 ay cache.
+[[headers]]
+  for = "/favicon.*"
+  [headers.values]
+    Cache-Control = "public, max-age=2592000"
+
+[[headers]]
+  for = "/logo-mark.jpg"
+  [headers.values]
+    Cache-Control = "public, max-age=2592000"

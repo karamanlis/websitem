@@ -3,6 +3,8 @@ import "../styles/global.css";
 import Header from "../components/layout/Header.astro";
 import Footer from "../components/layout/Footer.astro";
 import ScrollReveal from "../components/ScrollReveal.astro";
+import manropeLatin from "@fontsource-variable/manrope/files/manrope-latin-wght-normal.woff2?url";
+import fraunces from "@fontsource-variable/fraunces/files/fraunces-latin-wght-normal.woff2?url";
 import { siteConfig } from "../lib/site-config";
 import { getDict, getLocale, localeTags } from "../lib/i18n";
 
@@ -70,6 +72,8 @@ const organizationSchema = {
     <meta name="google-site-verification" content="HGmP6Bfy5a1xX4AdBo-lvOtOGaXj3cixaGOZCIdLSgM" />
     <link rel="canonical" href={canonicalURL} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preload" as="font" type="font/woff2" href={manropeLatin} crossorigin />
+    <link rel="preload" as="font" type="font/woff2" href={fraunces} crossorigin />
 
     {
       /* Karşılıklı hreflang çifti + varsayılan dil (tr) işareti.
